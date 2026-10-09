@@ -1,0 +1,402 @@
+[
+  {
+    "id": "6140.05",
+    "name": "W 21 St & 6 Ave",
+    "lat": 40.74174,
+    "lon": -73.99416,
+    "trips": 34612,
+    "electricShare": 0.662
+  },
+  {
+    "id": "6233.04",
+    "name": "Pier 61 at Chelsea Piers",
+    "lat": 40.74687,
+    "lon": -74.00821,
+    "trips": 33752,
+    "electricShare": 0.655
+  },
+  {
+    "id": "6331.01",
+    "name": "W 31 St & 7 Ave",
+    "lat": 40.74916,
+    "lon": -73.9916,
+    "trips": 30630,
+    "electricShare": 0.745
+  },
+  {
+    "id": "5980.10",
+    "name": "E 17 St & Broadway",
+    "lat": 40.73701,
+    "lon": -73.99013,
+    "trips": 30506,
+    "electricShare": 0.673
+  },
+  {
+    "id": "6492.08",
+    "name": "9 Ave & W 33 St",
+    "lat": 40.75257,
+    "lon": -73.99677,
+    "trips": 29964,
+    "electricShare": 0.745
+  },
+  {
+    "id": "6948.10",
+    "name": "Broadway & W 58 St",
+    "lat": 40.76695,
+    "lon": -73.98169,
+    "trips": 29688,
+    "electricShare": 0.757
+  },
+  {
+    "id": "6432.09",
+    "name": "Park Ave & E 42 St",
+    "lat": 40.75187,
+    "lon": -73.97771,
+    "trips": 29060,
+    "electricShare": 0.784
+  },
+  {
+    "id": "5905.14",
+    "name": "University Pl & E 14 St",
+    "lat": 40.73481,
+    "lon": -73.99209,
+    "trips": 27514,
+    "electricShare": 0.663
+  },
+  {
+    "id": "5905.12",
+    "name": "Broadway & E 14 St",
+    "lat": 40.73455,
+    "lon": -73.99074,
+    "trips": 27228,
+    "electricShare": 0.67
+  },
+  {
+    "id": "6876.04",
+    "name": "Central Park S & 6 Ave",
+    "lat": 40.76591,
+    "lon": -73.97634,
+    "trips": 26602,
+    "electricShare": 0.727
+  },
+  {
+    "id": "6173.08",
+    "name": "Broadway & W 25 St",
+    "lat": 40.74287,
+    "lon": -73.98919,
+    "trips": 26482,
+    "electricShare": 0.718
+  },
+  {
+    "id": "5492.05",
+    "name": "Cleveland Pl & Spring St",
+    "lat": 40.7221,
+    "lon": -73.99725,
+    "trips": 25782,
+    "electricShare": 0.753
+  },
+  {
+    "id": "6364.07",
+    "name": "6 Ave & W 33 St",
+    "lat": 40.74901,
+    "lon": -73.98848,
+    "trips": 25752,
+    "electricShare": 0.651
+  },
+  {
+    "id": "6072.06",
+    "name": "Greenwich Ave & 8 Ave",
+    "lat": 40.73902,
+    "lon": -74.00264,
+    "trips": 24620,
+    "electricShare": 0.685
+  },
+  {
+    "id": "6157.04",
+    "name": "10 Ave & W 14 St",
+    "lat": 40.74198,
+    "lon": -74.00832,
+    "trips": 24578,
+    "electricShare": 0.651
+  },
+  {
+    "id": "6726.01",
+    "name": "11 Ave & W 41 St",
+    "lat": 40.7603,
+    "lon": -73.99884,
+    "trips": 24488,
+    "electricShare": 0.731
+  },
+  {
+    "id": "6602.03",
+    "name": "W 41 St & 8 Ave",
+    "lat": 40.75641,
+    "lon": -73.99003,
+    "trips": 24190,
+    "electricShare": 0.677
+  },
+  {
+    "id": "6459.07",
+    "name": "W 30 St & 10 Ave",
+    "lat": 40.75269,
+    "lon": -74.00235,
+    "trips": 24124,
+    "electricShare": 0.763
+  },
+  {
+    "id": "5308.04",
+    "name": "Metropolitan Ave & Bedford Ave",
+    "lat": 40.71535,
+    "lon": -73.96024,
+    "trips": 24044,
+    "electricShare": 0.792
+  },
+  {
+    "id": "5374.01",
+    "name": "Norfolk St & Broome St",
+    "lat": 40.71723,
+    "lon": -73.98802,
+    "trips": 23878,
+    "electricShare": 0.677
+  },
+  {
+    "id": "5763.03",
+    "name": "Carmine St & 6 Ave",
+    "lat": 40.73039,
+    "lon": -74.00215,
+    "trips": 23838,
+    "electricShare": 0.709
+  },
+  {
+    "id": "6459.04",
+    "name": "10 Ave & W 28 St",
+    "lat": 40.75066,
+    "lon": -74.00177,
+    "trips": 23494,
+    "electricShare": 0.717
+  },
+  {
+    "id": "6450.05",
+    "name": "8 Ave & W 31 St",
+    "lat": 40.75059,
+    "lon": -73.99468,
+    "trips": 23406,
+    "electricShare": 0.697
+  },
+  {
+    "id": "5712.03",
+    "name": "Cooper Square & Astor Pl",
+    "lat": 40.72951,
+    "lon": -73.99075,
+    "trips": 23388,
+    "electricShare": 0.59
+  },
+  {
+    "id": "5880.02",
+    "name": "W 4 St & 7 Ave S",
+    "lat": 40.73401,
+    "lon": -74.00294,
+    "trips": 23316,
+    "electricShare": 0.752
+  },
+  {
+    "id": "6289.06",
+    "name": "Broadway & W 29 St",
+    "lat": 40.7462,
+    "lon": -73.98856,
+    "trips": 22988,
+    "electricShare": 0.731
+  },
+  {
+    "id": "5779.11",
+    "name": "Ave A & E 14 St",
+    "lat": 40.73031,
+    "lon": -73.98047,
+    "trips": 22960,
+    "electricShare": 0.581
+  },
+  {
+    "id": "5679.08",
+    "name": "Bleecker St & Crosby St",
+    "lat": 40.72616,
+    "lon": -73.9951,
+    "trips": 22896,
+    "electricShare": 0.747
+  },
+  {
+    "id": "5712.10",
+    "name": "Lafayette St & Astor Pl",
+    "lat": 40.72974,
+    "lon": -73.99162,
+    "trips": 22740,
+    "electricShare": 0.638
+  },
+  {
+    "id": "6822.09",
+    "name": "1 Ave & E 68 St",
+    "lat": 40.76501,
+    "lon": -73.95818,
+    "trips": 22540,
+    "electricShare": 0.738
+  },
+  {
+    "id": "5340.01",
+    "name": "N 7 St & Driggs Ave",
+    "lat": 40.71697,
+    "lon": -73.95639,
+    "trips": 22374,
+    "electricShare": 0.734
+  },
+  {
+    "id": "6098.10",
+    "name": "Broadway & E 21 St",
+    "lat": 40.73989,
+    "lon": -73.98959,
+    "trips": 22342,
+    "electricShare": 0.72
+  },
+  {
+    "id": "5276.04",
+    "name": "S 2 St & Kent Ave",
+    "lat": 40.71473,
+    "lon": -73.96661,
+    "trips": 21972,
+    "electricShare": 0.796
+  },
+  {
+    "id": "6257.03",
+    "name": "W 24 St & 7 Ave",
+    "lat": 40.74488,
+    "lon": -73.9953,
+    "trips": 21926,
+    "electricShare": 0.691
+  },
+  {
+    "id": "6747.07",
+    "name": "8 Ave & W 49 St",
+    "lat": 40.76171,
+    "lon": -73.98655,
+    "trips": 21892,
+    "electricShare": 0.683
+  },
+  {
+    "id": "6039.06",
+    "name": "Washington St & Gansevoort St",
+    "lat": 40.73932,
+    "lon": -74.00812,
+    "trips": 21870,
+    "electricShare": 0.7
+  },
+  {
+    "id": "5989.02",
+    "name": "W 15 St & 6 Ave",
+    "lat": 40.73805,
+    "lon": -73.99643,
+    "trips": 21428,
+    "electricShare": 0.614
+  },
+  {
+    "id": "5204.05",
+    "name": "S 4 St & Wythe Ave",
+    "lat": 40.71286,
+    "lon": -73.9659,
+    "trips": 21202,
+    "electricShare": 0.832
+  },
+  {
+    "id": "6526.05",
+    "name": "8 Ave & W 38 St",
+    "lat": 40.75461,
+    "lon": -73.99177,
+    "trips": 21134,
+    "electricShare": 0.669
+  },
+  {
+    "id": "6765.01",
+    "name": "12 Ave & W 40 St",
+    "lat": 40.76088,
+    "lon": -74.00278,
+    "trips": 21004,
+    "electricShare": 0.631
+  },
+  {
+    "id": "5382.06",
+    "name": "Grand St & Elizabeth St",
+    "lat": 40.71882,
+    "lon": -73.99596,
+    "trips": 20970,
+    "electricShare": 0.652
+  },
+  {
+    "id": "6756.01",
+    "name": "W 43 St & 10 Ave",
+    "lat": 40.76009,
+    "lon": -73.99462,
+    "trips": 20696,
+    "electricShare": 0.705
+  },
+  {
+    "id": "6239.08",
+    "name": "E 31 St & 3 Ave",
+    "lat": 40.74394,
+    "lon": -73.97966,
+    "trips": 20634,
+    "electricShare": 0.671
+  },
+  {
+    "id": "5379.10",
+    "name": "N 6 St & Bedford Ave",
+    "lat": 40.71745,
+    "lon": -73.95851,
+    "trips": 20538,
+    "electricShare": 0.735
+  },
+  {
+    "id": "6072.11",
+    "name": "8 Ave & W 16 St",
+    "lat": 40.74098,
+    "lon": -74.0017,
+    "trips": 20320,
+    "electricShare": 0.569
+  },
+  {
+    "id": "6197.08",
+    "name": "E 33 St & 1 Ave",
+    "lat": 40.74323,
+    "lon": -73.9745,
+    "trips": 20044,
+    "electricShare": 0.699
+  },
+  {
+    "id": "5303.08",
+    "name": "Canal St & Rutgers St",
+    "lat": 40.71427,
+    "lon": -73.9899,
+    "trips": 19836,
+    "electricShare": 0.714
+  },
+  {
+    "id": "6064.08",
+    "name": "W 18 St & 6 Ave",
+    "lat": 40.73971,
+    "lon": -73.99456,
+    "trips": 19720,
+    "electricShare": 0.693
+  },
+  {
+    "id": "5184.08",
+    "name": "West St & Liberty St",
+    "lat": 40.71144,
+    "lon": -74.01485,
+    "trips": 19660,
+    "electricShare": 0.638
+  },
+  {
+    "id": "6266.06",
+    "name": "9 Ave & W 22 St",
+    "lat": 40.7455,
+    "lon": -74.00197,
+    "trips": 19374,
+    "electricShare": 0.638
+  }
+]

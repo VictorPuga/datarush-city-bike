@@ -1,0 +1,21 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.header h1 {
+  font-size: 20px;
+}
+
+.map {
+  flex: 1;
+  min-height: 0;
+}
