@@ -19,3 +19,10 @@
   flex: 1;
   min-height: 0;
 }
+
+.toggle {
+  align-self: flex-start;
+  padding: 6px 12px;
+  font: inherit;
+  cursor: pointer;
+}

@@ -21,6 +21,7 @@ type Result = { key: string; data?: PredictionsResponse; error?: string };
 export default function Dashboard() {
   const [date, setDate] = useState(todayISO);
   const [hour, setHour] = useState(8);
+  const [showMarkers, setShowMarkers] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
 
   const key = `${date}|${hour}`;
@@ -50,10 +51,18 @@ export default function Dashboard() {
         <h1>NYC bike availability forecast</h1>
         <Controls date={date} hour={hour} onDateChange={setDate} onHourChange={setHour} />
         <Summary stations={stations} />
+        <button
+          type="button"
+          className={styles.toggle}
+          aria-pressed={showMarkers}
+          onClick={() => setShowMarkers((value) => !value)}
+        >
+          {showMarkers ? 'Hide markers' : 'Show markers'}
+        </button>
         {current?.error && <p role="alert">{current.error}</p>}
       </header>
       <div className={styles.map}>
-        <BikeMap stations={stations} />
+        <BikeMap stations={stations} showMarkers={showMarkers} />
       </div>
     </main>
   );

@@ -1,4 +1,5 @@
 import type { StationPrediction } from '@/lib/types';
+import { ClassicBikeIcon, ElectricBikeIcon } from './BikeIcons';
 import styles from './Summary.module.css';
 
 type SummaryProps = {
@@ -12,11 +13,15 @@ export default function Summary({ stations }: SummaryProps) {
   return (
     <dl className={styles.summary}>
       <div>
-        <dt>Classic</dt>
+        <dt>
+          <ClassicBikeIcon /> Classic
+        </dt>
         <dd>{classic}</dd>
       </div>
       <div>
-        <dt>Electric</dt>
+        <dt>
+          <ElectricBikeIcon /> Electric
+        </dt>
         <dd>{electric}</dd>
       </div>
       <div>
