@@ -13,8 +13,8 @@ import styles from './Map.module.css';
 const NYC_CENTER: [number, number] = [40.7306, -73.9866];
 const INITIAL_ZOOM = 13;
 const STATION_MIN_ZOOM = 16;
-const STATION_MARKER_SIZE = 26;
-const BIKE_GLYPH_SIZE = 16;
+const STATION_MARKER_SIZE = 38;
+const BIKE_GLYPH_SIZE = 24;
 
 const stationIcons = new Map<string, L.DivIcon>();
 
