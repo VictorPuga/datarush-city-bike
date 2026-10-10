@@ -1,26 +1,6 @@
-.chart svg {
-  display: block;
-  width: 100%;
-  height: auto;
+.plot {
+  height: 160px;
   cursor: crosshair;
-  touch-action: none;
-}
-
-.grid {
-  stroke: currentColor;
-  stroke-opacity: 0.2;
-}
-
-.tick {
-  fill: currentColor;
-  font-size: 9px;
-  opacity: 0.7;
-}
-
-.cursor {
-  stroke: currentColor;
-  stroke-dasharray: 3 3;
-  stroke-opacity: 0.6;
 }
 
 .legend {

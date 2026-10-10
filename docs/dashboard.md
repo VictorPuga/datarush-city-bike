@@ -26,7 +26,7 @@ Theme and colors are in `lib/nivoTheme.ts`.
 
 - Day, Week and Net flow use `lib/insights.ts` on the server. Daily totals are cached per date.
 - Net flow is the stock change from the selected hour to the next, because the API has no arrivals or departures.
-- The per-station forecast line chart is still `StationChart`.
+- `StationChart` is the per-station forecast, a Nivo line chart with the confidence band drawn as a custom layer. Click to set the hour.
 - Ranking and Net flow follow the bike type toggle.
 
 ## Regions in the UI

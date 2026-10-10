@@ -1,4 +1,6 @@
+import { ResponsiveLine, type LineCustomSvgLayer } from '@nivo/line';
 import { CLASSIC_COLOR, ELECTRIC_COLOR } from '@/lib/density';
+import { nivoTheme } from '@/lib/nivoTheme';
 import type { HourPrediction } from '@/lib/types';
 import styles from './StationChart.module.css';
 
@@ -8,13 +10,8 @@ type StationChartProps = {
   onHourChange: (hour: number) => void;
 };
 
-const WIDTH = 320;
-const HEIGHT = 160;
-const PAD = { top: 8, right: 8, bottom: 22, left: 28 };
-const X_TICKS = [0, 6, 12, 18, 23];
-
 type Series = {
-  label: string;
+  id: string;
   color: string;
   value: (item: HourPrediction) => number;
   low: (item: HourPrediction) => number;
@@ -23,14 +20,14 @@ type Series = {
 
 const SERIES: Series[] = [
   {
-    label: 'Classic',
+    id: 'Classic',
     color: CLASSIC_COLOR,
     value: (item) => item.classic,
     low: (item) => item.classicLow,
     high: (item) => item.classicHigh,
   },
   {
-    label: 'Electric',
+    id: 'Electric',
     color: ELECTRIC_COLOR,
     value: (item) => item.electric,
     low: (item) => item.electricLow,
@@ -40,58 +37,49 @@ const SERIES: Series[] = [
 
 export default function StationChart({ hours, hour, onHourChange }: StationChartProps) {
   const yMax = Math.max(1, ...hours.map((item) => Math.max(item.classicHigh, item.electricHigh)));
-  const plotWidth = WIDTH - PAD.left - PAD.right;
-  const plotHeight = HEIGHT - PAD.top - PAD.bottom;
-  const x = (h: number) => PAD.left + (h / 23) * plotWidth;
-  const y = (v: number) => PAD.top + plotHeight - (v / yMax) * plotHeight;
-  const line = (fn: (item: HourPrediction) => number) =>
-    hours.map((item, i) => `${i === 0 ? 'M' : 'L'}${x(item.hour)} ${y(fn(item))}`).join(' ');
-  const band = (series: Series) => {
-    const upper = hours.map((item) => `${x(item.hour)} ${y(series.high(item))}`);
-    const lower = [...hours].reverse().map((item) => `${x(item.hour)} ${y(series.low(item))}`);
-    return `M${upper.join(' L')} L${lower.join(' L')} Z`;
-  };
+  const data = SERIES.map((series) => ({
+    id: series.id,
+    color: series.color,
+    data: hours.map((item) => ({ x: item.hour, y: series.value(item) })),
+  }));
 
-  const handlePointer = (event: React.PointerEvent<SVGSVGElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const svgX = ((event.clientX - rect.left) / rect.width) * WIDTH;
-    const next = Math.round(((svgX - PAD.left) / plotWidth) * 23);
-    onHourChange(Math.min(23, Math.max(0, next)));
-  };
+  const bands: LineCustomSvgLayer<(typeof data)[number]> = ({ xScale, yScale }) => (
+    <g>
+      {SERIES.map((series) => {
+        const upper = hours.map((item) => `${xScale(item.hour)} ${yScale(series.high(item))}`);
+        const lower = [...hours].reverse().map((item) => `${xScale(item.hour)} ${yScale(series.low(item))}`);
+        return (
+          <path key={series.id} d={`M${upper.join(' L')} L${lower.join(' L')} Z`} fill={series.color} opacity={0.2} />
+        );
+      })}
+    </g>
+  );
 
   return (
-    <div className={styles.chart}>
-      <svg
-        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        role="img"
-        aria-label="Predicted bikes over 24 hours with confidence range"
-        onPointerDown={handlePointer}
-      >
-        {[0, yMax].map((tick) => (
-          <g key={tick}>
-            <line x1={PAD.left} x2={WIDTH - PAD.right} y1={y(tick)} y2={y(tick)} className={styles.grid} />
-            <text x={PAD.left - 4} y={y(tick) + 3} textAnchor="end" className={styles.tick}>
-              {tick}
-            </text>
-          </g>
-        ))}
-        {X_TICKS.map((tick) => (
-          <text key={tick} x={x(tick)} y={HEIGHT - 6} textAnchor="middle" className={styles.tick}>
-            {String(tick).padStart(2, '0')}
-          </text>
-        ))}
-        {SERIES.map((series) => (
-          <g key={series.label}>
-            <path d={band(series)} fill={series.color} opacity="0.2" />
-            <path d={line(series.value)} fill="none" stroke={series.color} strokeWidth="2" />
-          </g>
-        ))}
-        <line x1={x(hour)} x2={x(hour)} y1={PAD.top} y2={PAD.top + plotHeight} className={styles.cursor} />
-      </svg>
+    <div>
+      <div className={styles.plot} role="img" aria-label="Predicted bikes over 24 hours with confidence range">
+        <ResponsiveLine
+          data={data}
+          theme={nivoTheme}
+          colors={(serie) => serie.color}
+          margin={{ top: 8, right: 8, bottom: 28, left: 32 }}
+          xScale={{ type: 'linear', min: 0, max: 23 }}
+          yScale={{ type: 'linear', min: 0, max: yMax }}
+          axisBottom={{ tickValues: [0, 6, 12, 18, 23], format: (value) => String(value).padStart(2, '0') }}
+          axisLeft={{ tickValues: [0, yMax] }}
+          enableGridX={false}
+          enableGridY={false}
+          enablePoints={false}
+          useMesh
+          onClick={(point) => 'data' in point && onHourChange(Number(point.data.x))}
+          layers={['grid', 'axes', bands, 'lines', 'markers', 'mesh']}
+          markers={[{ axis: 'x', value: hour, lineStyle: { stroke: 'currentColor', strokeDasharray: '3 3' } }]}
+        />
+      </div>
       <div className={styles.legend}>
         {SERIES.map((series) => (
-          <span key={series.label}>
-            <i style={{ background: series.color }} /> {series.label}
+          <span key={series.id}>
+            <i style={{ background: series.color }} /> {series.id}
           </span>
         ))}
         <span>Shaded: confidence range</span>
