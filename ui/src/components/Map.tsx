@@ -110,6 +110,7 @@ export default function BikeMap({
     <MapContainer center={NYC_CENTER} zoom={INITIAL_ZOOM} preferCanvas zoomControl={false} className={styles.map}>
       <ZoomControl position="topright" />
       <TileLayer
+        className={styles.tiles}
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />

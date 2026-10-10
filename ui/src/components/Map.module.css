@@ -51,6 +51,16 @@
   background: var(--fill);
 }
 
+.map .tiles {
+  filter: saturate(0.85) contrast(0.95) brightness(1.04);
+}
+
+@media (prefers-color-scheme: dark) {
+  .map .tiles {
+    filter: invert(1) hue-rotate(180deg) saturate(0.7) contrast(0.85) brightness(0.9);
+  }
+}
+
 .map :global(.leaflet-control-attribution) {
   color: #fff;
   background: rgb(0 0 0 / 0.5);
