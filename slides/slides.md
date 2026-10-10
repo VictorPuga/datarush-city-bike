@@ -103,66 +103,37 @@ Con la cantidad de bicis que habrá en cada estación durante el día, el operad
 
 # Arquitectura del modelo
 
-<div class="grid grid-cols-5 gap-3 mt-10 items-stretch text-left text-sm">
+<img src="/forecast_vs_real_es.png" class="mt-2 mx-auto rounded-xl" style="max-height:250px" />
+
+<div class="grid grid-cols-3 gap-4 mt-4 text-left text-sm">
 <div class="card">
 
 ### Hora
-Calendario y clima de cada intervalo de 15 min.
+Una red neuronal chica lee calendario y clima de cada intervalo de 15 min.
 
 </div>
 <div class="card">
 
 ### Estación
-Embedding propio, de barrio y coordenadas.
-
-</div>
-<div class="card">
-
-### Producto punto
-Factores de la hora × factores de la estación.
+Embedding propio, de barrio y coordenadas. Pronostica estaciones nuevas.
 
 </div>
 <div class="card">
 
 ### Binomial negativa
-Tasa esperada y dispersión de cada celda.
-
-</div>
-<div class="card">
-
-### Intervalos
-Choques compartidos de día, hora y barrio.
-
-</div>
-</div>
-
-<div class="grid grid-cols-2 gap-6 mt-8 text-left text-sm">
-<div class="card">
-
-### Entradas
-- **Calendario:** hora del día, día de la semana, fin de semana, festivo
-- **Clima:** temperatura, humedad, viento, lluvia, lluvia de las 2 horas previas y tipo de clima
-
-</div>
-<div class="card">
-
-### Salidas, por estación cada 15 min
-- **Tasa esperada** de bicis (`lambda`) y **dispersión** (`alpha`)
-- Para salidas y llegadas, clásicas y eléctricas: 4 series por estación
+Da la tasa esperada y la incertidumbre. Mismo pronóstico que Poisson, intervalos realistas.
 
 </div>
 </div>
 
 <!--
-(0:50–1:30) Una red neuronal chica que separa lo que depende de la hora de lo que depende de la estación.
-Para la estación s, el intervalo t y el objetivo c (salidas y llegadas, clásicas y eléctricas): log mu = b[s,c] + g0[t,c] + suma de U[s,r,c] * G[t,r,c].
-Una red toma el calendario y el clima del intervalo (13 entradas: hora del día, día de la semana, fin de semana, festivo, temperatura, humedad, viento, lluvia, lluvia de las 2 horas previas y tipo de clima) y produce g0 y G una sola vez por intervalo.
-Cada estación aporta su sesgo b y 24 factores U, a partir de un embedding libre, un embedding de su barrio y sus coordenadas. La parte del barrio es lo que permite pronosticar estaciones nuevas sin historia.
-Cada celda cuesta un producto punto, así que entrenar toma unos 6 minutos en 8 núcleos de CPU.
-La verosimilitud es binomial negativa: varianza = mu + alpha * mu^2, con la dispersión según la tasa, el objetivo y la estación. Da el mismo pronóstico puntual que Poisson, pero un intervalo mucho más realista.
-Entrenamos con ruido en el clima, promedio móvil exponencial de los pesos y calendario coseno.
-Intervalos calibrados: parte del ruido es independiente entre celdas y parte es compartida (el clima de un día, un evento en un barrio, una estación fuera de servicio). Cinco choques compartidos, ajustados en cinco folds, hacen que los intervalos de totales por barrio no queden demasiado angostos.
-Se exporta a ONNX (1.2 MB) y el dashboard lo ejecuta con `onnxruntime-node`.
+(0:50–1:30) Una red neuronal chica separa lo que depende de la hora de lo que depende de la estación: log mu = b[s,c] + g0[t,c] + suma de U[s,r,c] * G[t,r,c].
+Una red toma el calendario y el clima del intervalo (13 entradas) y produce g0 y G una sola vez por intervalo. Es la única parte con capas ocultas.
+Cada estación aporta su sesgo b y 24 factores U, a partir de un embedding libre, uno de su barrio y sus coordenadas. Por eso funciona con estaciones nuevas sin historia.
+Cada celda cuesta un producto punto, así que entrenar toma unos 6 minutos en CPU. Se exporta a ONNX (1.2 MB) y el dashboard lo ejecuta con `onnxruntime-node`.
+La gráfica: salidas y llegadas totales de la ciudad cada 15 minutos en el periodo de prueba, R² de 0.891 y 0.888.
+Poisson supone varianza igual a la media. La demanda varía más (lluvia, eventos, estaciones fuera de servicio), así que usamos binomial negativa: varianza = mu + alpha * mu^2, con alpha por serie, tasa y estación.
+Optimizaciones: dropout 0.2, LayerNorm y GELU en el MLP de contexto; ruido en el clima al entrenar; decaimiento de pesos 5 veces mayor en estaciones; AdamW con coseno, recorte de gradiente y promedio móvil de pesos.
 -->
 
 ---
