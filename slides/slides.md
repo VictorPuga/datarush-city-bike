@@ -71,32 +71,84 @@ Queremos que sea **planeado**.
 
 ---
 
-# La decisión concreta
+# Habilitamos a Operaciones para decidir
 
 <div class="grid grid-cols-3 gap-6 mt-10 text-left">
 <div class="card">
 
-### Operaciones
-**Cuántas** bicis mover a **qué estación** y **cuándo**.
+### Cuántas
+Bicis clásicas y eléctricas que habrá en cada estación en un periodo dado.
 
 </div>
 <div class="card">
 
-### Planeadores urbanos
-Dónde ampliar o reubicar estaciones.
+### Dónde
+Distinguimos estaciones y barrios para ver dónde faltarán.
 
 </div>
 <div class="card">
 
-### Usuarios
-Una bici y un anclaje cuando los necesitan.
+### Cuándo
+Planear el rebalanceo antes de que las bicis falten.
 
 </div>
+</div>
+
+<div class="mt-8 text-lg font-semibold">Pasamos de reaccionar a planear el rebalanceo.</div>
+
+<!--
+(0:35–0:50) Al identificar el problema, impulsamos la solución con Machine Learning.
+Armamos un sistema de pronóstico completo que dice cuántas bicicletas clásicas y eléctricas habrá en cada estación en un periodo determinado, distinguiendo los lugares donde se encuentran.
+Nuestro objetivo es dejar de reaccionar solo a viajes pasados y planear el rebalanceo de forma inteligente.
+-->
+
+---
+
+# Cómo lo construimos
+
+<div class="grid grid-cols-3 gap-6 mt-10 text-left">
+<div class="card">
+
+### Datos
+12 tablas mensuales con Nueva York en común, limpias y con clima por hora.
+
+</div>
+<div class="card">
+
+### Modelo
+Definimos entradas y salidas, y entrenamos en PyTorch hasta una red factorizada.
+
+</div>
+<div class="card">
+
+### Dashboard
+Estaciones agrupadas por barrios oficiales de NYC Open Data.
+
+</div>
+</div>
+
+<div class="grid grid-cols-3 gap-6 mt-8">
+<div class="card"><div class="big">21%</div>de error por estación-día</div>
+<div class="card"><div class="big">2,515</div>estaciones pronosticadas cada 15 min</div>
+<div class="card"><div class="big">84%</div>de cobertura del intervalo de 80%</div>
 </div>
 
 <!--
-(0:35–0:50) Quién se beneficia y con qué decisión. Nivel estación-hora, porque ahí se opera.
-Con la cantidad de bicis que habrá en cada estación durante el día, el operador decide cuáles bicis mover y a dónde.
+(2:15–3:00) Construimos el modelo a partir de 12 tablas, con Nueva York como localidad en común.
+Primero hicimos un análisis y limpieza de datos: quitamos outliers, nulos y variables de baja correlación que no aportaban densidad a la red.
+Añadimos un factor diferencial: el clima de cada momento exacto, alineado por tiempo, y normalizamos los datos.
+Definimos la estructura de entrada y salida: con la información precisa del día, pronosticamos entradas y salidas por tipo de bicicleta para cada estación.
+Todo reproducible desde los CSV crudos, con semilla fija.
+Entradas: 12 CSV mensuales de Citi Bike (oct 2025 a sep 2026), 262 barrios NTA 2020 (NYC Open Data), clima por hora (Open-Meteo) y festivos federales.
+Proceso: limpieza de nulos, duración, coordenadas, estaciones de prueba y duplicados (45.2 M viajes); tabla estación × 15 min con 2,515 estaciones y 81 M de filas; `extract_stations.py` y `assign_regions.py` para estación → barrio; modelo exportado a ONNX y dashboard Next.js.
+Iteramos el modelo varias veces; la versión final es una red factorizada con binomial negativa.
+Resultados en el bloque de prueba (17 a 30 sep, no usado para elegir nada): 21% de error por estación-día y 47% por estación-hora, contra 33% y 57% del baseline (perfil histórico de la estación ajustado al nivel reciente). Eso es −37.5% y −17.5%.
+El error es la suma de errores absolutos entre la suma de salidas (WAPE).
+Validación temporal: se entrena con el pasado y se prueba en las dos últimas semanas.
+La tarea es salidas y llegadas por estación cada 15 min, clásicas y eléctricas. Sin lags: predice cualquier fecha con calendario y pronóstico de clima. Las estaciones nuevas se pronostican por barrio y coordenadas.
+El intervalo de 80% por estación y hora está calibrado: por día-estación cubre 84%.
+Las 924 estaciones más usadas (84% de los viajes) se pronostican con 19% de error por día.
+Límite: los datos solo registran la demanda satisfecha. Una estación vacía no genera viajes que contar. En las 377 estaciones de menos de 5 salidas al día, el intervalo importa más que el punto.
 -->
 
 ---
@@ -109,7 +161,7 @@ Con la cantidad de bicis que habrá en cada estación durante el día, el operad
 <div class="card">
 
 ### Hora
-Una red neuronal chica lee calendario y clima de cada intervalo de 15 min.
+Una red neuronal chica lee calendario y clima de cada intervalo de 15 min. El clima pesa más.
 
 </div>
 <div class="card">
@@ -127,7 +179,9 @@ Da la tasa esperada y la incertidumbre. Mismo pronóstico que Poisson, intervalo
 </div>
 
 <!--
-(0:50–1:30) Una red neuronal chica separa lo que depende de la hora de lo que depende de la estación: log mu = b[s,c] + g0[t,c] + suma de U[s,r,c] * G[t,r,c].
+(0:50–1:30) Entrenamos y evaluamos el modelo con PyTorch, ajustando capas y arquitectura de la red neuronal.
+Así vimos que el clima es el diferenciador principal para ajustar los pesos del modelo.
+Una red neuronal chica separa lo que depende de la hora de lo que depende de la estación: log mu = b[s,c] + g0[t,c] + suma de U[s,r,c] * G[t,r,c].
 Una red toma el calendario y el clima del intervalo (13 entradas) y produce g0 y G una sola vez por intervalo. Es la única parte con capas ocultas.
 Cada estación aporta su sesgo b y 24 factores U, a partir de un embedding libre, uno de su barrio y sus coordenadas. Por eso funciona con estaciones nuevas sin historia.
 Cada celda cuesta un producto punto, así que entrenar toma unos 6 minutos en CPU. Se exporta a ONNX (1.2 MB) y el dashboard lo ejecuta con `onnxruntime-node`.
@@ -152,6 +206,7 @@ Optimizaciones: dropout 0.2, LayerNorm y GELU en el MLP de contexto; ruido en el
 
 <!--
 (1:30–2:15) Como valor agregado incorporamos el clima, porque las condiciones afectan la cantidad de viajes.
+Con los resultados agrupamos estaciones cercanas en barrios definidos con la data oficial de NYC Open Data, y eso es lo que mostramos ahora en el dashboard.
 Una de las cosas que encontramos: la lluvia moderada baja la demanda de bicicletas 47%.
 Nuestro pronóstico ya lo incluye, así que no solo repite el pasado.
 Se compara cada hora con horas secas del mismo mes, tipo de día y hora.
@@ -160,51 +215,6 @@ Cada +10 °C: +30% de viajes, y +48% entre usuarios ocasionales contra +27% entr
 Con 11 a 50 mm de lluvia el perfil histórico se pasa hasta 4.5x y el modelo hasta 1.5x.
 El modelo sigue la caída, pero con tormentas muy fuertes todavía se pasa.
 Un operador que ignora el clima manda camiones a reponer estaciones que ese día no se van a vaciar.
--->
-
----
-
-# Cómo lo construimos
-
-<div class="grid grid-cols-3 gap-6 mt-10 text-left">
-<div class="card">
-
-### Datos
-12 meses de viajes, barrios NTA y clima por hora.
-
-</div>
-<div class="card">
-
-### Modelo
-Iteramos varias versiones hasta una red factorizada, validada en el tiempo.
-
-</div>
-<div class="card">
-
-### Dashboard
-Modelo ONNX con pronóstico de clima en vivo.
-
-</div>
-</div>
-
-<div class="grid grid-cols-3 gap-6 mt-8">
-<div class="card"><div class="big">21%</div>de error por estación-día</div>
-<div class="card"><div class="big">2,515</div>estaciones pronosticadas cada 15 min</div>
-<div class="card"><div class="big">84%</div>de cobertura del intervalo de 80%</div>
-</div>
-
-<!--
-(2:15–3:00) Todo reproducible desde los CSV crudos, con semilla fija.
-Entradas: 12 CSV mensuales de Citi Bike (oct 2025 a sep 2026), 262 barrios NTA 2020 (NYC Open Data), clima por hora (Open-Meteo) y festivos federales.
-Proceso: limpieza de nulos, duración, coordenadas, estaciones de prueba y duplicados (45.2 M viajes); tabla estación × 15 min con 2,515 estaciones y 81 M de filas; `extract_stations.py` y `assign_regions.py` para estación → barrio; modelo exportado a ONNX y dashboard Next.js.
-Iteramos el modelo varias veces; la versión final es una red factorizada con binomial negativa.
-Resultados en el bloque de prueba (17 a 30 sep, no usado para elegir nada): 21% de error por estación-día y 47% por estación-hora, contra 33% y 57% del baseline (perfil histórico de la estación ajustado al nivel reciente). Eso es −37.5% y −17.5%.
-El error es la suma de errores absolutos entre la suma de salidas (WAPE).
-Validación temporal: se entrena con el pasado y se prueba en las dos últimas semanas.
-La tarea es salidas y llegadas por estación cada 15 min, clásicas y eléctricas. Sin lags: predice cualquier fecha con calendario y pronóstico de clima. Las estaciones nuevas se pronostican por barrio y coordenadas.
-El intervalo de 80% por estación y hora está calibrado: por día-estación cubre 84%.
-Las 924 estaciones más usadas (84% de los viajes) se pronostican con 19% de error por día.
-Límite: los datos solo registran la demanda satisfecha. Una estación vacía no genera viajes que contar. En las 377 estaciones de menos de 5 salidas al día, el intervalo importa más que el punto.
 -->
 
 ---
