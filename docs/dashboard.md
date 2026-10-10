@@ -22,11 +22,11 @@ Theme and colors are in `lib/nivoTheme.ts`.
 | Week | Day of week × 15-minute heatmap. Click a cell to set the date and time. | `/api/insights` |
 | Top/Bottom | The 5 neighborhoods with the most and fewest predicted bikes. Click to fly to one. | Current predictions |
 | Net flow | Diverging bars: the 5 biggest gaining and losing neighborhoods in the selected 15 minutes. | `/api/insights` |
-| Demand | Histogram of stations by total trips, log scale. Highlights the selected station. | `stations.json` |
+| Demand | Histogram of the active stations by total trips, log scale. Highlights the selected station. | `stations.json` and the stations of `/api/predictions` |
 
 - Day, Week and Net flow use `lib/insights.ts` on the server. Forecasts are cached per date on the server.
 - Net flow is expected arrivals minus departures during the selected 15-minute slot.
-- `StationChart` is the per-station forecast, a Nivo line chart with the confidence band drawn as a custom layer. Click to set the time.
+- `StationChart` is the per-station forecast, a Nivo line chart with the 80% range drawn as a custom layer. Click to set the time.
 - Ranking and Net flow follow the bike type toggle.
 
 ## Time and metric
@@ -34,12 +34,16 @@ Theme and colors are in `lib/nivoTheme.ts`.
 - The time slider moves in 15-minute slots (0 to 95). `lib/time.ts` formats them.
 - The **Bikes available / Departures / Arrivals** toggle switches every view between predicted stock, departures and arrivals in the slot.
 - Departures and arrivals use a 0 to 6 color scale per station (`MAX_FLOW`), and stock uses 0 to 40.
-- Stations missing from the model (68 of the 2,490) and model stations missing from `stations.json` are left out.
+- Only the 2,388 active stations that the model forecasts are shown. The other 102 of the 2,490 in `stations.json` are left out everywhere, see [inference.md](inference.md).
 
 ## Regions in the UI
 
-- `lib/regions.ts` converts `regions.json` to Leaflet positions and sums the `/api/predictions` response per region on the client. The API is unchanged.
-- Low and high bounds are plain sums, so region ranges are wider than the true uncertainty.
+- `lib/regions.ts` converts `regions.json` to Leaflet positions.
+- `/api/predictions` returns a `regions` array next to `stations`, with stock, `departures` and `arrivals` for each of the 262 neighborhoods (zeros and `stations: 0` when none is active).
+  The server computes the ranges from the variance of the sum, so the client no longer adds station bounds. See [inference.md](inference.md#ranges).
+  The Bikes available / Departures / Arrivals toggle picks the metric on the client with `viewMetric`, as for stations.
+- The response only gained fields (`regions`), and the station fields keep their names. Bounds of departures and arrivals are now whole bikes.
+- Ranges are described as 80% ranges calibrated on held-out weeks in the legend and the station chart, and the legend says the stock baseline is an assumption.
 - `RegionList` ranks neighborhoods that have stations by predicted bikes and flies the map to the one clicked.
 - `StationPanel` shows the selected station's neighborhood and its totals.
 - The former `react-leaflet-cluster` marker clustering was removed.

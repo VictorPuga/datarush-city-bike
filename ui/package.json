@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:reference": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/register.mjs scripts/check-reference.ts"
   },
   "dependencies": {
     "@nivo/bar": "^0.99.0",

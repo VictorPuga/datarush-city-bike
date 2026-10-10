@@ -25,12 +25,12 @@ export async function dayTotals(date: string): Promise<DayTotals> {
     const base = index * SLOTS_PER_DAY;
     for (let slot = 0; slot < SLOTS_PER_DAY; slot += 1) {
       const total = slots[slot];
-      total.classic += forecast.stockClassic[base + slot];
-      total.electric += forecast.stockElectric[base + slot];
-      total.depClassic += forecast.depClassic[base + slot];
-      total.depElectric += forecast.depElectric[base + slot];
-      total.arrClassic += forecast.arrClassic[base + slot];
-      total.arrElectric += forecast.arrElectric[base + slot];
+      total.classic += forecast.stock[0][base + slot];
+      total.electric += forecast.stock[1][base + slot];
+      total.depClassic += forecast.lambda[0][base + slot];
+      total.depElectric += forecast.lambda[1][base + slot];
+      total.arrClassic += forecast.lambda[2][base + slot];
+      total.arrElectric += forecast.lambda[3][base + slot];
     }
   }
   for (const total of slots) {

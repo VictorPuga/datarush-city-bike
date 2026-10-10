@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { arrivalCounts, departureCounts, getForecast, modelStations, stockCounts } from '@/lib/model';
+import { arrivalCounts, departureCounts, getForecast, modelStations, regionPredictions, stockCounts } from '@/lib/model';
 import { isValidDate, isValidSlot, stations } from '@/lib/stations';
 import type { PredictionsResponse } from '@/lib/types';
 
@@ -18,6 +18,7 @@ export async function GET(request: NextRequest) {
   const slot = Number(slotParam);
   try {
     const [forecast, covered] = await Promise.all([getForecast(date), modelStations()]);
+    const regions = await regionPredictions(forecast, slot);
     const byId = new Map(stations.map((station) => [station.id, station]));
     const body: PredictionsResponse = {
       date,
@@ -35,6 +36,7 @@ export async function GET(request: NextRequest) {
           arrivals: arrivalCounts(forecast, index, slot),
         };
       }),
+      regions,
     };
     return Response.json(body);
   } catch (error) {

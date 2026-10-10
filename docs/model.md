@@ -2,7 +2,7 @@
 
 `notebooks/MODELO_v3.ipynb` trains and scores the v3 demand model with the protocol of [evaluation.md](evaluation.md), and exports it for the dashboard.
 It replaces the v2 network of `MODELO_pytorch.ipynb`, which is unchanged.
-The dashboard still serves v2 until the UI changes listed below are made.
+The dashboard serves v3 since the UI changes listed below were made.
 
 ## Files
 
@@ -239,18 +239,18 @@ It is not used.
 - Only the federal holidays in the data are modelled (12 days), and the test block has none.
 - Stock is not observed, so the dashboard's stock band can only be checked against the cumulative net flow.
 
-## UI changes needed to serve v3
+## UI changes made to serve v3
 
-The v2 contract is kept, so the UI keeps working if `ui/models/` receives `demanda_net_v3.onnx` and the v3 station ids renamed as the UI expects.
-To use the new outputs:
+The v2 contract is kept.
+The dashboard now does the following, see [inference.md](inference.md):
 
 1. `ui/src/lib/model.ts`: load `demanda_net_v3.onnx` and `estaciones_onnx_v3.json` (station ids in model order, `active` flags and the shocks), read the `alpha` output, replace the Poisson bands (`Z_80 * sqrt(value)`) of departures and arrivals with negative binomial quantiles, and compute the stock band from the cumulative net variance above.
 2. `ui/src/lib/weather.ts`: request `end_date` one day after the date, use the rain stamped at hour h+1 for hour h, interpolate temperature, humidity and wind to 15 minutes, and compute `precip_prev2h` as training does (see [inference.md](inference.md)).
-3. Hide stations marked `active: false`, which are 74 of the 2,462 in `stations.json`.
+3. Hide stations marked `active: false`, which are 74 of the 2,462 stations that are in both `stations.json` and the model.
    `stations.json` and `regions.json` already come from the 12 months.
 4. Region ranges in `lib/regions.ts` are plain sums of the station bounds.
    Use the variance formulas for sums instead.
-5. Check the port against `data/results/ui_reference_v3.json`.
+5. The port is checked against `data/results/ui_reference_v3.json` with `cd ui && yarn check:reference`.
 6. Update `docs/inference.md` and `docs/dashboard.md` in the same change.
 
 ## Run

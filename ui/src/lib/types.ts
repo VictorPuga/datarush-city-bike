@@ -36,6 +36,8 @@ export type RegionPrediction = BikeCounts & {
   lat: number;
   lon: number;
   stations: number;
+  departures: BikeCounts;
+  arrivals: BikeCounts;
 };
 
 export type SlotPrediction = BikeCounts & {
@@ -49,6 +51,7 @@ export type PredictionsResponse = {
   slot: number;
   weather: WeatherSource;
   stations: StationPrediction[];
+  regions: RegionPrediction[];
 };
 
 export type StationDayResponse = {

@@ -15,6 +15,7 @@ type InsightsProps = {
   metric: Metric;
   regions: RegionPrediction[];
   selectedId: string | null;
+  stationIds: Set<string>;
   onSelectSlot: (date: string, slot: number) => void;
   onSlotChange: (slot: number) => void;
   onSelectRegion: (id: string) => void;
@@ -37,6 +38,7 @@ export default function Insights({
   metric,
   regions,
   selectedId,
+  stationIds,
   onSelectSlot,
   onSlotChange,
   onSelectRegion,
@@ -64,7 +66,7 @@ export default function Insights({
         ))}
       </div>
       {tab === 'ranking' && <RegionRanking regions={regions} layer={layer} metric={metric} onSelect={onSelectRegion} />}
-      {tab === 'demand' && <DemandHistogram selectedId={selectedId} />}
+      {tab === 'demand' && <DemandHistogram selectedId={selectedId} stationIds={stationIds} />}
       {tab === 'day' && today && <DayChart slots={today.slots} slot={slot} metric={metric} onSlotChange={onSlotChange} />}
       {tab === 'week' && data && (
         <WeekHeatmap

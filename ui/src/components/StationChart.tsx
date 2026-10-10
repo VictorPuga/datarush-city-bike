@@ -60,7 +60,7 @@ export default function StationChart({ slots, slot, metric, onSlotChange }: Stat
 
   return (
     <div>
-      <div className={styles.plot} role="img" aria-label="Predicted bikes over the day with confidence range">
+      <div className={styles.plot} role="img" aria-label="Predicted bikes over the day with 80% range">
         <ResponsiveLine
           data={data}
           theme={nivoTheme}
@@ -88,7 +88,7 @@ export default function StationChart({ slots, slot, metric, onSlotChange }: Stat
             <i style={{ background: series.color }} /> {series.id}
           </span>
         ))}
-        <span>Shaded: confidence range</span>
+        <span>Shaded: 80% range, calibrated on held-out weeks</span>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import { useMemo, useState } from 'react';
 import { maxFor, viewMetric } from '@/lib/density';
-import { aggregateRegions, regionIdOf } from '@/lib/regions';
+import { regionIdOf } from '@/lib/regions';
 import { useJson } from '@/lib/useJson';
 import type { Layer, Metric, PredictionsResponse, StationDayResponse } from '@/lib/types';
 import type { FlyTarget } from './Map';
@@ -49,7 +49,11 @@ export default function Dashboard() {
     () => (predictions.data?.stations ?? []).map((station) => viewMetric(station, metric)),
     [predictions.data, metric],
   );
-  const regions = useMemo(() => aggregateRegions(stations), [stations]);
+  const regions = useMemo(
+    () => (predictions.data?.regions ?? []).map((region) => viewMetric(region, metric)),
+    [predictions.data, metric],
+  );
+  const stationIds = useMemo(() => new Set(stations.map((station) => station.id)), [stations]);
   const selected = stations.find((station) => station.id === selectedId);
   const selectedStationRegion = regions.find((region) => region.id === (selected && regionIdOf(selected.id)));
 
@@ -109,6 +113,7 @@ export default function Dashboard() {
             metric={metric}
             regions={regions}
             selectedId={selectedId}
+            stationIds={stationIds}
             onSelectSlot={(nextDate, nextSlot) => {
               setDate(nextDate);
               setSlot(nextSlot);

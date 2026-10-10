@@ -1,20 +1,19 @@
 # Inference
 
-The Next.js API runs `demanda_net_v2.onnx` with `onnxruntime-node`.
-Code is in `ui/src/lib/model.ts`, `weather.ts`, `calendar.ts` and `insights.ts`.
+The Next.js API runs `demanda_net_v3.onnx` with `onnxruntime-node`.
+Code is in `ui/src/lib/`: `model.ts` (inference and series), `intervals.ts` (negative binomial quantiles and variance formulas), `weather.ts`, `calendar.ts` and `insights.ts`.
 
 ## Files
 
 | File | Purpose |
 | --- | --- |
-| `ui/models/demanda_net_v2.onnx` | The model (gitignored) |
-| `ui/models/station_ids.json` | The 2,461 station ids in model order |
-| `ui/models/estaciones.parquet` | Source of `station_ids.json` from the ML repo (`station_idx` order) |
+| `ui/models/demanda_net_v3.onnx` | The model (gitignored) |
+| `ui/models/estaciones_onnx_v3.json` | The 2,515 stations in model order with `active`, the shock variances and `alpha_floor` |
 
+Both files come from `notebooks/modelos/`.
 `MODELS_DIR` overrides the folder.
-`station_ids.json` is the `station_id` column sorted by `station_idx`, kept as strings (`5905.10` must not become `5905.1`).
-Check it against the checkpoint order in the ML repo if the model is retrained.
-The first ids are `6233.04`, `6140.05`, `6331.01`.
+Station ids stay strings (`5905.10` must not become `5905.1`).
+`demanda_net_v2.onnx`, `station_ids.json` and `estaciones.parquet` are the v2 files and are no longer read.
 
 ## Model contract
 
@@ -27,29 +26,42 @@ Inputs, one row per 15-minute slot:
 | `es_festivo` | float32 `[S]` | 1 on a US federal holiday |
 | `clima` | float32 `[S, 6]` | `temperature_2m`, `relative_humidity_2m`, `wind_speed_10m`, `precipitation`, `precip_prev2h`, `weather_code` |
 
-Output `lambda` is float32 `[S, 2461, 4]`: expected bikes per 15 minutes for `salidas_classic`, `salidas_electric`, `llegadas_classic`, `llegadas_electric` (departures then arrivals).
-One call with `S = 96` predicts a whole day, so the result is cached per date (8 dates).
+Outputs, both float32 `[S, 2515, 4]` with channels departures classic, departures electric, arrivals classic, arrivals electric:
 
-The v3 model in `notebooks/modelos/` has the same inputs, a second output `alpha` and 2,515 stations, see [model.md](model.md).
-The dashboard serves v2 until the UI changes listed there are made.
+| Output | Meaning |
+| --- | --- |
+| `lambda` | Expected bikes per 15 minutes |
+| `alpha` | Negative binomial dispersion of one cell: variance = lambda + alpha lambda^2 |
+
+One call with `S = 96` predicts a whole day, so the result is cached per date (8 dates).
+The cache holds the expected stock and its standard deviation per station and per neighbourhood, so a request only reads one slot.
 
 ## Weather
 
-`weather.ts` fetches hourly values from Open-Meteo for NYC in the Open-Meteo default units (°C, km/h, mm).
+`weather.ts` fetches hourly values for NYC in the Open-Meteo default units (°C, km/h, mm).
 It uses the forecast API from 90 days back to 15 days ahead and the archive API before that.
-`precip_prev2h` is the precipitation of the two hours before the slot's hour.
-Each hour's values apply to its four slots.
-If Open-Meteo fails or the date is further ahead, a mild default is used and the API returns `weather: "default"`.
-The failure is cached for 5 minutes.
-Known gap: training takes the rain of hour h from the Open-Meteo value stamped h+1 and interpolates temperature, humidity and wind to 15 minutes, while this code uses the value stamped h for the four slots of the hour.
-Rain and `precip_prev2h` are therefore one hour late here, which raises the test NLL from 0.32702 to 0.32834 on a mostly dry block (emulated in Python).
-It is fixed together with the next model, see [evaluation.md](evaluation.md).
+`climaFromHourly` builds the `clima` input as training does (`clima_day` in `notebooks/ui_reference.py` is the spec):
+
+- The request spans `date - 1` to `date + 1`, 72 hourly values.
+- Temperature, humidity and wind are interpolated linearly to the 15-minute slot.
+- The rain of hour h is the value stamped h + 1, held for the 4 slots of the hour.
+  The weather code of hour h is the one stamped h.
+- `precip_prev2h` is the sum of the rain of the 8 previous slots divided by 4.
+
+Fallbacks:
+
+- On the last forecast day, `date + 1` is out of Open-Meteo's range and the request is refused.
+  The request is repeated up to `date`, and the one missing value (00:00 of the day after) repeats 23:00.
+- A null or missing value takes the previous valid value, or the next one at the start of the series.
+  A variable with no valid value takes the mild default (18 °C, 60%, 10 km/h, no rain, code 0).
+- A request that fails (timeout, 429 or 5xx) is retried once after 500 ms.
+  If it fails again, or the date is more than 15 days ahead, the default weather is used for all slots, the API returns `weather: "default"` and the dashboard says so.
+  The failure is cached for 5 minutes and logged as a warning on the server.
 
 ## Holidays
 
 `calendar.ts` flags the US federal holidays and their observed weekdays.
 Training uses the same definition: `LIMPIEZA_citibike.ipynb` flags US federal holidays only, without the New York state dates that the `holidays` library adds for `state='NY'`.
-v2 was trained on Jul to Sep 2026, where both definitions give the same three dates.
 
 ## From rates to bikes available
 
@@ -60,11 +72,29 @@ For each station and bike type:
 2. Stock at the start of a slot is the baseline plus the net change accumulated since 00:00.
 3. The baseline is the bikes needed so stock never drops below 0 that day, plus 5% of the day's departures (`POPULARITY_SHARE`), so busier stations start fuller.
 
-The confidence range is ±1.28σ (80%) with σ = √(sum of arrivals and departures so far), which is Poisson noise and grows through the day.
-Departures use the slot's rate with ±1.28√λ.
 The baseline is an assumption, not a measured stock.
+
+## Ranges
+
+All ranges are 80% ranges calibrated on held-out weeks, see [model.md](model.md).
+
+- **Departures and arrivals of a station in 15 minutes:** the mean with one decimal and the 10% and 90% quantiles of the negative binomial with mean `lambda` and dispersion `alpha`, found by the recursion in `nbQuantile`.
+  The bounds are whole bikes.
+- **Stock of a station:** the stock value plus or minus `Z_80 = 1.28` standard deviations, rounded down and up and never below 0.
+  The standard deviation is the one of the cumulative net flow since midnight, `sqrt(noise + (D + R + Ds) M^2 + (H + Hs) sum_h M_h^2)` with the shocks `D`, `H`, `R`, `Ds`, `Hs` per bike type from `estaciones_onnx_v3.json` and `alpha_idio = max(alpha - (D + H + R + Ds + Hs), alpha_floor)`.
+  The band covers the net flow, not the baseline, which is an assumption.
+- **Neighbourhoods:** `regionPredictions` computes the mean and the standard deviation of the sum over the active stations of the neighbourhood (`groupSlot`, `groupStock`) and takes the bounds from them.
+  Departures and arrivals use the negative binomial with that mean and variance (`groupFlowBand`).
+  `/api/predictions` returns them in `regions`, so the client no longer adds station bounds, which were 3.9 times too wide.
+
+`yarn check:reference` in `ui/` runs these functions on `data/results/ui_reference_v3.json` and prints the largest difference per quantity.
+Tolerances: `clima` 1e-4, `lambda` and `alpha` 1e-4 relative, stock mean and standard deviation 1e-3, integer bounds identical.
+The script loads the TypeScript with Node's type stripping and `scripts/ts-loader.mjs`, which resolves the `@/` alias and extensionless imports.
 
 ## Station coverage
 
-2,422 of the 2,490 stations in `stations.json` are in the model.
-The other 68 and the 39 model stations that are not in `stations.json` are left out.
+`stations.json` has 2,490 stations.
+2,462 are in the model, and 74 of those are marked `active: false` (no trips in the last 28 days).
+The dashboard shows the 2,388 active stations, all of which have a neighbourhood.
+Inactive stations and the 28 that the model does not have are left out of the map, search, rankings, neighbourhood sums and insights.
+

@@ -26,6 +26,9 @@ export default function Legend({ metric }: LegendProps) {
       <span className={styles.note}>
         Neighborhood color shows the average per station, and gray areas have no stations. Zoom in to see each station.
       </span>
+      <span className={styles.note}>
+        Ranges are 80% ranges calibrated on held-out weeks. The stock baseline is an assumption.
+      </span>
     </div>
   );
 }

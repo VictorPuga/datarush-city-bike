@@ -3,8 +3,10 @@
 Predicts how many classic and electric Citi Bikes will be around NYC stations at a given date and 15-minute slot.
 A Next.js dashboard shows the predictions on a react-leaflet map, with a date picker and a 15-minute time slider.
 Neighborhood polygons show bike density, with station markers when zoomed in.
-A classic/electric toggle, a bikes/departures/arrivals toggle, station search, and a per-station day forecast with confidence range are included.
-The ML model (`demanda_net_v2.onnx`) runs inside the Next.js API with `onnxruntime-node`.
+A classic/electric toggle, a bikes/departures/arrivals toggle, station search, and a per-station day forecast with an 80% range calibrated on held-out weeks are included.
+The ML model (`demanda_net_v3.onnx`) runs inside the Next.js API with `onnxruntime-node`.
+Neighborhood totals and their ranges are computed on the server with the variance formulas of [docs/model.md](docs/model.md).
+`cd ui && yarn check:reference` checks the TypeScript port against `data/results/ui_reference_v3.json`.
 See [docs/inference.md](docs/inference.md).
 
 ## Repository layout
