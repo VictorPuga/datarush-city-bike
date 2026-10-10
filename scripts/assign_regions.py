@@ -11,6 +11,7 @@ STATIONS = ROOT / "ui" / "src" / "data" / "stations.json"
 DEFAULT_NTA = ROOT / "tmp" / "nta.geojson"
 OUTPUT = ROOT / "ui" / "src" / "data" / "regions.json"
 PRECISION = 5
+PARK_REGIONS = {"MN6491", "QN0271", "QN0571", "QN0574", "BK0571", "QN8191", "BK5591", "BK0071", "BK0771", "BK1771", "BX0391", "BX0491", "MN1291"}
 
 
 def ring_contains(ring, x, y):
@@ -86,7 +87,12 @@ def simplify_polygons(polygons, tolerance):
 
 
 def distance_to_polygons(polygons, x, y):
-  return min(math.hypot(px - x, py - y) for polygon in polygons for px, py in polygon[0])
+  return min(
+    perpendicular_distance((x, y), ring[i], ring[i + 1])
+    for polygon in polygons
+    for ring in polygon[:1]
+    for i in range(len(ring) - 1)
+  )
 
 
 def main():
@@ -118,6 +124,7 @@ def main():
 
   assignments = {}
   fallbacks = 0
+  moved = 0
   for station in stations:
     x, y = station["lon"], station["lat"]
     match = next(
@@ -133,6 +140,12 @@ def main():
     if match is None:
       match = min(regions, key=lambda region: distance_to_polygons(region["polygons"], x, y))
       fallbacks += 1
+    elif match["id"] in PARK_REGIONS:
+      match = min(
+        (region for region in regions if region["id"] not in PARK_REGIONS),
+        key=lambda region: distance_to_polygons(region["polygons"], x, y),
+      )
+      moved += 1
     match["members"].append(station)
     assignments[station["id"]] = match["id"]
 
@@ -163,7 +176,8 @@ def main():
   empty = sum(1 for region in output if not region["stations"])
   print(
     f"wrote {len(output)} regions ({empty} empty) to {OUTPUT}; "
-    f"{fallbacks} stations outside every polygon assigned to the nearest region"
+    f"{fallbacks} stations outside every polygon assigned to the nearest region; "
+    f"{moved} park stations moved to the nearest neighboring region"
   )
 
 

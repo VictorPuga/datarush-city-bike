@@ -44,6 +44,8 @@ function RegionTooltip({ region }: { region: RegionPrediction }) {
     <Tooltip sticky>
       <strong>{region.name}</strong> · {region.borough}
       <br />
+      {region.id}
+      <br />
       {region.stations} stations
       {region.stations > 0 && (
         <>
