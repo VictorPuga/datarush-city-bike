@@ -14,6 +14,8 @@ See [docs/inference.md](docs/inference.md).
 | `ui/` | Next.js dashboard and mock API |
 | `slides/` | Slidev pitch deck, in Spanish |
 | `scripts/` | Data preparation scripts |
+| `notebooks/` | Data cleaning, model evaluation and training notebooks, see [docs/ml-data.md](docs/ml-data.md) |
+| `data/results/` | Evaluation tables (CSV), see [docs/evaluation.md](docs/evaluation.md) |
 | `data/raw/` | Raw Citi Bike trip files (gitignored) |
 | `docs/` | Notes on each data process, see [docs/README.md](docs/README.md) |
 
@@ -35,7 +37,7 @@ See [docs/nta-dataset.md](docs/nta-dataset.md) for the download command and fiel
 ## Quick start
 
 1. Download trip data into `data/raw/`.
-2. Run `python3 scripts/extract_stations.py`.
+2. Run `python3 scripts/extract_stations.py`. It reads every zip in `data/raw/`, so with the 12 months used by the model it rebuilds `stations.json` from all of them, see [docs/ml-data.md](docs/ml-data.md).
 3. Run `cd ui && yarn install && yarn dev`.
 4. Open http://localhost:3000.
 
@@ -85,3 +87,13 @@ The top-level counts are bikes available (stock).
 `week` has the Monday to Sunday days around `date`, each with 96 citywide `{ classic, electric, depClassic, depElectric }` slots.
 `netFlow` has one `{ id, classic, electric }` per neighborhood: arrivals minus departures during `slot`.
 Requests return 503 if the model files in `ui/models/` are missing.
+
+## Model
+
+The demand model and its evaluation live in `notebooks/`.
+See [docs/ml-data.md](docs/ml-data.md) for the training tables and [docs/evaluation.md](docs/evaluation.md) for the evaluation protocol and results.
+
+1. Put the monthly Citi Bike zips in `data/raw/`. The model uses 12 consecutive months, Oct 2025 to Sep 2026.
+2. Install `notebooks/requirements.txt` in a virtual environment.
+3. Run `notebooks/LIMPIEZA_citibike.ipynb` to build `notebooks/data_procesada/`. It needs about 6 GB of memory.
+4. Run `notebooks/EVALUACION_protocolo.ipynb` to score the baselines and the shipped network. It writes the tables in `data/results/`.

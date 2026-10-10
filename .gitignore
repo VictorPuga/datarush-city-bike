@@ -4,3 +4,4 @@
 /notebooks/*/*.csv
 /notebooks/data_procesada
 .DS_Store
+__pycache__/

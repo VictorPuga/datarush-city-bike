@@ -15,4 +15,15 @@ jupyterlab>=4.0
 ipykernel>=6.29
 holidays
 
+# Clima (Open-Meteo)
+requests
+
+# Exportar a ONNX y verificar con ONNX Runtime
+onnx
+onnxscript
+onnxruntime
+
+# Gradient boosting (modelo de comparación con la red)
+lightgbm
+
 torch

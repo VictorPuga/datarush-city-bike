@@ -38,12 +38,15 @@ It uses the forecast API from 90 days back to 15 days ahead and the archive API 
 Each hour's values apply to its four slots.
 If Open-Meteo fails or the date is further ahead, a mild default is used and the API returns `weather: "default"`.
 The failure is cached for 5 minutes.
-The units and the `precip_prev2h` definition are assumed to match training, so confirm them with the ML team.
+Known gap: training takes the rain of hour h from the Open-Meteo value stamped h+1 and interpolates temperature, humidity and wind to 15 minutes, while this code uses the value stamped h for the four slots of the hour.
+Rain and `precip_prev2h` are therefore one hour late here, which raises the test NLL from 0.32702 to 0.32834 on a mostly dry block (emulated in Python).
+It is fixed together with the next model, see [evaluation.md](evaluation.md).
 
 ## Holidays
 
 `calendar.ts` flags the US federal holidays and their observed weekdays.
-Confirm which days training treated as `es_festivo`.
+Training uses the same definition: `LIMPIEZA_citibike.ipynb` flags US federal holidays only, without the New York state dates that the `holidays` library adds for `state='NY'`.
+v2 was trained on Jul to Sep 2026, where both definitions give the same three dates.
 
 ## From rates to bikes available
 

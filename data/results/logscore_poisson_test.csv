@@ -1,0 +1,9 @@
+model,target,logscore
+v2 network,salidas_classic,0.344279
+v2 network,salidas_electric,0.657962
+v2 network,llegadas_classic,0.348115
+v2 network,llegadas_electric,0.659868
+C|all+level (bar),salidas_classic,0.367831
+C|all+level (bar),salidas_electric,0.689986
+C|all+level (bar),llegadas_classic,0.373513
+C|all+level (bar),llegadas_electric,0.693836
