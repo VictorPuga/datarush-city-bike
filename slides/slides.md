@@ -10,7 +10,7 @@ comark: true
 duration: 5min
 ---
 
-<img class="cover-bg" src="https://images.pexels.com/photos/12473031/pexels-photo-12473031.jpeg?w=1280" />
+<img class="cover-bg" src="/cover.jpeg" />
 <div class="cover-overlay"></div>
 
 <div class="cover-text">
@@ -60,7 +60,7 @@ Queremos que sea **planeado**.
 </div>
 </div>
 <div class="col-span-2 photo">
-<img src="https://images.unsplash.com/photo-1772209254647-34caf1ebaae3?w=1280" />
+<img src="/photo.jpeg" />
 <div class="credit">Foto: adam roye, Unsplash</div>
 </div>
 </div>
