@@ -9,6 +9,7 @@ type MetricToggleProps = {
 const OPTIONS: { value: Metric; label: string }[] = [
   { value: 'stock', label: 'Bikes available' },
   { value: 'departures', label: 'Departures' },
+  { value: 'arrivals', label: 'Arrivals' },
 ];
 
 export default function MetricToggle({ metric, onChange }: MetricToggleProps) {

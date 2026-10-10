@@ -23,7 +23,7 @@ export default function RegionRanking({ regions, layer, metric, onSelect }: Regi
   const data = [...top, ...bottom].reverse();
 
   return (
-    <div className={styles.chart} role="img" aria-label={`Neighborhoods with the most and fewest predicted ${metric === 'stock' ? 'bikes' : 'departures'}`}>
+    <div className={styles.chart} role="img" aria-label={`Neighborhoods with the most and fewest predicted ${metric === 'stock' ? 'bikes' : metric}`}>
       <ResponsiveBar
         data={data}
         keys={['value']}

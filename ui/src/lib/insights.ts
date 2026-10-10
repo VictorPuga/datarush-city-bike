@@ -18,6 +18,8 @@ export async function dayTotals(date: string): Promise<DayTotals> {
     electric: 0,
     depClassic: 0,
     depElectric: 0,
+    arrClassic: 0,
+    arrElectric: 0,
   }));
   for (const { index } of stations) {
     const base = index * SLOTS_PER_DAY;
@@ -27,6 +29,8 @@ export async function dayTotals(date: string): Promise<DayTotals> {
       total.electric += forecast.stockElectric[base + slot];
       total.depClassic += forecast.depClassic[base + slot];
       total.depElectric += forecast.depElectric[base + slot];
+      total.arrClassic += forecast.arrClassic[base + slot];
+      total.arrElectric += forecast.arrElectric[base + slot];
     }
   }
   for (const total of slots) {
@@ -34,6 +38,8 @@ export async function dayTotals(date: string): Promise<DayTotals> {
     total.electric = Math.round(total.electric);
     total.depClassic = Math.round(total.depClassic * 10) / 10;
     total.depElectric = Math.round(total.depElectric * 10) / 10;
+    total.arrClassic = Math.round(total.arrClassic * 10) / 10;
+    total.arrElectric = Math.round(total.arrElectric * 10) / 10;
   }
   return { date, slots };
 }

@@ -3,7 +3,7 @@
 Predicts how many classic and electric Citi Bikes will be around NYC stations at a given date and 15-minute slot.
 A Next.js dashboard shows the predictions on a react-leaflet map, with a date picker and a 15-minute time slider.
 Neighborhood polygons show bike density, with station markers when zoomed in.
-A classic/electric toggle, a bikes/departures toggle, station search, and a per-station day forecast with confidence range are included.
+A classic/electric toggle, a bikes/departures/arrivals toggle, station search, and a per-station day forecast with confidence range are included.
 The ML model (`demanda_net_v2.onnx`) runs inside the Next.js API with `onnxruntime-node`.
 See [docs/inference.md](docs/inference.md).
 
@@ -71,14 +71,16 @@ yarn dev
     "id": "...", "name": "...", "lat": 40.7, "lon": -73.9,
     "classic": 12, "classicLow": 9, "classicHigh": 15,
     "electric": 5, "electricLow": 4, "electricHigh": 6,
-    "departures": { "classic": 1.7, "classicLow": 0, "classicHigh": 3.3, "electric": 4, "electricLow": 1.5, "electricHigh": 6.6 }
+    "departures": { "classic": 1.7, "classicLow": 0, "classicHigh": 3.3, "electric": 4, "electricLow": 1.5, "electricHigh": 6.6 },
+    "arrivals": { "classic": 1.2, "classicLow": 0, "classicHigh": 2.6, "electric": 3.5, "electricLow": 1.1, "electricHigh": 5.9 }
   }]
 }
 ```
 The top-level counts are bikes available (stock).
 `departures` is the expected number of bikes taken in that 15-minute slot.
+`arrivals` has the same shape and is the expected number of bikes returned.
 `weather` is `default` when Open-Meteo could not be reached.
-`GET /api/predictions/day?date=YYYY-MM-DD&station=ID` returns `{ date, weather, station, slots: [{ slot, ...counts, departures }] }` with 96 entries, used by the station chart.
+`GET /api/predictions/day?date=YYYY-MM-DD&station=ID` returns `{ date, weather, station, slots: [{ slot, ...counts, departures, arrivals }] }` with 96 entries, used by the station chart.
 `GET /api/insights?date=YYYY-MM-DD&slot=0-95` returns `{ date, slot, week, netFlow }`.
 `week` has the Monday to Sunday days around `date`, each with 96 citywide `{ classic, electric, depClassic, depElectric }` slots.
 `netFlow` has one `{ id, classic, electric }` per neighborhood: arrivals minus departures during `slot`.

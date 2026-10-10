@@ -153,15 +153,23 @@ export function stockCounts(forecast: DayForecast, station: number, slot: number
   return { classic, classicLow, classicHigh, electric, electricLow, electricHigh };
 }
 
-export function departureCounts(forecast: DayForecast, station: number, slot: number): BikeCounts {
+function flowCounts(classicSeries: Series, electricSeries: Series, station: number, slot: number): BikeCounts {
   const i = station * SLOTS_PER_DAY + slot;
   const counts = (value: number) => {
     const spread = Z_80 * Math.sqrt(value);
     return [round1(value), round1(Math.max(0, value - spread)), round1(value + spread)] as const;
   };
-  const [classic, classicLow, classicHigh] = counts(forecast.depClassic[i]);
-  const [electric, electricLow, electricHigh] = counts(forecast.depElectric[i]);
+  const [classic, classicLow, classicHigh] = counts(classicSeries[i]);
+  const [electric, electricLow, electricHigh] = counts(electricSeries[i]);
   return { classic, classicLow, classicHigh, electric, electricLow, electricHigh };
+}
+
+export function departureCounts(forecast: DayForecast, station: number, slot: number): BikeCounts {
+  return flowCounts(forecast.depClassic, forecast.depElectric, station, slot);
+}
+
+export function arrivalCounts(forecast: DayForecast, station: number, slot: number): BikeCounts {
+  return flowCounts(forecast.arrClassic, forecast.arrElectric, station, slot);
 }
 
 export function netChange(forecast: DayForecast, station: number, slot: number) {

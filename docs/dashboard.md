@@ -32,8 +32,8 @@ Theme and colors are in `lib/nivoTheme.ts`.
 ## Time and metric
 
 - The time slider moves in 15-minute slots (0 to 95). `lib/time.ts` formats them.
-- The **Bikes available / Departures** toggle switches every view between predicted stock and predicted departures in the slot.
-- Departures use a 0 to 6 color scale per station (`MAX_DEPARTURES`), and stock uses 0 to 40.
+- The **Bikes available / Departures / Arrivals** toggle switches every view between predicted stock, departures and arrivals in the slot.
+- Departures and arrivals use a 0 to 6 color scale per station (`MAX_FLOW`), and stock uses 0 to 40.
 - Stations missing from the model (27 of the 2,393) and model stations missing from `stations.json` are left out.
 
 ## Regions in the UI

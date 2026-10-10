@@ -6,11 +6,17 @@ type LegendProps = {
   metric: Metric;
 };
 
+const LABELS: Record<Metric, string> = {
+  stock: 'Bikes per station',
+  departures: 'Departures per station in 15 min',
+  arrivals: 'Arrivals per station in 15 min',
+};
+
 export default function Legend({ metric }: LegendProps) {
   return (
     <div className={styles.legend}>
       <span className={styles.title}>
-        {metric === 'stock' ? 'Bikes per station' : 'Departures per station in 15 min'}
+        {LABELS[metric]}
       </span>
       <div className={styles.bar} style={{ background: `linear-gradient(to right, ${RAMP.join(', ')})` }} />
       <div className={styles.labels}>

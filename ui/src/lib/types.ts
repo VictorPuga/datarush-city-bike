@@ -18,7 +18,7 @@ export type BikeCounts = {
 
 export type WeatherSource = 'open-meteo' | 'default';
 
-export type Metric = 'stock' | 'departures';
+export type Metric = 'stock' | 'departures' | 'arrivals';
 
 export type StationPrediction = BikeCounts & {
   id: string;
@@ -26,6 +26,7 @@ export type StationPrediction = BikeCounts & {
   lat: number;
   lon: number;
   departures: BikeCounts;
+  arrivals: BikeCounts;
 };
 
 export type RegionPrediction = BikeCounts & {
@@ -40,6 +41,7 @@ export type RegionPrediction = BikeCounts & {
 export type SlotPrediction = BikeCounts & {
   slot: number;
   departures: BikeCounts;
+  arrivals: BikeCounts;
 };
 
 export type PredictionsResponse = {
@@ -63,6 +65,8 @@ export type CitySlot = {
   electric: number;
   depClassic: number;
   depElectric: number;
+  arrClassic: number;
+  arrElectric: number;
 };
 
 export type DayTotals = {

@@ -18,7 +18,7 @@ export default function RegionList({ regions, layer, metric, selectedId, onSelec
   return (
     <section aria-label="Regions">
       <h2 className={styles.title}>
-        {metric === 'stock' ? 'Neighborhoods by predicted bikes' : 'Neighborhoods by predicted departures'}
+        Neighborhoods by predicted {metric === 'stock' ? 'bikes' : metric}
       </h2>
       <ol className={styles.list}>
         {ranked.map((region) => (

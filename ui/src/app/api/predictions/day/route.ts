@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { departureCounts, getForecast, modelStations, stockCounts } from '@/lib/model';
+import { arrivalCounts, departureCounts, getForecast, modelStations, stockCounts } from '@/lib/model';
 import { isValidDate, stations } from '@/lib/stations';
 import { SLOTS_PER_DAY } from '@/lib/time';
 import type { StationDayResponse } from '@/lib/types';
@@ -31,6 +31,7 @@ export async function GET(request: NextRequest) {
         slot,
         ...stockCounts(forecast, model.index, slot),
         departures: departureCounts(forecast, model.index, slot),
+        arrivals: arrivalCounts(forecast, model.index, slot),
       })),
     };
     return Response.json(body);

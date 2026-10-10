@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { departureCounts, getForecast, modelStations, stockCounts } from '@/lib/model';
+import { arrivalCounts, departureCounts, getForecast, modelStations, stockCounts } from '@/lib/model';
 import { isValidDate, isValidSlot, stations } from '@/lib/stations';
 import type { PredictionsResponse } from '@/lib/types';
 
@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
           lon: station.lon,
           ...stockCounts(forecast, index, slot),
           departures: departureCounts(forecast, index, slot),
+          arrivals: arrivalCounts(forecast, index, slot),
         };
       }),
     };

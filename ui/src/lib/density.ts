@@ -1,10 +1,10 @@
 import type { BikeCounts, CitySlot, Layer, Metric } from './types';
 
 export const MAX_BIKES = 40;
-export const MAX_DEPARTURES = 6;
+export const MAX_FLOW = 6;
 
 export function maxFor(metric: Metric): number {
-  return metric === 'stock' ? MAX_BIKES : MAX_DEPARTURES;
+  return metric === 'stock' ? MAX_BIKES : MAX_FLOW;
 }
 
 export function formatCount(value: number): string {
@@ -12,14 +12,14 @@ export function formatCount(value: number): string {
   return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
 }
 
-export function viewMetric<T extends BikeCounts & { departures: BikeCounts }>(item: T, metric: Metric): T {
-  return metric === 'stock' ? item : { ...item, ...item.departures };
+export function viewMetric<T extends BikeCounts & { departures: BikeCounts; arrivals: BikeCounts }>(item: T, metric: Metric): T {
+  return metric === 'stock' ? item : { ...item, ...item[metric] };
 }
 
 export function viewCitySlot(slot: CitySlot, metric: Metric): { classic: number; electric: number } {
-  return metric === 'stock'
-    ? { classic: slot.classic, electric: slot.electric }
-    : { classic: slot.depClassic, electric: slot.depElectric };
+  if (metric === 'departures') return { classic: slot.depClassic, electric: slot.depElectric };
+  if (metric === 'arrivals') return { classic: slot.arrClassic, electric: slot.arrElectric };
+  return { classic: slot.classic, electric: slot.electric };
 }
 
 export const RAMP = ['#ffd60a', '#ff9f0a', '#ff3b30', '#a1122a'];
