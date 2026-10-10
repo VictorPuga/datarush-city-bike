@@ -12,6 +12,7 @@ import styles from './Dashboard.module.css';
 import Legend from './Legend';
 import RegionList from './RegionList';
 import LayerToggle from './LayerToggle';
+import SheetHandle, { type SheetState } from './SheetHandle';
 import StationPanel from './StationPanel';
 import StationSearch from './StationSearch';
 import Summary from './Summary';
@@ -33,7 +34,8 @@ export default function Dashboard() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedRegionId, setSelectedRegionId] = useState<string | null>(null);
   const [flyTarget, setFlyTarget] = useState<FlyTarget | null>(null);
-  const [collapsed, setCollapsed] = useState(false);
+  const [sheet, setSheet] = useState<SheetState>('half');
+  const [dragHeight, setDragHeight] = useState<number | null>(null);
 
   const predictions = useJson<PredictionsResponse>(`/api/predictions?date=${date}&hour=${hour}`);
   const day = useJson<StationDayResponse>(
@@ -70,16 +72,11 @@ export default function Dashboard() {
           </div>
         )}
       </div>
-      <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
-        <button
-          type="button"
-          className={styles.handle}
-          aria-expanded={!collapsed}
-          onClick={() => setCollapsed((value) => !value)}
-        >
-          <span className={styles.grip} />
-          {collapsed ? 'Show controls' : 'Hide controls'}
-        </button>
+      <aside
+        className={`${styles.sidebar} ${styles[sheet]} ${dragHeight === null ? '' : styles.dragging}`}
+        style={dragHeight === null ? undefined : { height: dragHeight }}
+      >
+        <SheetHandle onChange={setSheet} onDrag={setDragHeight} />
         <div className={styles.content}>
           <h1>NYC bike availability forecast</h1>
           <Controls date={date} hour={hour} onDateChange={setDate} onHourChange={setHour} />
