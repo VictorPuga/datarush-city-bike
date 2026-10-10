@@ -1,7 +1,7 @@
 # Dashboard
 
 The Next.js app in `ui/` shows predicted classic and electric bikes per NTA neighborhood on a react-leaflet map.
-Predictions come from a mock API until the ML model is ready.
+Predictions come from the ONNX demand model through the Next.js API. See [inference.md](inference.md).
 
 ## Map
 
@@ -18,16 +18,23 @@ Theme and colors are in `lib/nivoTheme.ts`.
 
 | Tab | Chart | Data |
 | --- | --- | --- |
-| Day | Citywide classic and electric bikes per hour. Click to set the hour. | `/api/insights` |
-| Week | Day of week × hour heatmap. Click a cell to set the date and hour. | `/api/insights` |
+| Day | Citywide classic and electric bikes per 15 minutes. Click to set the time. | `/api/insights` |
+| Week | Day of week × 15-minute heatmap. Click a cell to set the date and time. | `/api/insights` |
 | Top/Bottom | The 5 neighborhoods with the most and fewest predicted bikes. Click to fly to one. | Current predictions |
-| Net flow | Diverging bars: the 5 biggest gaining and losing neighborhoods in the next hour. | `/api/insights` |
+| Net flow | Diverging bars: the 5 biggest gaining and losing neighborhoods in the selected 15 minutes. | `/api/insights` |
 | Demand | Histogram of stations by total trips, log scale. Highlights the selected station. | `stations.json` |
 
-- Day, Week and Net flow use `lib/insights.ts` on the server. Daily totals are cached per date.
-- Net flow is the stock change from the selected hour to the next, because the API has no arrivals or departures.
-- `StationChart` is the per-station forecast, a Nivo line chart with the confidence band drawn as a custom layer. Click to set the hour.
+- Day, Week and Net flow use `lib/insights.ts` on the server. Forecasts are cached per date on the server.
+- Net flow is expected arrivals minus departures during the selected 15-minute slot.
+- `StationChart` is the per-station forecast, a Nivo line chart with the confidence band drawn as a custom layer. Click to set the time.
 - Ranking and Net flow follow the bike type toggle.
+
+## Time and metric
+
+- The time slider moves in 15-minute slots (0 to 95). `lib/time.ts` formats them.
+- The **Bikes available / Departures** toggle switches every view between predicted stock and predicted departures in the slot.
+- Departures use a 0 to 6 color scale per station (`MAX_DEPARTURES`), and stock uses 0 to 40.
+- Stations missing from the model (27 of the 2,393) and model stations missing from `stations.json` are left out.
 
 ## Regions in the UI
 

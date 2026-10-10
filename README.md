@@ -1,11 +1,11 @@
 # DataRush City Bike
 
-Predicts how many classic and electric Citi Bikes will be around NYC stations at a given date and hour.
-A Next.js dashboard shows the predictions on a react-leaflet map, with a date picker and an hour slider.
+Predicts how many classic and electric Citi Bikes will be around NYC stations at a given date and 15-minute slot.
+A Next.js dashboard shows the predictions on a react-leaflet map, with a date picker and a 15-minute time slider.
 Neighborhood polygons show bike density, with station markers when zoomed in.
-A classic/electric toggle, station search, and a per-station 24-hour forecast with confidence range are included.
-An ML model will serve the predictions through an API.
-Until it is ready, a mock backend returns deterministic counts for a fixed list of stations.
+A classic/electric toggle, a bikes/departures toggle, station search, and a per-station day forecast with confidence range are included.
+The ML model (`demanda_net_v2.onnx`) runs inside the Next.js API with `onnxruntime-node`.
+See [docs/inference.md](docs/inference.md).
 
 ## Repository layout
 
@@ -60,23 +60,26 @@ yarn install
 yarn dev
 ```
 
-### Mock API
-`GET /api/predictions?date=YYYY-MM-DD&hour=0-23` returns:
+### API
+`GET /api/predictions?date=YYYY-MM-DD&slot=0-95` returns the forecast for one 15-minute slot (`slot` 0 is 00:00, 95 is 23:45):
 ```json
 {
   "date": "2026-10-09",
-  "hour": 8,
+  "slot": 32,
+  "weather": "open-meteo",
   "stations": [{
     "id": "...", "name": "...", "lat": 40.7, "lon": -73.9,
     "classic": 12, "classicLow": 9, "classicHigh": 15,
-    "electric": 5, "electricLow": 4, "electricHigh": 6
+    "electric": 5, "electricLow": 4, "electricHigh": 6,
+    "departures": { "classic": 1.7, "classicLow": 0, "classicHigh": 3.3, "electric": 4, "electricLow": 1.5, "electricHigh": 6.6 }
   }]
 }
 ```
-`GET /api/predictions/day?date=YYYY-MM-DD&station=ID` returns `{ date, station, hours: [{ hour, ...counts }] }` with 24 entries, used by the station chart.
-Counts are deterministic per station, date and hour.
-`GET /api/insights?date=YYYY-MM-DD&hour=0-23` returns `{ date, hour, week, netFlow }`.
-`week` has the Monday to Sunday days around `date`, each with 24 citywide `{ classic, electric }` totals.
-`netFlow` has one `{ id, classic, electric }` per neighborhood: the change in bikes from `hour` to the next hour.
-
-Replace the route handler in `ui/src/app/api/predictions/route.ts` with a call to the inference API when it is ready.
+The top-level counts are bikes available (stock).
+`departures` is the expected number of bikes taken in that 15-minute slot.
+`weather` is `default` when Open-Meteo could not be reached.
+`GET /api/predictions/day?date=YYYY-MM-DD&station=ID` returns `{ date, weather, station, slots: [{ slot, ...counts, departures }] }` with 96 entries, used by the station chart.
+`GET /api/insights?date=YYYY-MM-DD&slot=0-95` returns `{ date, slot, week, netFlow }`.
+`week` has the Monday to Sunday days around `date`, each with 96 citywide `{ classic, electric, depClassic, depElectric }` slots.
+`netFlow` has one `{ id, classic, electric }` per neighborhood: arrivals minus departures during `slot`.
+Requests return 503 if the model files in `ui/models/` are missing.

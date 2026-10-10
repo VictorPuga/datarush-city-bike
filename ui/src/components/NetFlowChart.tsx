@@ -1,6 +1,7 @@
 import { ResponsiveBar } from '@nivo/bar';
 import { layerValue } from '@/lib/density';
 import { GAIN_COLOR, LOSS_COLOR, nivoTheme } from '@/lib/nivoTheme';
+import { formatSlot } from '@/lib/time';
 import type { Layer, RegionFlow, RegionPrediction } from '@/lib/types';
 import styles from './Insights.module.css';
 
@@ -8,13 +9,13 @@ type NetFlowChartProps = {
   flows: RegionFlow[];
   regions: RegionPrediction[];
   layer: Layer;
-  hour: number;
+  slot: number;
   onSelect: (id: string) => void;
 };
 
 const COUNT = 5;
 
-export default function NetFlowChart({ flows, regions, layer, hour, onSelect }: NetFlowChartProps) {
+export default function NetFlowChart({ flows, regions, layer, slot, onSelect }: NetFlowChartProps) {
   const names = new Map(regions.map((region) => [region.id, region.name]));
   const sorted = flows
     .map((flow) => ({ id: flow.id, label: names.get(flow.id) ?? flow.id, value: layerValue(flow, layer) }))
@@ -67,7 +68,7 @@ export default function NetFlowChart({ flows, regions, layer, hour, onSelect }: 
         />
       </div>
       <p className={styles.note}>
-        Change in bikes from {String(hour).padStart(2, '0')}:00 to {String((hour + 1) % 24).padStart(2, '0')}:00.
+        Net change in bikes from {formatSlot(slot)} to {formatSlot(slot + 1)}.
         Blue gains bikes, orange loses them.
       </p>
     </>

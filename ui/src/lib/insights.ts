@@ -1,9 +1,9 @@
-import { predictCounts, stations } from './mock';
+import { getForecast, modelStations, netChange } from './model';
 import { regionIdOf } from './regions';
-import type { DayTotals, RegionFlow } from './types';
+import { SLOTS_PER_DAY } from './time';
+import type { CitySlot, DayTotals, RegionFlow } from './types';
 
 const DAY_MS = 86_400_000;
-const dayCache = new Map<string, DayTotals>();
 
 export function weekDates(date: string): string[] {
   const base = new Date(`${date}T00:00:00Z`);
@@ -11,34 +11,48 @@ export function weekDates(date: string): string[] {
   return Array.from({ length: 7 }, (_, i) => new Date(monday + i * DAY_MS).toISOString().slice(0, 10));
 }
 
-export function dayTotals(date: string): DayTotals {
-  const cached = dayCache.get(date);
-  if (cached) return cached;
-  const hours = Array.from({ length: 24 }, () => ({ classic: 0, electric: 0 }));
-  for (const station of stations) {
-    for (let hour = 0; hour < 24; hour += 1) {
-      const counts = predictCounts(station, date, hour);
-      hours[hour].classic += counts.classic;
-      hours[hour].electric += counts.electric;
+export async function dayTotals(date: string): Promise<DayTotals> {
+  const [forecast, stations] = await Promise.all([getForecast(date), modelStations()]);
+  const slots: CitySlot[] = Array.from({ length: SLOTS_PER_DAY }, () => ({
+    classic: 0,
+    electric: 0,
+    depClassic: 0,
+    depElectric: 0,
+  }));
+  for (const { index } of stations) {
+    const base = index * SLOTS_PER_DAY;
+    for (let slot = 0; slot < SLOTS_PER_DAY; slot += 1) {
+      const total = slots[slot];
+      total.classic += forecast.stockClassic[base + slot];
+      total.electric += forecast.stockElectric[base + slot];
+      total.depClassic += forecast.depClassic[base + slot];
+      total.depElectric += forecast.depElectric[base + slot];
     }
   }
-  const totals = { date, hours };
-  dayCache.set(date, totals);
-  return totals;
+  for (const total of slots) {
+    total.classic = Math.round(total.classic);
+    total.electric = Math.round(total.electric);
+    total.depClassic = Math.round(total.depClassic * 10) / 10;
+    total.depElectric = Math.round(total.depElectric * 10) / 10;
+  }
+  return { date, slots };
 }
 
-export function netFlow(date: string, hour: number): RegionFlow[] {
-  const next = (hour + 1) % 24;
+export async function netFlow(date: string, slot: number): Promise<RegionFlow[]> {
+  const [forecast, stations] = await Promise.all([getForecast(date), modelStations()]);
   const flows = new Map<string, RegionFlow>();
-  for (const station of stations) {
-    const id = regionIdOf(station.id);
-    if (!id) continue;
-    const now = predictCounts(station, date, hour);
-    const later = predictCounts(station, date, next);
-    const flow = flows.get(id) ?? { id, classic: 0, electric: 0 };
-    flow.classic += later.classic - now.classic;
-    flow.electric += later.electric - now.electric;
-    flows.set(id, flow);
+  for (const { id, index } of stations) {
+    const region = regionIdOf(id);
+    if (!region) continue;
+    const change = netChange(forecast, index, slot);
+    const flow = flows.get(region) ?? { id: region, classic: 0, electric: 0 };
+    flow.classic += change.classic;
+    flow.electric += change.electric;
+    flows.set(region, flow);
   }
-  return [...flows.values()];
+  return [...flows.values()].map((flow) => ({
+    id: flow.id,
+    classic: Math.round(flow.classic * 10) / 10,
+    electric: Math.round(flow.electric * 10) / 10,
+  }));
 }

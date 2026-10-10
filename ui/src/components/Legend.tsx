@@ -1,17 +1,24 @@
-import { MAX_BIKES, RAMP } from '@/lib/density';
+import { maxFor, RAMP } from '@/lib/density';
+import type { Metric } from '@/lib/types';
 import styles from './Legend.module.css';
 
-export default function Legend() {
+type LegendProps = {
+  metric: Metric;
+};
+
+export default function Legend({ metric }: LegendProps) {
   return (
     <div className={styles.legend}>
-      <span className={styles.title}>Bikes per station</span>
+      <span className={styles.title}>
+        {metric === 'stock' ? 'Bikes per station' : 'Departures per station in 15 min'}
+      </span>
       <div className={styles.bar} style={{ background: `linear-gradient(to right, ${RAMP.join(', ')})` }} />
       <div className={styles.labels}>
         <span>0</span>
-        <span>{MAX_BIKES}+</span>
+        <span>{maxFor(metric)}+</span>
       </div>
       <span className={styles.note}>
-        Neighborhood color shows bikes per station, and gray areas have no stations. Zoom in to see each station.
+        Neighborhood color shows the average per station, and gray areas have no stations. Zoom in to see each station.
       </span>
     </div>
   );

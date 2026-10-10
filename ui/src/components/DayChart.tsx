@@ -1,19 +1,22 @@
 import { ResponsiveLine } from '@nivo/line';
-import { CLASSIC_COLOR, ELECTRIC_COLOR } from '@/lib/density';
+import { CLASSIC_COLOR, ELECTRIC_COLOR, viewCitySlot } from '@/lib/density';
 import { nivoTheme } from '@/lib/nivoTheme';
-import type { CityHour } from '@/lib/types';
+import { SLOTS_PER_DAY } from '@/lib/time';
+import type { CitySlot, Metric } from '@/lib/types';
 import styles from './Insights.module.css';
 
 type DayChartProps = {
-  hours: CityHour[];
-  hour: number;
-  onHourChange: (hour: number) => void;
+  slots: CitySlot[];
+  slot: number;
+  metric: Metric;
+  onSlotChange: (slot: number) => void;
 };
 
-export default function DayChart({ hours, hour, onHourChange }: DayChartProps) {
+export default function DayChart({ slots, slot, metric, onSlotChange }: DayChartProps) {
+  const views = slots.map((item) => viewCitySlot(item, metric));
   const data = [
-    { id: 'Classic', color: CLASSIC_COLOR, data: hours.map((item, x) => ({ x, y: item.classic })) },
-    { id: 'Electric', color: ELECTRIC_COLOR, data: hours.map((item, x) => ({ x, y: item.electric })) },
+    { id: 'Classic', color: CLASSIC_COLOR, data: views.map((item, x) => ({ x, y: item.classic })) },
+    { id: 'Electric', color: ELECTRIC_COLOR, data: views.map((item, x) => ({ x, y: item.electric })) },
   ];
 
   return (
@@ -23,16 +26,22 @@ export default function DayChart({ hours, hour, onHourChange }: DayChartProps) {
         theme={nivoTheme}
         colors={(serie) => serie.color}
         margin={{ top: 12, right: 12, bottom: 32, left: 48 }}
-        xScale={{ type: 'linear', min: 0, max: 23 }}
+        xScale={{ type: 'linear', min: 0, max: SLOTS_PER_DAY - 1 }}
         yScale={{ type: 'linear', min: 0, max: 'auto' }}
-        axisBottom={{ tickValues: [0, 6, 12, 18, 23], legend: 'Hour', legendOffset: 28, legendPosition: 'middle' }}
+        axisBottom={{
+          tickValues: [0, 24, 48, 72, 95],
+          format: (value) => String(Math.floor(Number(value) / 4)).padStart(2, '0'),
+          legend: 'Hour',
+          legendOffset: 28,
+          legendPosition: 'middle',
+        }}
         axisLeft={{ format: '>-.2s', tickValues: 5 }}
         enablePoints={false}
         enableGridX={false}
         curve="monotoneX"
         useMesh
-        onClick={(point) => 'data' in point && onHourChange(Number(point.data.x))}
-        markers={[{ axis: 'x', value: hour, lineStyle: { stroke: 'currentColor', strokeDasharray: '3 3' } }]}
+        onClick={(point) => 'data' in point && onSlotChange(Number(point.data.x))}
+        markers={[{ axis: 'x', value: slot, lineStyle: { stroke: 'currentColor', strokeDasharray: '3 3' } }]}
         legends={[
           {
             anchor: 'top-right',

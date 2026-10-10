@@ -4,7 +4,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
 import { MapContainer, Marker, Polygon, TileLayer, Tooltip, ZoomControl, useMap, useMapEvents } from 'react-leaflet';
-import { colorFor, layerValue } from '@/lib/density';
+import { colorFor, formatCount, layerValue } from '@/lib/density';
 import { regionShapes } from '@/lib/regions';
 import type { Layer, RegionPrediction, StationPrediction } from '@/lib/types';
 import { ClassicBikeIcon, ElectricBikeIcon, PEDAL_BIKE_PATH } from './BikeIcons';
@@ -39,6 +39,7 @@ type MapProps = {
   stations: StationPrediction[];
   regions: RegionPrediction[];
   layer: Layer;
+  max: number;
   selectedId: string | null;
   selectedRegionId: string | null;
   flyTarget: FlyTarget | null;
@@ -51,9 +52,9 @@ function StationTooltip({ station }: { station: StationPrediction }) {
     <Tooltip sticky>
       <strong>{station.name}</strong>
       <br />
-      <ClassicBikeIcon size={14} /> Classic: {station.classic} ({station.classicLow}–{station.classicHigh})
+      <ClassicBikeIcon size={14} /> Classic: {formatCount(station.classic)} ({formatCount(station.classicLow)}–{formatCount(station.classicHigh)})
       <br />
-      <ElectricBikeIcon size={14} /> Electric: {station.electric} ({station.electricLow}–{station.electricHigh})
+      <ElectricBikeIcon size={14} /> Electric: {formatCount(station.electric)} ({formatCount(station.electricLow)}–{formatCount(station.electricHigh)})
     </Tooltip>
   );
 }
@@ -69,9 +70,9 @@ function RegionTooltip({ region }: { region: RegionPrediction }) {
       {region.stations > 0 && (
         <>
           <br />
-          <ClassicBikeIcon size={14} /> Classic: {region.classic} ({region.classicLow}–{region.classicHigh})
+          <ClassicBikeIcon size={14} /> Classic: {formatCount(region.classic)} ({formatCount(region.classicLow)}–{formatCount(region.classicHigh)})
           <br />
-          <ElectricBikeIcon size={14} /> Electric: {region.electric} ({region.electricLow}–{region.electricHigh})
+          <ElectricBikeIcon size={14} /> Electric: {formatCount(region.electric)} ({formatCount(region.electricLow)}–{formatCount(region.electricHigh)})
         </>
       )}
     </Tooltip>
@@ -96,6 +97,7 @@ export default function BikeMap({
   stations,
   regions,
   layer,
+  max,
   selectedId,
   selectedRegionId,
   flyTarget,
@@ -129,7 +131,7 @@ export default function BikeMap({
             pathOptions={{
               color: isSelected ? '#111' : '#555',
               weight: isSelected ? 3 : 1,
-              fillColor: occupied ? colorFor(layerValue(region, layer) / region.stations) : '#9ca3af',
+              fillColor: occupied ? colorFor(layerValue(region, layer) / region.stations, max) : '#9ca3af',
               fillOpacity,
             }}
             eventHandlers={{ click: () => onSelectRegion(shape.id) }}
@@ -143,7 +145,7 @@ export default function BikeMap({
           <Marker
             key={`station-${station.id}`}
             position={[station.lat, station.lon]}
-            icon={stationIcon(colorFor(layerValue(station, layer)), station.id === selectedId)}
+            icon={stationIcon(colorFor(layerValue(station, layer), max), station.id === selectedId)}
             eventHandlers={{ click: () => onSelect(station.id) }}
           >
             <StationTooltip station={station} />

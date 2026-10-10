@@ -1,18 +1,19 @@
 import { ResponsiveBar } from '@nivo/bar';
 import { layerValue, RAMP } from '@/lib/density';
 import { nivoTheme } from '@/lib/nivoTheme';
-import type { Layer, RegionPrediction } from '@/lib/types';
+import type { Layer, Metric, RegionPrediction } from '@/lib/types';
 import styles from './Insights.module.css';
 
 type RegionRankingProps = {
   regions: RegionPrediction[];
   layer: Layer;
+  metric: Metric;
   onSelect: (id: string) => void;
 };
 
 const COUNT = 5;
 
-export default function RegionRanking({ regions, layer, onSelect }: RegionRankingProps) {
+export default function RegionRanking({ regions, layer, metric, onSelect }: RegionRankingProps) {
   const ranked = regions
     .filter((region) => region.stations > 0)
     .map((region) => ({ id: region.id, label: region.name, value: layerValue(region, layer) }))
@@ -22,7 +23,7 @@ export default function RegionRanking({ regions, layer, onSelect }: RegionRankin
   const data = [...top, ...bottom].reverse();
 
   return (
-    <div className={styles.chart} role="img" aria-label="Neighborhoods with the most and fewest predicted bikes">
+    <div className={styles.chart} role="img" aria-label={`Neighborhoods with the most and fewest predicted ${metric === 'stock' ? 'bikes' : 'departures'}`}>
       <ResponsiveBar
         data={data}
         keys={['value']}

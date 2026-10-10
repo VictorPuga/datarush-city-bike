@@ -2,9 +2,10 @@
 
 import dynamic from 'next/dynamic';
 import { useMemo, useState } from 'react';
+import { maxFor, viewMetric } from '@/lib/density';
 import { aggregateRegions, regionIdOf } from '@/lib/regions';
 import { useJson } from '@/lib/useJson';
-import type { Layer, PredictionsResponse, StationDayResponse } from '@/lib/types';
+import type { Layer, Metric, PredictionsResponse, StationDayResponse } from '@/lib/types';
 import type { FlyTarget } from './Map';
 import Controls from './Controls';
 import Insights from './Insights';
@@ -12,6 +13,7 @@ import styles from './Dashboard.module.css';
 import Legend from './Legend';
 import RegionList from './RegionList';
 import LayerToggle from './LayerToggle';
+import MetricToggle from './MetricToggle';
 import SheetHandle, { type SheetState } from './SheetHandle';
 import StationPanel from './StationPanel';
 import StationSearch from './StationSearch';
@@ -29,7 +31,8 @@ function todayISO(): string {
 
 export default function Dashboard() {
   const [date, setDate] = useState(todayISO);
-  const [hour, setHour] = useState(8);
+  const [slot, setSlot] = useState(32);
+  const [metric, setMetric] = useState<Metric>('stock');
   const [layer, setLayer] = useState<Layer>('both');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedRegionId, setSelectedRegionId] = useState<string | null>(null);
@@ -37,12 +40,15 @@ export default function Dashboard() {
   const [sheet, setSheet] = useState<SheetState>('half');
   const [dragHeight, setDragHeight] = useState<number | null>(null);
 
-  const predictions = useJson<PredictionsResponse>(`/api/predictions?date=${date}&hour=${hour}`);
+  const predictions = useJson<PredictionsResponse>(`/api/predictions?date=${date}&slot=${slot}`);
   const day = useJson<StationDayResponse>(
     selectedId ? `/api/predictions/day?date=${date}&station=${encodeURIComponent(selectedId)}` : null,
   );
 
-  const stations = useMemo(() => predictions.data?.stations ?? [], [predictions.data]);
+  const stations = useMemo(
+    () => (predictions.data?.stations ?? []).map((station) => viewMetric(station, metric)),
+    [predictions.data, metric],
+  );
   const regions = useMemo(() => aggregateRegions(stations), [stations]);
   const selected = stations.find((station) => station.id === selectedId);
   const selectedStationRegion = regions.find((region) => region.id === (selected && regionIdOf(selected.id)));
@@ -57,6 +63,7 @@ export default function Dashboard() {
           stations={stations}
           regions={regions}
           layer={layer}
+          max={maxFor(metric)}
           selectedId={selectedId}
           selectedRegionId={selectedRegionId}
           flyTarget={flyTarget}
@@ -79,8 +86,12 @@ export default function Dashboard() {
         <SheetHandle onChange={setSheet} onDrag={setDragHeight} />
         <div className={styles.content}>
           <h1>NYC bike availability forecast</h1>
-          <Controls date={date} hour={hour} onDateChange={setDate} onHourChange={setHour} />
+          <Controls date={date} slot={slot} onDateChange={setDate} onSlotChange={setSlot} />
+          <MetricToggle metric={metric} onChange={setMetric} />
           <LayerToggle layer={layer} onChange={setLayer} />
+          {predictions.data?.weather === 'default' && (
+            <p className={styles.notice}>Weather unavailable, using typical conditions.</p>
+          )}
           <StationSearch
             stations={stations}
             onSelect={(id) => {
@@ -90,18 +101,19 @@ export default function Dashboard() {
             }}
           />
           <Summary stations={stations} />
-          <Legend />
+          <Legend metric={metric} />
           <Insights
             date={date}
-            hour={hour}
+            slot={slot}
             layer={layer}
+            metric={metric}
             regions={regions}
             selectedId={selectedId}
-            onSelectSlot={(nextDate, nextHour) => {
+            onSelectSlot={(nextDate, nextSlot) => {
               setDate(nextDate);
-              setHour(nextHour);
+              setSlot(nextSlot);
             }}
-            onHourChange={setHour}
+            onSlotChange={setSlot}
             onSelectRegion={(id) => {
               setSelectedRegionId(id);
               const region = regions.find((item) => item.id === id);
@@ -111,6 +123,7 @@ export default function Dashboard() {
           <RegionList
             regions={regions}
             layer={layer}
+            metric={metric}
             selectedId={selectedRegionId}
             onSelect={(id) => {
               setSelectedRegionId(id);
@@ -130,11 +143,12 @@ export default function Dashboard() {
             <StationPanel
               station={selected}
               region={selectedStationRegion}
-              hour={hour}
+              slot={slot}
+              metric={metric}
               day={day.data}
               loading={day.loading}
               error={day.error}
-              onHourChange={setHour}
+              onSlotChange={setSlot}
               onClose={() => setSelectedId(null)}
               onRetry={day.retry}
             />

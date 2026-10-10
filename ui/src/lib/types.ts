@@ -16,11 +16,16 @@ export type BikeCounts = {
   electricHigh: number;
 };
 
+export type WeatherSource = 'open-meteo' | 'default';
+
+export type Metric = 'stock' | 'departures';
+
 export type StationPrediction = BikeCounts & {
   id: string;
   name: string;
   lat: number;
   lon: number;
+  departures: BikeCounts;
 };
 
 export type RegionPrediction = BikeCounts & {
@@ -32,41 +37,48 @@ export type RegionPrediction = BikeCounts & {
   stations: number;
 };
 
-export type HourPrediction = BikeCounts & {
-  hour: number;
+export type SlotPrediction = BikeCounts & {
+  slot: number;
+  departures: BikeCounts;
 };
 
 export type PredictionsResponse = {
   date: string;
-  hour: number;
+  slot: number;
+  weather: WeatherSource;
   stations: StationPrediction[];
 };
 
 export type StationDayResponse = {
   date: string;
+  weather: WeatherSource;
   station: Pick<StationPrediction, 'id' | 'name' | 'lat' | 'lon'>;
-  hours: HourPrediction[];
+  slots: SlotPrediction[];
 };
 
 export type Layer = 'both' | 'classic' | 'electric';
 
-export type CityHour = {
+export type CitySlot = {
   classic: number;
   electric: number;
+  depClassic: number;
+  depElectric: number;
 };
 
 export type DayTotals = {
   date: string;
-  hours: CityHour[];
+  slots: CitySlot[];
 };
 
-export type RegionFlow = CityHour & {
+export type RegionFlow = {
   id: string;
+  classic: number;
+  electric: number;
 };
 
 export type InsightsResponse = {
   date: string;
-  hour: number;
+  slot: number;
   week: DayTotals[];
   netFlow: RegionFlow[];
 };

@@ -1,4 +1,5 @@
-import type { RegionPrediction, StationDayResponse, StationPrediction } from '@/lib/types';
+import { formatCount } from '@/lib/density';
+import type { Metric, RegionPrediction, StationDayResponse, StationPrediction } from '@/lib/types';
 import { ClassicBikeIcon, ElectricBikeIcon } from './BikeIcons';
 import StationChart from './StationChart';
 import styles from './StationPanel.module.css';
@@ -6,11 +7,12 @@ import styles from './StationPanel.module.css';
 type StationPanelProps = {
   station: StationPrediction;
   region?: RegionPrediction;
-  hour: number;
+  slot: number;
+  metric: Metric;
   day?: StationDayResponse;
   loading: boolean;
   error?: string;
-  onHourChange: (hour: number) => void;
+  onSlotChange: (slot: number) => void;
   onClose: () => void;
   onRetry: () => void;
 };
@@ -18,11 +20,12 @@ type StationPanelProps = {
 export default function StationPanel({
   station,
   region,
-  hour,
+  slot,
+  metric,
   day,
   loading,
   error,
-  onHourChange,
+  onSlotChange,
   onClose,
   onRetry,
 }: StationPanelProps) {
@@ -36,8 +39,8 @@ export default function StationPanel({
       </header>
       {region && (
         <p className={styles.region}>
-          {region.name}, {region.borough} · {region.stations} stations · {region.classic} classic, {region.electric}{' '}
-          electric
+          {region.name}, {region.borough} · {region.stations} stations · {formatCount(region.classic)} classic,{' '}
+          {formatCount(region.electric)} electric
         </p>
       )}
       <dl className={styles.counts}>
@@ -45,22 +48,22 @@ export default function StationPanel({
           <dt>
             <ClassicBikeIcon /> Classic
           </dt>
-          <dd>{station.classic}</dd>
+          <dd>{formatCount(station.classic)}</dd>
           <small>
-            {station.classicLow}–{station.classicHigh}
+            {formatCount(station.classicLow)}–{formatCount(station.classicHigh)}
           </small>
         </div>
         <div>
           <dt>
             <ElectricBikeIcon /> Electric
           </dt>
-          <dd>{station.electric}</dd>
+          <dd>{formatCount(station.electric)}</dd>
           <small>
-            {station.electricLow}–{station.electricHigh}
+            {formatCount(station.electricLow)}–{formatCount(station.electricHigh)}
           </small>
         </div>
       </dl>
-      {day && <StationChart hours={day.hours} hour={hour} onHourChange={onHourChange} />}
+      {day && <StationChart slots={day.slots} slot={slot} metric={metric} onSlotChange={onSlotChange} />}
       {loading && <p className={styles.status}>Loading day forecast…</p>}
       {error && (
         <p role="alert" className={styles.status}>

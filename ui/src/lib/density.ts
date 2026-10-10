@@ -1,6 +1,26 @@
-import type { BikeCounts, Layer } from './types';
+import type { BikeCounts, CitySlot, Layer, Metric } from './types';
 
 export const MAX_BIKES = 40;
+export const MAX_DEPARTURES = 6;
+
+export function maxFor(metric: Metric): number {
+  return metric === 'stock' ? MAX_BIKES : MAX_DEPARTURES;
+}
+
+export function formatCount(value: number): string {
+  const rounded = Math.round(value * 10) / 10;
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+}
+
+export function viewMetric<T extends BikeCounts & { departures: BikeCounts }>(item: T, metric: Metric): T {
+  return metric === 'stock' ? item : { ...item, ...item.departures };
+}
+
+export function viewCitySlot(slot: CitySlot, metric: Metric): { classic: number; electric: number } {
+  return metric === 'stock'
+    ? { classic: slot.classic, electric: slot.electric }
+    : { classic: slot.depClassic, electric: slot.depElectric };
+}
 
 export const RAMP = ['#ffd60a', '#ff9f0a', '#ff3b30', '#a1122a'];
 
@@ -15,8 +35,8 @@ function hexToRgb(hex: string): [number, number, number] {
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 }
 
-export function colorFor(value: number): string {
-  const t = Math.min(Math.max(value / MAX_BIKES, 0), 1) * (RAMP.length - 1);
+export function colorFor(value: number, max = MAX_BIKES): string {
+  const t = Math.min(Math.max(value / max, 0), 1) * (RAMP.length - 1);
   const i = Math.min(Math.floor(t), RAMP.length - 2);
   const from = hexToRgb(RAMP[i]);
   const to = hexToRgb(RAMP[i + 1]);

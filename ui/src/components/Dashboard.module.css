@@ -72,6 +72,12 @@
   font-size: 14px;
 }
 
+.notice {
+  margin: 0;
+  font-size: 13px;
+  color: var(--secondary);
+}
+
 .error button {
   color: var(--accent);
   background: transparent;

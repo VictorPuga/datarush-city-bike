@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useJson } from '@/lib/useJson';
-import type { InsightsResponse, Layer, RegionPrediction } from '@/lib/types';
+import type { InsightsResponse, Layer, Metric, RegionPrediction } from '@/lib/types';
 import DayChart from './DayChart';
 import DemandHistogram from './DemandHistogram';
 import styles from './Insights.module.css';
@@ -10,12 +10,13 @@ import WeekHeatmap from './WeekHeatmap';
 
 type InsightsProps = {
   date: string;
-  hour: number;
+  slot: number;
   layer: Layer;
+  metric: Metric;
   regions: RegionPrediction[];
   selectedId: string | null;
-  onSelectSlot: (date: string, hour: number) => void;
-  onHourChange: (hour: number) => void;
+  onSelectSlot: (date: string, slot: number) => void;
+  onSlotChange: (slot: number) => void;
   onSelectRegion: (id: string) => void;
 };
 
@@ -31,16 +32,17 @@ type TabId = (typeof TABS)[number]['id'];
 
 export default function Insights({
   date,
-  hour,
+  slot,
   layer,
+  metric,
   regions,
   selectedId,
   onSelectSlot,
-  onHourChange,
+  onSlotChange,
   onSelectRegion,
 }: InsightsProps) {
   const [tab, setTab] = useState<TabId>('day');
-  const insights = useJson<InsightsResponse>(`/api/insights?date=${date}&hour=${hour}`);
+  const insights = useJson<InsightsResponse>(`/api/insights?date=${date}&slot=${slot}`);
   const data = insights.data;
   const today = data?.week.find((day) => day.date === date);
 
@@ -61,14 +63,21 @@ export default function Insights({
           </button>
         ))}
       </div>
-      {tab === 'ranking' && <RegionRanking regions={regions} layer={layer} onSelect={onSelectRegion} />}
+      {tab === 'ranking' && <RegionRanking regions={regions} layer={layer} metric={metric} onSelect={onSelectRegion} />}
       {tab === 'demand' && <DemandHistogram selectedId={selectedId} />}
-      {tab === 'day' && today && <DayChart hours={today.hours} hour={hour} onHourChange={onHourChange} />}
+      {tab === 'day' && today && <DayChart slots={today.slots} slot={slot} metric={metric} onSlotChange={onSlotChange} />}
       {tab === 'week' && data && (
-        <WeekHeatmap week={data.week} layer={layer} date={date} hour={hour} onSelect={onSelectSlot} />
+        <WeekHeatmap
+          week={data.week}
+          layer={layer}
+          metric={metric}
+          date={date}
+          slot={slot}
+          onSelect={onSelectSlot}
+        />
       )}
       {tab === 'flow' && data && (
-        <NetFlowChart flows={data.netFlow} regions={regions} layer={layer} hour={hour} onSelect={onSelectRegion} />
+        <NetFlowChart flows={data.netFlow} regions={regions} layer={layer} slot={slot} onSelect={onSelectRegion} />
       )}
       {insights.loading && !data && <p className={styles.note}>Loading insights…</p>}
       {insights.error && (

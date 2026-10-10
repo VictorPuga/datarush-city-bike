@@ -1,19 +1,16 @@
 'use client';
 
+import { formatSlot, SLOTS_PER_DAY } from '@/lib/time';
 import styles from './Controls.module.css';
 
 type ControlsProps = {
   date: string;
-  hour: number;
+  slot: number;
   onDateChange: (date: string) => void;
-  onHourChange: (hour: number) => void;
+  onSlotChange: (slot: number) => void;
 };
 
-function formatHour(hour: number): string {
-  return `${String(hour).padStart(2, '0')}:00`;
-}
-
-export default function Controls({ date, hour, onDateChange, onHourChange }: ControlsProps) {
+export default function Controls({ date, slot, onDateChange, onSlotChange }: ControlsProps) {
   return (
     <div className={styles.controls}>
       <label className={styles.field}>
@@ -25,14 +22,14 @@ export default function Controls({ date, hour, onDateChange, onHourChange }: Con
         />
       </label>
       <label className={`${styles.field} ${styles.slider}`}>
-        <span>Hour: {formatHour(hour)}</span>
+        <span>Time: {formatSlot(slot)}</span>
         <input
           type="range"
           min={0}
-          max={23}
+          max={SLOTS_PER_DAY - 1}
           step={1}
-          value={hour}
-          onChange={(event) => onHourChange(Number(event.target.value))}
+          value={slot}
+          onChange={(event) => onSlotChange(Number(event.target.value))}
         />
       </label>
     </div>

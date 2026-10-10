@@ -1,3 +1,4 @@
+import { formatCount } from '@/lib/density';
 import type { StationPrediction } from '@/lib/types';
 import { ClassicBikeIcon, ElectricBikeIcon } from './BikeIcons';
 import styles from './Summary.module.css';
@@ -16,17 +17,17 @@ export default function Summary({ stations }: SummaryProps) {
         <dt>
           <ClassicBikeIcon /> Classic
         </dt>
-        <dd>{classic}</dd>
+        <dd>{formatCount(classic)}</dd>
       </div>
       <div>
         <dt>
           <ElectricBikeIcon /> Electric
         </dt>
-        <dd>{electric}</dd>
+        <dd>{formatCount(electric)}</dd>
       </div>
       <div>
         <dt>Total</dt>
-        <dd>{classic + electric}</dd>
+        <dd>{formatCount(classic + electric)}</dd>
       </div>
       <div>
         <dt>Stations</dt>
