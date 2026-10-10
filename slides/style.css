@@ -1,0 +1,53 @@
+:root {
+  --slidev-theme-primary: #007aff;
+  --ink: #1c1c1e;
+  --muted: rgb(60 60 67 / 0.6);
+  --card: #fff;
+  --bg: #f2f2f7;
+  --warn: #ff9500;
+}
+
+.slidev-layout {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+h2 {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 1.1rem 1.4rem;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 0.08), 0 0 0 0.5px rgb(0 0 0 / 0.06);
+}
+
+.big {
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--slidev-theme-primary);
+}
+
+.todo {
+  border: 2px dashed var(--warn);
+  border-radius: 16px;
+  padding: 0.8rem 1.2rem;
+  color: var(--warn);
+  font-weight: 600;
+}
+
+table {
+  border-radius: 14px;
+  overflow: hidden;
+}

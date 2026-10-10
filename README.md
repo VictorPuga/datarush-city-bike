@@ -12,6 +12,7 @@ Until it is ready, a mock backend returns deterministic counts for a fixed list 
 | Path | Purpose |
 | --- | --- |
 | `ui/` | Next.js dashboard and mock API |
+| `slides/` | Slidev pitch deck, in Spanish |
 | `scripts/` | Data preparation scripts |
 | `data/raw/` | Raw Citi Bike trip files (gitignored) |
 | `docs/` | Notes on each data process, see [docs/README.md](docs/README.md) |
