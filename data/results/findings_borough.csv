@@ -1,0 +1,5 @@
+borough,stations,trips,casual_share,electric_share,trip_share
+Bronx,374.0,1339925.0,0.2026,0.9173,0.0296
+Brooklyn,873.0,12772334.0,0.1792,0.7388,0.2824
+Manhattan,746.0,27921920.0,0.1684,0.7079,0.6174
+Queens,515.0,3191531.0,0.1748,0.7031,0.0706

@@ -183,7 +183,7 @@ Weekends are no longer over-forecast: the bias is 1.03 for v3, 0.94 for v2 and 1
 
 ### Interval coverage, test block
 
-Nominal 80% and 90%, total departures and arrivals of both bike types, intervals from the shocks fitted on the folds.
+Nominal 80% and 90%, mean over the four series (departures and arrivals, classic and electric bikes), intervals from the shocks fitted on the folds.
 
 | group | window | 80% interval | 90% interval |
 | --- | --- | --- | --- |
@@ -196,8 +196,9 @@ Nominal 80% and 90%, total departures and arrivals of both bike types, intervals
 | city | day | 0.446 | 0.750 |
 | city | hour | 0.656 | 0.767 |
 
-- For station-days the Poisson assumption of the dashboard covered 0.53 and 0.62.
+- For station-days the Poisson assumption of the dashboard, around the v2 forecasts, covered 0.63 and 0.71 on the same four series.
   The calibrated intervals cover 0.84 and 0.91.
+  The 0.53 and 0.62 of [evaluation.md](evaluation.md) are for the total departures of both bike types, a different series.
 - Station-hour and neighbourhood-hour coverage is at or above nominal.
   At 15 minutes most counts are 0, so a discrete interval cannot reach 80% and the cell coverage is 0.96.
 - City, borough and neighbourhood totals per day are too narrow on this block.

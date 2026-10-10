@@ -108,3 +108,5 @@ See [docs/ml-data.md](docs/ml-data.md) for the training tables, [docs/evaluation
    It writes the tables in `data/results/`.
 5. Run `notebooks/MODELO_v3.ipynb` to train, score and export the v3 model, see [docs/model.md](docs/model.md).
    It writes `notebooks/modelos/demanda_net_v3.onnx` and more tables in `data/results/`.
+6. Run `notebooks/HALLAZGOS_demanda.ipynb` to compute the demand findings and their figures, see [docs/findings.md](docs/findings.md).
+   It needs the extracted trip folders next to the notebooks and the fit of step 5.

@@ -1,0 +1,4 @@
+plan,precision_at_100,share_of_lost_bikes_covered,spearman,direction_correct_big_movers,big_movers,stations
+v3,0.742,0.3479,0.9487,0.9879,907.0,1756.0
+baseline,0.741,0.3467,0.9486,0.989,907.0,1756.0
+perfect foresight,,0.3778,,,,

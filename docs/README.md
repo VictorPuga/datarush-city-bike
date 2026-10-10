@@ -13,5 +13,6 @@ Each page covers one process: what it does, how to run it, and what it produces.
 | [ml-data.md](ml-data.md) | Building the training tables from the raw trip files |
 | [evaluation.md](evaluation.md) | The fixed model evaluation protocol and its results |
 | [model.md](model.md) | The v3 demand model, its calibrated intervals, results and the UI changes it needs |
+| [findings.md](findings.md) | Five findings on what drives demand and what operations can do about each |
 
 Add a new page here when a new process is introduced, and link it in the table.

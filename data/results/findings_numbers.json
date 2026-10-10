@@ -1,0 +1,519 @@
+{
+ "clean_trips": 45226146,
+ "stations_model": 2515,
+ "days_free": 115,
+ "days_work": 250,
+ "stations_typed": 2337,
+ "types": {
+  "origin": {
+   "stations": 460,
+   "share_workday_trips": 0.3774,
+   "share_free_day_trips": 0.4131,
+   "net_am": -13.859,
+   "net_pm": 8.8684,
+   "free_ratio": 0.9095,
+   "casual_share": 0.1584,
+   "electric_share": 0.7104,
+   "departures_per_workday": 108.4371
+  },
+  "destination": {
+   "stations": 306,
+   "share_workday_trips": 0.317,
+   "share_free_day_trips": 0.2581,
+   "net_am": 19.729,
+   "net_pm": -16.342,
+   "free_ratio": 0.6765,
+   "casual_share": 0.1745,
+   "electric_share": 0.7227,
+   "departures_per_workday": 136.9284
+  },
+  "leisure": {
+   "stations": 78,
+   "share_workday_trips": 0.0281,
+   "share_free_day_trips": 0.0436,
+   "net_am": -0.3633,
+   "net_pm": 1.3659,
+   "free_ratio": 1.2898,
+   "casual_share": 0.2544,
+   "electric_share": 0.7152,
+   "departures_per_workday": 47.6401
+  },
+  "balanced": {
+   "stations": 843,
+   "share_workday_trips": 0.252,
+   "share_free_day_trips": 0.2587,
+   "net_am": -0.8494,
+   "net_pm": 0.2641,
+   "free_ratio": 0.8528,
+   "casual_share": 0.1739,
+   "electric_share": 0.7351,
+   "departures_per_workday": 39.5101
+  },
+  "low use": {
+   "stations": 650,
+   "share_workday_trips": 0.0255,
+   "share_free_day_trips": 0.0264,
+   "net_am": 0.3407,
+   "net_pm": 1.0915,
+   "free_ratio": 0.8598,
+   "casual_share": 0.2412,
+   "electric_share": 0.7914,
+   "departures_per_workday": 5.1935
+  }
+ },
+ "big_movers": 791,
+ "big_movers_share": 0.33847,
+ "origin_reverse_share": 0.96522,
+ "destination_reverse_share": 0.96732,
+ "top_destinations": [
+  {
+   "name": "9 Ave & W 33 St",
+   "net_am": 103.2,
+   "net_pm": -104.1
+  },
+  {
+   "name": "North Moore St & Greenwich St",
+   "net_am": 99.7,
+   "net_pm": -91.2
+  },
+  {
+   "name": "E 47 St & Park Ave",
+   "net_am": 86.5,
+   "net_pm": -78.9
+  }
+ ],
+ "top_origins": [
+  {
+   "name": "W 43 St & 10 Ave",
+   "net_am": -71.5,
+   "net_pm": 49.4
+  },
+  {
+   "name": "FDR Drive & E 35 St",
+   "net_am": -55.8,
+   "net_pm": 52.1
+  },
+  {
+   "name": "E 10 St & Ave A",
+   "net_am": -50.2,
+   "net_pm": 37.5
+  }
+ ],
+ "casual_share_city": 0.1729,
+ "electric_share_city": 0.72247,
+ "casual_share_workday_8h": 0.08737,
+ "casual_share_free_17h": 0.23691,
+ "casual_share_workday_total": 0.14944,
+ "casual_share_free_total": 0.23427,
+ "casual_trips_per_day": {
+  "workday": 19556.52,
+  "free": 25482.34783
+ },
+ "member_trips_per_day": {
+  "workday": 111313.084,
+  "free": 83289.34783
+ },
+ "casual_month_min": {
+  "month": "2026-02",
+  "casual_share": 0.08861
+ },
+ "casual_month_max": {
+  "month": "2026-08",
+  "casual_share": 0.21434
+ },
+ "electric_month_range": [
+  0.70464,
+  0.73462
+ ],
+ "borough": {
+  "Bronx": {
+   "stations": 374.0,
+   "trips": 1339925.0,
+   "casual_share": 0.2026,
+   "electric_share": 0.9173,
+   "trip_share": 0.0296
+  },
+  "Brooklyn": {
+   "stations": 873.0,
+   "trips": 12772334.0,
+   "casual_share": 0.1792,
+   "electric_share": 0.7388,
+   "trip_share": 0.2824
+  },
+  "Manhattan": {
+   "stations": 746.0,
+   "trips": 27921920.0,
+   "casual_share": 0.1684,
+   "electric_share": 0.7079,
+   "trip_share": 0.6174
+  },
+  "Queens": {
+   "stations": 515.0,
+   "trips": 3191531.0,
+   "casual_share": 0.1748,
+   "electric_share": 0.7031,
+   "trip_share": 0.0706
+  }
+ },
+ "casual_top_stations": [
+  {
+   "name": "Southpoint Park",
+   "casual_share": 0.724,
+   "free_ratio": 2.116
+  },
+  {
+   "name": "Soissons Landing",
+   "casual_share": 0.666,
+   "free_ratio": 2.569
+  },
+  {
+   "name": "Yankee Ferry Terminal",
+   "casual_share": 0.598,
+   "free_ratio": 2.955
+  },
+  {
+   "name": "Central Park S & 6 Ave",
+   "casual_share": 0.549,
+   "free_ratio": 1.154
+  },
+  {
+   "name": "Roosevelt Island Tramway",
+   "casual_share": 0.502,
+   "free_ratio": 1.499
+  }
+ ],
+ "casual_share_station_median": 0.16955,
+ "electric_share_station_p10_p90": [
+  0.63915,
+  0.88509
+ ],
+ "rain_hours": {
+  "dry": 7389,
+  "light": 989,
+  "moderate": 333,
+  "heavy": 49
+ },
+ "snow_hours": 177,
+ "weather_all": {
+  "light": {
+   "effect_pct": -22.3,
+   "low_pct": -26.1,
+   "high_pct": -18.3
+  },
+  "moderate": {
+   "effect_pct": -47.3,
+   "low_pct": -54.1,
+   "high_pct": -39.4
+  },
+  "heavy": {
+   "effect_pct": -59.0,
+   "low_pct": -68.8,
+   "high_pct": -46.1
+  },
+  "temp_10C": {
+   "effect_pct": 29.8,
+   "low_pct": 24.5,
+   "high_pct": 35.3
+  },
+  "snowing": {
+   "effect_pct": -33.1,
+   "low_pct": -49.2,
+   "high_pct": -11.9
+  }
+ },
+ "weather_by_hour": {
+  "light|morning peak": {
+   "effect_pct": -20.4,
+   "low_pct": -27.2,
+   "high_pct": -13.0
+  },
+  "moderate|morning peak": {
+   "effect_pct": -62.3,
+   "low_pct": -70.7,
+   "high_pct": -51.6
+  },
+  "heavy|morning peak": {
+   "effect_pct": -81.3,
+   "low_pct": -86.9,
+   "high_pct": -73.3
+  },
+  "light|midday": {
+   "effect_pct": -20.3,
+   "low_pct": -25.3,
+   "high_pct": -15.0
+  },
+  "moderate|midday": {
+   "effect_pct": -50.0,
+   "low_pct": -58.1,
+   "high_pct": -40.4
+  },
+  "heavy|midday": {
+   "effect_pct": -54.4,
+   "low_pct": -74.2,
+   "high_pct": -19.5
+  },
+  "light|evening peak": {
+   "effect_pct": -23.3,
+   "low_pct": -28.9,
+   "high_pct": -17.2
+  },
+  "moderate|evening peak": {
+   "effect_pct": -36.5,
+   "low_pct": -48.3,
+   "high_pct": -22.0
+  },
+  "heavy|evening peak": {
+   "effect_pct": -58.1,
+   "low_pct": -76.0,
+   "high_pct": -26.8
+  },
+  "temp_10C": {
+   "effect_pct": 30.2,
+   "low_pct": 24.9,
+   "high_pct": 35.8
+  },
+  "snowing": {
+   "effect_pct": -37.0,
+   "low_pct": -52.0,
+   "high_pct": -17.2
+  }
+ },
+ "weather_by_group": {
+  "members": {
+   "light": {
+    "effect_pct": -20.8,
+    "low_pct": -24.4,
+    "high_pct": -17.0
+   },
+   "moderate": {
+    "effect_pct": -45.8,
+    "low_pct": -52.7,
+    "high_pct": -37.9
+   },
+   "heavy": {
+    "effect_pct": -57.2,
+    "low_pct": -67.0,
+    "high_pct": -44.5
+   },
+   "temp_10C": {
+    "effect_pct": 26.6,
+    "low_pct": 21.7,
+    "high_pct": 31.7
+   },
+   "snowing": {
+    "effect_pct": -33.6,
+    "low_pct": -49.8,
+    "high_pct": -12.3
+   }
+  },
+  "casual riders": {
+   "light": {
+    "effect_pct": -28.0,
+    "low_pct": -33.1,
+    "high_pct": -22.4
+   },
+   "moderate": {
+    "effect_pct": -53.0,
+    "low_pct": -60.1,
+    "high_pct": -44.6
+   },
+   "heavy": {
+    "effect_pct": -64.9,
+    "low_pct": -75.6,
+    "high_pct": -49.6
+   },
+   "temp_10C": {
+    "effect_pct": 47.7,
+    "low_pct": 38.6,
+    "high_pct": 57.4
+   },
+   "snowing": {
+    "effect_pct": -34.8,
+    "low_pct": -52.0,
+    "high_pct": -11.3
+   }
+  },
+  "classic bikes": {
+   "light": {
+    "effect_pct": -24.2,
+    "low_pct": -28.2,
+    "high_pct": -20.0
+   },
+   "moderate": {
+    "effect_pct": -49.5,
+    "low_pct": -56.5,
+    "high_pct": -41.5
+   },
+   "heavy": {
+    "effect_pct": -62.5,
+    "low_pct": -72.9,
+    "high_pct": -48.2
+   },
+   "temp_10C": {
+    "effect_pct": 29.0,
+    "low_pct": 23.5,
+    "high_pct": 34.8
+   },
+   "snowing": {
+    "effect_pct": -33.4,
+    "low_pct": -49.4,
+    "high_pct": -12.5
+   }
+  },
+  "electric bikes": {
+   "light": {
+    "effect_pct": -21.6,
+    "low_pct": -25.3,
+    "high_pct": -17.6
+   },
+   "moderate": {
+    "effect_pct": -46.4,
+    "low_pct": -53.3,
+    "high_pct": -38.6
+   },
+   "heavy": {
+    "effect_pct": -57.6,
+    "low_pct": -67.3,
+    "high_pct": -45.2
+   },
+   "temp_10C": {
+    "effect_pct": 30.1,
+    "low_pct": 24.9,
+    "high_pct": 35.6
+   },
+   "snowing": {
+    "effect_pct": -33.0,
+    "low_pct": -49.2,
+    "high_pct": -11.6
+   }
+  }
+ },
+ "test_days": {
+  "mae_v3": 15.23597,
+  "mae_baseline": 51.26978,
+  "wet": [
+   {
+    "date": "2026-09-20",
+    "rain_mm": 11.3,
+    "actual": 87082.0,
+    "v3": 91850.4,
+    "baseline": 150883.8,
+    "v3_error_pct": 5.5,
+    "baseline_error_pct": 73.3
+   },
+   {
+    "date": "2026-09-26",
+    "rain_mm": 24.5,
+    "actual": 62805.0,
+    "v3": 83456.3,
+    "baseline": 150201.8,
+    "v3_error_pct": 32.9,
+    "baseline_error_pct": 139.2
+   },
+   {
+    "date": "2026-09-27",
+    "rain_mm": 49.8,
+    "actual": 33162.0,
+    "v3": 50739.1,
+    "baseline": 150169.2,
+    "v3_error_pct": 53.0,
+    "baseline_error_pct": 352.8
+   },
+   {
+    "date": "2026-09-28",
+    "rain_mm": 12.3,
+    "actual": 104261.0,
+    "v3": 113119.6,
+    "baseline": 175560.7,
+    "v3_error_pct": 8.5,
+    "baseline_error_pct": 68.4
+   }
+  ],
+  "dry_v3_mean_error": -11.34461,
+  "wet_baseline_ratio_max": 4.52835,
+  "wet_v3_ratio_max": 1.53004
+ },
+ "relocation": {
+  "v3": {
+   "precision_at_100": 0.742,
+   "share_of_lost_bikes_covered": 0.3479,
+   "spearman": 0.9487,
+   "direction_correct_big_movers": 0.9879,
+   "big_movers": 907.0,
+   "stations": 1756.0
+  },
+  "baseline": {
+   "precision_at_100": 0.741,
+   "share_of_lost_bikes_covered": 0.3467,
+   "spearman": 0.9486,
+   "direction_correct_big_movers": 0.989,
+   "big_movers": 907.0,
+   "stations": 1756.0
+  },
+  "perfect foresight": {
+   "precision_at_100": null,
+   "share_of_lost_bikes_covered": 0.3778,
+   "spearman": null,
+   "direction_correct_big_movers": null,
+   "big_movers": null,
+   "stations": null
+  }
+ },
+ "relocation_days": 10,
+ "tiers": {
+  "<2": {
+   "stations": 132,
+   "departures_per_day": 0.6185,
+   "share_of_trips": 0.0005,
+   "wape_hour_v3": 1.5912,
+   "wape_hour_baseline": 1.6299,
+   "wape_day_v3": 0.7517,
+   "wape_day_baseline": 0.7152
+  },
+  "2-5": {
+   "stations": 245,
+   "departures_per_day": 4.486,
+   "share_of_trips": 0.0072,
+   "wape_hour_v3": 1.44,
+   "wape_hour_baseline": 1.5763,
+   "wape_day_v3": 0.4421,
+   "wape_day_baseline": 0.5501
+  },
+  "5-15": {
+   "stations": 670,
+   "departures_per_day": 11.2014,
+   "share_of_trips": 0.0489,
+   "wape_hour_v3": 1.0518,
+   "wape_hour_baseline": 1.1317,
+   "wape_day_v3": 0.3152,
+   "wape_day_baseline": 0.4078
+  },
+  "15-40": {
+   "stations": 542,
+   "departures_per_day": 30.6427,
+   "share_of_trips": 0.1082,
+   "wape_hour_v3": 0.6874,
+   "wape_hour_baseline": 0.767,
+   "wape_day_v3": 0.2234,
+   "wape_day_baseline": 0.3336
+  },
+  ">40": {
+   "stations": 924,
+   "departures_per_day": 138.6904,
+   "share_of_trips": 0.8352,
+   "wape_hour_v3": 0.3867,
+   "wape_hour_baseline": 0.4893,
+   "wape_day_v3": 0.1873,
+   "wape_day_baseline": 0.3136
+  }
+ },
+ "busiest": {
+  "stations": 924,
+  "share_of_trips": 0.8352,
+  "share_of_stations": 0.36769
+ },
+ "quiet": {
+  "stations": 377,
+  "share_of_trips": 0.0077
+ }
+}
