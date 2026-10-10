@@ -1,0 +1,4 @@
+model,fit,block,deviance_15min,mae_15min,wape_hour,wape_day,bias,logscore_poisson,logscore_nb
+v3 (NegBin),train-only,test,0.797025,0.507341,0.47242,0.216105,0.914934,0.494168,0.485845
+v3 (NegBin),refit,test,0.791015,0.505967,0.467833,0.20859,0.923799,0.492549,0.484575
+"v2 recipe, 12 months",train-only,test,0.803641,0.509784,0.478393,0.231325,0.908587,0.495811,

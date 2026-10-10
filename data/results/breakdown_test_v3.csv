@@ -1,0 +1,661 @@
+model,dimension,group,target,n,mean_y,mae,rmse,wape,bias,deviance
+v3 refit,volume_tier,>40,salidas_total,1162848,1.534102,0.96408,1.578805,0.628433,0.92841,1.218371
+v3 refit,volume_tier,<2,salidas_total,114432,0.009525,0.016714,0.102097,1.754698,0.810024,0.071064
+v3 refit,volume_tier,15-40,salidas_total,701472,0.335244,0.407066,0.644995,1.214241,0.918617,0.789974
+v3 refit,volume_tier,5-15,salidas_total,876768,0.12234,0.192809,0.377504,1.57601,0.89242,0.483132
+v3 refit,volume_tier,no training data,salidas_total,21504,0.263718,0.190964,0.691029,0.72412,0.744185,0.375001
+v3 refit,volume_tier,2-5,salidas_total,329760,0.050473,0.08761,0.237896,1.735782,0.875742,0.278865
+v3 refit,borough,Manhattan,salidas_total,923040,1.432758,0.88827,1.57616,0.619972,0.921022,1.129524
+v3 refit,borough,Brooklyn,salidas_total,1126176,0.534448,0.449019,0.83546,0.840154,0.939376,0.741226
+v3 refit,borough,Queens,salidas_total,654720,0.235744,0.277885,0.525886,1.178759,0.924508,0.57458
+v3 refit,borough,Bronx,salidas_total,493632,0.143909,0.208774,0.415505,1.450739,0.865835,0.504683
+v3 refit,borough,unassigned,salidas_total,9216,0.0,0.000548,0.000818,,,0.001095
+v3 refit,nta,Chelsea-Hudson Yards,salidas_total,45792,2.926232,1.45489,2.391588,0.497189,0.852732,1.522516
+v3 refit,nta,Midtown South-Flatiron-Union Square,salidas_total,32256,2.789838,1.308652,2.102769,0.469078,0.908207,1.265423
+v3 refit,nta,Greenwich Village,salidas_total,26880,2.55186,1.282786,2.045799,0.502687,0.841936,1.367569
+v3 refit,nta,Midtown-Times Square,salidas_total,58656,1.641605,1.168751,2.177235,0.711956,0.979836,1.578253
+v3 refit,nta,Murray Hill-Kips Bay,salidas_total,32256,2.091518,1.276635,2.131895,0.610387,0.972211,1.525467
+v3 refit,nta,Lower East Side,salidas_total,28704,1.726937,1.064261,1.640546,0.616271,0.943978,1.312058
+v3 refit,nta,SoHo-Little Italy-Hudson Square,salidas_total,26880,2.265588,1.17464,1.843887,0.51847,0.913643,1.258893
+v3 refit,nta,West Village,salidas_total,29568,2.249425,1.153029,1.864693,0.512588,0.889987,1.206644
+v3 refit,nta,East Village,salidas_total,55104,1.892168,1.070314,1.690213,0.565655,0.899332,1.208094
+v3 refit,nta,Upper East Side-Lenox Hill-Roosevelt Island,salidas_total,20160,1.714236,0.964779,1.548144,0.562804,0.918255,1.128703
+v3 refit,nta,Williamsburg,salidas_total,55104,1.625145,0.933831,1.512351,0.574614,0.945697,1.075405
+v3 refit,nta,Hell's Kitchen,salidas_total,28224,2.185976,1.260031,1.881452,0.576416,0.939536,1.421895
+v3 refit,nta,Upper West Side-Lincoln Square,salidas_total,22848,2.13848,1.196437,1.894684,0.55948,0.955427,1.304094
+v3 refit,nta,Chinatown-Two Bridges,salidas_total,24192,1.291625,0.847456,1.32739,0.656116,0.98422,1.095519
+v3 refit,nta,Fort Greene,salidas_total,30912,1.151333,0.797065,1.27524,0.692298,0.940129,1.118428
+v3 refit,nta,Financial District-Battery Park City,salidas_total,44352,1.286999,0.848561,1.415299,0.659333,0.950954,1.121576
+v3 refit,nta,Upper East Side-Carnegie Hill,salidas_total,28800,1.282118,0.93655,1.63779,0.730471,0.948761,1.292387
+v3 refit,nta,Stuyvesant Town-Peter Cooper Village,salidas_total,9408,1.695047,0.970333,1.522605,0.572452,0.909248,1.113249
+v3 refit,nta,Greenpoint,salidas_total,40320,1.122817,0.759512,1.220829,0.676434,0.936824,1.013318
+v3 refit,nta,Tribeca-Civic Center,salidas_total,34944,1.293555,0.819832,1.488293,0.633782,0.919089,1.031065
+v3 refit,nta,East Midtown-Turtle Bay,salidas_total,25728,1.625117,1.038416,1.834609,0.638979,0.891158,1.345495
+v3 refit,nta,Gramercy,salidas_total,13440,2.164881,1.164446,1.758811,0.53788,0.865947,1.265391
+v3 refit,nta,Upper East Side-Yorkville,salidas_total,17472,1.124771,0.830687,1.24209,0.738539,1.044718,1.11738
+v3 refit,nta,Upper West Side (Central),salidas_total,31488,1.321678,0.891992,1.458407,0.674893,0.920694,1.251578
+v3 refit,nta,Windsor Terrace-South Slope,salidas_total,24864,0.434001,0.451564,0.769898,1.040469,1.070245,0.782506
+v3 refit,nta,Park Slope,salidas_total,38976,1.065399,0.760422,1.195321,0.713744,0.968619,1.038679
+v3 refit,nta,East Williamsburg,salidas_total,57792,0.612438,0.524528,0.879072,0.856459,0.928339,0.866943
+v3 refit,nta,Prospect Heights,salidas_total,20448,1.067097,0.754447,1.173598,0.707009,0.967602,1.030032
+v3 refit,nta,Downtown Brooklyn-DUMBO-Boerum Hill,salidas_total,39360,1.112424,0.777419,1.253065,0.698851,0.895575,1.082557
+v3 refit,nta,Brooklyn Heights,salidas_total,16128,1.154142,0.789324,1.256845,0.683906,0.950543,1.066206
+v3 refit,nta,Long Island City-Hunters Point,salidas_total,36288,0.6549,0.533395,0.914424,0.814468,0.947738,0.825531
+v3 refit,nta,East Harlem (North),salidas_total,34944,0.460995,0.472624,0.749156,1.025226,0.962208,0.838682
+v3 refit,nta,Queensbridge-Ravenswood-Dutch Kills,salidas_total,31872,0.421185,0.440735,0.712528,1.046418,0.942339,0.803023
+v3 refit,nta,Upper West Side-Manhattan Valley,salidas_total,14784,1.170996,0.865246,1.311967,0.738898,0.939162,1.209699
+v3 refit,nta,Carroll Gardens-Cobble Hill-Gowanus-Red Hook,salidas_total,78048,0.599208,0.527011,0.885973,0.879512,0.956741,0.861281
+v3 refit,nta,Clinton Hill,salidas_total,10752,1.362165,0.892791,1.318313,0.65542,0.938864,1.136087
+v3 refit,nta,Harlem (South),salidas_total,20160,0.902034,0.746903,1.156285,0.828021,1.04753,1.094625
+v3 refit,nta,Astoria (Central),salidas_total,24192,0.698041,0.608822,0.900806,0.872187,0.919578,0.973876
+v3 refit,nta,East Harlem (South),salidas_total,21504,0.612212,0.572546,0.889176,0.935209,0.999844,0.929781
+v3 refit,nta,Bedford-Stuyvesant (West),salidas_total,47040,0.653125,0.571514,0.889707,0.875045,0.949215,0.909874
+v3 refit,nta,Crown Heights (North),salidas_total,51648,0.537194,0.497205,0.842446,0.925559,0.889148,0.856643
+v3 refit,nta,Astoria (East)-Woodside (North),salidas_total,37824,0.354034,0.389118,0.632544,1.099095,0.905906,0.738038
+v3 refit,nta,Brooklyn Navy Yard,salidas_total,9408,0.729486,0.557622,1.050159,0.764404,0.91823,0.984252
+v3 refit,nta,Morningside Heights,salidas_total,14784,0.886634,0.692789,1.113215,0.78137,0.809426,1.068319
+v3 refit,nta,Flatbush,salidas_total,20064,0.316537,0.366955,0.634638,1.159281,0.92783,0.73078
+v3 refit,nta,Astoria (North)-Ditmars-Steinway,salidas_total,53760,0.242206,0.300643,0.529197,1.241269,0.953347,0.602905
+v3 refit,nta,Bushwick (East),salidas_total,41280,0.370712,0.429687,0.652993,1.159085,0.934181,0.809494
+v3 refit,nta,Bushwick (West),salidas_total,40320,0.588194,0.576181,0.831216,0.979575,0.940665,0.973986
+v3 refit,nta,Prospect Lefferts Gardens-Wingate,salidas_total,41664,0.300379,0.353987,0.590085,1.178466,0.942261,0.691349
+v3 refit,nta,Harlem (North),salidas_total,38976,0.379079,0.405949,0.668997,1.07088,0.898853,0.746308
+v3 refit,nta,Bedford-Stuyvesant (East),salidas_total,52416,0.43647,0.467116,0.708931,1.070213,0.942929,0.833755
+v3 refit,nta,South Williamsburg,salidas_total,14784,0.309456,0.356031,0.607303,1.150505,0.917352,0.713129
+v3 refit,nta,Crown Heights (South),salidas_total,26880,0.405618,0.46086,0.708824,1.136193,0.850599,0.912262
+v3 refit,nta,Elmhurst,salidas_total,47040,0.167708,0.225435,0.445861,1.344209,0.858451,0.532265
+v3 refit,nta,Melrose,salidas_total,26880,0.218527,0.279847,0.504749,1.280608,0.86861,0.599795
+v3 refit,nta,Sunnyside,salidas_total,47040,0.25878,0.320812,0.545941,1.239711,0.920468,0.647369
+v3 refit,nta,Sunset Park (West),salidas_total,57792,0.175924,0.229255,0.451955,1.303149,0.941982,0.491984
+v3 refit,nta,Old Astoria-Hallets Point,salidas_total,13440,0.347693,0.404219,0.617431,1.162574,0.947607,0.753826
+v3 refit,nta,Manhattanville-West Harlem,salidas_total,16128,0.388145,0.420937,0.729818,1.084484,0.858207,0.800358
+v3 refit,nta,Concourse-Concourse Village,salidas_total,40320,0.245734,0.325299,0.592519,1.323786,0.881671,0.70833
+v3 refit,nta,Astoria Park,salidas_total,4032,0.389385,0.444559,0.717525,1.141695,0.96145,0.815734
+v3 refit,nta,Hamilton Heights-Sugar Hill,salidas_total,24192,0.260954,0.351662,0.552631,1.347603,0.975746,0.711011
+v3 refit,nta,Jackson Heights,salidas_total,57312,0.184359,0.255334,0.455196,1.38498,0.89631,0.571867
+v3 refit,nta,Mount Eden-Claremont (West),salidas_total,20064,0.189394,0.264986,0.465011,1.399128,0.866585,0.610563
+v3 refit,nta,Randall's Island,salidas_total,5376,0.326265,0.395827,0.863894,1.213208,0.871511,0.890142
+v3 refit,nta,Woodside,salidas_total,45696,0.160911,0.226537,0.425404,1.40784,0.863885,0.533753
+v3 refit,nta,Ridgewood,salidas_total,56448,0.233613,0.315686,0.513361,1.35132,0.927536,0.654266
+v3 refit,nta,Mott Haven-Port Morris,salidas_total,45120,0.185527,0.253912,0.459197,1.368594,0.850196,0.568214
+v3 refit,nta,The Battery-Governors Island-Ellis Island-Liberty Island,salidas_total,4032,0.201637,0.26985,0.65792,1.338296,1.180889,0.52279
+v3 refit,nta,Washington Heights (South),salidas_total,32256,0.203094,0.288405,0.484357,1.420056,0.99073,0.612248
+v3 refit,nta,Belmont,salidas_total,16128,0.176153,0.244139,0.471388,1.385948,0.807412,0.596549
+v3 refit,nta,Sunset Park (Central),salidas_total,21504,0.147693,0.221769,0.401044,1.501549,0.974155,0.507096
+v3 refit,nta,Sunnyside Yards (North),salidas_total,4032,0.191964,0.257779,0.450603,1.342848,1.040115,0.52236
+v3 refit,nta,Fordham Heights,salidas_total,10752,0.178199,0.247003,0.436259,1.386104,0.860826,0.566345
+v3 refit,nta,Washington Heights (North),salidas_total,33600,0.13994,0.220815,0.407124,1.577923,1.018589,0.499234
+v3 refit,nta,Ocean Hill,salidas_total,37632,0.124415,0.192654,0.369933,1.548473,0.907995,0.467925
+v3 refit,nta,Morrisania,salidas_total,14784,0.162608,0.239118,0.428642,1.470517,0.889243,0.549155
+v3 refit,nta,Mount Hope,salidas_total,22848,0.150692,0.229082,0.414572,1.520206,0.866937,0.560968
+v3 refit,nta,Tremont,salidas_total,21216,0.1102,0.170354,0.367359,1.545863,0.903907,0.426982
+v3 refit,nta,East Flatbush-Erasmus,salidas_total,22848,0.113708,0.171906,0.347153,1.511817,0.966253,0.403134
+v3 refit,nta,Longwood,salidas_total,24192,0.130126,0.194077,0.385847,1.491458,0.877772,0.47086
+v3 refit,nta,Flatbush (West)-Ditmas Park-Parkville,salidas_total,12096,0.198247,0.280839,0.499499,1.416608,0.963367,0.576146
+v3 refit,nta,University Heights (North)-Fordham,salidas_total,21504,0.119559,0.178034,0.361199,1.489085,0.833052,0.458964
+v3 refit,nta,Highbridge,salidas_total,16128,0.143601,0.22063,0.40645,1.53641,0.927713,0.522616
+v3 refit,nta,Maspeth,salidas_total,33600,0.08378,0.133141,0.321819,1.589182,0.816384,0.38659
+v3 refit,nta,Claremont Village-Claremont (East),salidas_total,17472,0.171989,0.251776,0.456852,1.463902,0.882354,0.582888
+v3 refit,nta,Bay Ridge,salidas_total,68928,0.069217,0.111762,0.28472,1.614651,0.843234,0.323795
+v3 refit,nta,Crotona Park East,salidas_total,20160,0.123016,0.189117,0.370789,1.53734,0.8959,0.463838
+v3 refit,nta,Inwood,salidas_total,19776,0.087126,0.135266,0.319379,1.552536,0.882909,0.34525
+v3 refit,nta,West Farms,salidas_total,13440,0.134598,0.200989,0.382483,1.493253,0.825871,0.508408
+v3 refit,nta,Sunnyside Yards (South),salidas_total,2688,0.205357,0.256346,0.496016,1.248294,0.699379,0.601976
+v3 refit,nta,Kensington,salidas_total,17472,0.143544,0.222275,0.40138,1.548482,0.977535,0.505092
+v3 refit,nta,Corona,salidas_total,36288,0.072641,0.121953,0.282936,1.678839,0.877237,0.361048
+v3 refit,nta,Flushing-Willets Point,salidas_total,2688,0.122024,0.210336,0.536261,1.723727,1.101547,0.529883
+v3 refit,nta,Sunset Park (East)-Borough Park (West),salidas_total,2688,0.181176,0.268385,0.463035,1.481355,0.90644,0.59796
+v3 refit,nta,Bedford Park,salidas_total,33600,0.098601,0.152828,0.344155,1.549962,0.822209,0.41584
+v3 refit,nta,Glendale,salidas_total,5376,0.164993,0.227465,0.423813,1.378639,0.761422,0.554973
+v3 refit,nta,Lincoln Terrace Park,salidas_total,4032,0.133185,0.243321,0.427856,1.826945,1.237464,0.540293
+v3 refit,nta,Kingsbridge-Marble Hill,salidas_total,18816,0.120323,0.176616,0.433999,1.467846,0.751841,0.493838
+v3 refit,nta,University Heights (South)-Morris Heights,salidas_total,28224,0.117063,0.181935,0.361192,1.554154,0.844578,0.469105
+v3 refit,nta,Norwood,salidas_total,25536,0.080866,0.137906,0.298029,1.705358,0.941403,0.370904
+v3 refit,nta,East Elmhurst,salidas_total,32256,0.074684,0.126323,0.280739,1.691444,0.891255,0.358404
+v3 refit,nta,Claremont Park,salidas_total,2688,0.091518,0.163699,0.315097,1.788716,1.077689,0.402892
+v3 refit,nta,Brownsville,salidas_total,37632,0.036405,0.066699,0.197483,1.83214,0.970259,0.220679
+v3 refit,nta,Inwood Hill Park,salidas_total,5376,0.083333,0.151016,0.326494,1.812187,1.079269,0.385781
+v3 refit,nta,Kingsbridge Heights-Van Cortlandt Village,salidas_total,14784,0.078463,0.127851,0.295337,1.62944,0.828087,0.37559
+v3 refit,nta,East Flatbush-Rugby,salidas_total,20832,0.051747,0.092826,0.229864,1.793827,0.960382,0.27673
+v3 refit,nta,North Corona,salidas_total,21408,0.056054,0.098233,0.244901,1.752477,0.913543,0.298464
+v3 refit,nta,Borough Park,salidas_total,5376,0.072917,0.128519,0.296315,1.762544,1.039006,0.342436
+v3 refit,nta,Forest Hills,salidas_total,50688,0.076251,0.136765,0.301146,1.793626,1.143228,0.341362
+v3 refit,nta,Hunts Point,salidas_total,9408,0.066752,0.117085,0.265242,1.754043,0.957524,0.335325
+v3 refit,nta,Riverdale-Spuyten Duyvil,salidas_total,21504,0.060593,0.103781,0.2601,1.71275,0.932716,0.295738
+v3 refit,nta,Rego Park,salidas_total,10752,0.091239,0.155587,0.320491,1.705276,0.997726,0.396818
+v3 refit,nta,East Flatbush-Farragut,salidas_total,4032,0.044643,0.078331,0.209703,1.754606,0.895949,0.253027
+v3 refit,nta,Van Cortlandt Park,salidas_total,6720,0.06994,0.115809,0.286783,1.655825,0.824729,0.347442
+v3 refit,nta,Bronx Park,salidas_total,1344,0.045387,0.087961,0.234847,1.938019,1.126765,0.24853
+v3 refit,nta,East Flatbush-Remsen Village,salidas_total,18816,0.048151,0.089181,0.22717,1.852125,1.004989,0.266093
+v3 refit,nta,Cypress Hills,salidas_total,12096,0.042328,0.073642,0.221837,1.739796,0.851342,0.252987
+v3 refit,nta,unassigned,salidas_total,9216,0.0,0.000548,0.000818,,,0.001095
+v3 refit,nta,East New York (North),salidas_total,17472,0.031937,0.056555,0.188443,1.770849,0.844767,0.218502
+v3 refit,nta,East New York-New Lots,salidas_total,6720,0.03497,0.055308,0.198103,1.581571,0.641934,0.241145
+v3 refit,hour,0,salidas_total,133616,0.224344,0.268287,0.586524,1.195872,0.888523,0.58272
+v3 refit,hour,1,salidas_total,133616,0.133592,0.178045,0.452941,1.332757,0.916519,0.43135
+v3 refit,hour,2,salidas_total,133616,0.083755,0.119831,0.346396,1.430739,0.906245,0.32
+v3 refit,hour,3,salidas_total,133616,0.054148,0.083762,0.271519,1.54692,0.892234,0.251733
+v3 refit,hour,4,salidas_total,133616,0.050211,0.084198,0.2466,1.676887,0.918432,0.256711
+v3 refit,hour,5,salidas_total,133616,0.121295,0.161258,0.390929,1.329468,0.856437,0.398865
+v3 refit,hour,6,salidas_total,133616,0.330275,0.318606,0.653771,0.964669,0.840614,0.62052
+v3 refit,hour,7,salidas_total,133616,0.711951,0.525348,1.009125,0.7379,0.775164,0.843145
+v3 refit,hour,8,salidas_total,133616,1.085506,0.683166,1.329985,0.629352,0.843469,0.932967
+v3 refit,hour,9,salidas_total,133616,0.835656,0.599713,1.081798,0.717656,0.938274,0.874471
+v3 refit,hour,10,salidas_total,133616,0.63898,0.531391,0.926893,0.831623,0.951551,0.841786
+v3 refit,hour,11,salidas_total,133616,0.676498,0.561404,0.972447,0.829867,0.964627,0.880731
+v3 refit,hour,12,salidas_total,133616,0.789456,0.621245,1.066469,0.786927,0.98918,0.925957
+v3 refit,hour,13,salidas_total,133616,0.849576,0.656913,1.124667,0.773224,0.989341,0.966305
+v3 refit,hour,14,salidas_total,133616,0.914127,0.681354,1.16833,0.74536,0.958069,0.996088
+v3 refit,hour,15,salidas_total,133616,1.028814,0.726435,1.250997,0.70609,0.933831,1.027896
+v3 refit,hour,16,salidas_total,133616,1.196189,0.782449,1.369572,0.654118,0.928969,1.045297
+v3 refit,hour,17,salidas_total,133616,1.594951,0.914427,1.753313,0.573326,0.908916,1.121773
+v3 refit,hour,18,salidas_total,133616,1.484987,0.877699,1.612548,0.591048,0.93473,1.089642
+v3 refit,hour,19,salidas_total,133616,1.096366,0.728891,1.277502,0.664824,0.954437,0.98834
+v3 refit,hour,20,salidas_total,133616,0.767139,0.598551,1.057147,0.780238,0.961723,0.91067
+v3 refit,hour,21,salidas_total,133616,0.595498,0.517372,0.950463,0.868807,0.926383,0.864122
+v3 refit,hour,22,salidas_total,133616,0.480953,0.465619,0.898757,0.968117,0.916053,0.843738
+v3 refit,hour,23,salidas_total,133616,0.344824,0.367852,0.740584,1.066782,0.889427,0.715518
+v3 refit,weekday,3,salidas_total,459168,0.840037,0.573683,1.150198,0.682926,0.862252,0.844966
+v3 refit,weekday,4,salidas_total,458976,0.83281,0.586289,1.137806,0.703989,0.894295,0.871438
+v3 refit,weekday,5,salidas_total,458496,0.569935,0.474697,0.984949,0.832896,0.973919,0.772129
+v3 refit,weekday,6,salidas_total,458208,0.262422,0.314616,0.62476,1.198892,1.185834,0.602043
+v3 refit,weekday,0,salidas_total,458016,0.584436,0.462261,0.929213,0.790953,0.983357,0.733678
+v3 refit,weekday,1,salidas_total,457344,0.77738,0.542377,1.084655,0.697699,0.915143,0.804915
+v3 refit,weekday,2,salidas_total,456576,0.825786,0.561772,1.133503,0.680287,0.868756,0.833783
+v3 refit,day_type,workday,salidas_total,2290080,0.772114,0.545298,1.09019,0.706241,0.899534,0.817786
+v3 refit,day_type,weekend,salidas_total,916704,0.416227,0.394681,0.824813,0.948236,1.040702,0.687113
+v3 refit,volume_tier,>40,llegadas_total,1162848,1.50557,0.958507,1.5777,0.636641,0.932599,1.220071
+v3 refit,volume_tier,<2,llegadas_total,114432,0.328186,0.302253,0.830045,0.920982,0.574632,0.725166
+v3 refit,volume_tier,15-40,llegadas_total,701472,0.332221,0.404138,0.638335,1.216473,0.921321,0.785415
+v3 refit,volume_tier,5-15,llegadas_total,876768,0.121724,0.191951,0.373355,1.576934,0.902609,0.477085
+v3 refit,volume_tier,no training data,llegadas_total,21504,0.256278,0.191658,0.653533,0.747852,0.772763,0.373219
+v3 refit,volume_tier,2-5,llegadas_total,329760,0.050691,0.089086,0.23599,1.757422,0.904483,0.277633
+v3 refit,borough,Manhattan,llegadas_total,923040,1.431766,0.901995,1.589203,0.629988,0.917839,1.167189
+v3 refit,borough,Brooklyn,llegadas_total,1126176,0.535235,0.458485,0.849738,0.856605,0.941743,0.769209
+v3 refit,borough,Queens,llegadas_total,654720,0.235466,0.277478,0.52533,1.178425,0.919856,0.575151
+v3 refit,borough,Bronx,llegadas_total,493632,0.145222,0.210116,0.411873,1.446865,0.867834,0.505734
+v3 refit,borough,unassigned,llegadas_total,9216,0.011176,0.01838,0.124452,1.644551,0.717015,0.078217
+v3 refit,nta,Chelsea-Hudson Yards,llegadas_total,45792,2.937194,1.436151,2.351676,0.488953,0.849172,1.488898
+v3 refit,nta,Midtown South-Flatiron-Union Square,llegadas_total,32256,2.782924,1.322725,2.094911,0.4753,0.874437,1.290672
+v3 refit,nta,Greenwich Village,llegadas_total,26880,2.566592,1.368622,2.191463,0.533245,0.847269,1.561112
+v3 refit,nta,Midtown-Times Square,llegadas_total,58656,1.625153,1.187801,2.16506,0.730886,0.962374,1.627922
+v3 refit,nta,Murray Hill-Kips Bay,llegadas_total,32256,2.049541,1.211162,1.970806,0.590943,0.974671,1.422767
+v3 refit,nta,Lower East Side,llegadas_total,28704,1.731431,1.061337,1.662106,0.612983,0.956587,1.300317
+v3 refit,nta,SoHo-Little Italy-Hudson Square,llegadas_total,26880,2.291257,1.237485,2.000378,0.54009,0.904286,1.345213
+v3 refit,nta,West Village,llegadas_total,29568,2.26576,1.195808,1.981044,0.527774,0.881914,1.28458
+v3 refit,nta,East Village,llegadas_total,55104,1.892403,1.112252,1.76933,0.587746,0.911715,1.32849
+v3 refit,nta,Upper East Side-Lenox Hill-Roosevelt Island,llegadas_total,20160,1.720288,0.999601,1.61034,0.581066,0.919785,1.190859
+v3 refit,nta,Williamsburg,llegadas_total,55104,1.637395,1.019268,1.620227,0.622494,0.948251,1.285566
+v3 refit,nta,Hell's Kitchen,llegadas_total,28224,2.162521,1.191037,1.816315,0.550763,0.941434,1.318459
+v3 refit,nta,Upper West Side-Lincoln Square,llegadas_total,22848,2.131784,1.206375,1.870499,0.565899,0.962608,1.355863
+v3 refit,nta,Chinatown-Two Bridges,llegadas_total,24192,1.294229,0.895622,1.408265,0.692011,1.00159,1.192961
+v3 refit,nta,Fort Greene,llegadas_total,30912,1.151592,0.78947,1.236328,0.685547,0.942788,1.069645
+v3 refit,nta,Financial District-Battery Park City,llegadas_total,44352,1.298115,0.8671,1.424052,0.667969,0.921606,1.160299
+v3 refit,nta,Upper East Side-Carnegie Hill,llegadas_total,28800,1.292847,0.987738,1.647081,0.764002,0.947473,1.409119
+v3 refit,nta,Stuyvesant Town-Peter Cooper Village,llegadas_total,9408,1.675808,0.920058,1.447194,0.549024,0.931838,1.030611
+v3 refit,nta,Greenpoint,llegadas_total,40320,1.128522,0.77595,1.233531,0.687581,0.946006,1.053844
+v3 refit,nta,Tribeca-Civic Center,llegadas_total,34944,1.302885,0.869227,1.476115,0.667156,0.903608,1.152491
+v3 refit,nta,East Midtown-Turtle Bay,llegadas_total,25728,1.60269,1.089554,1.938657,0.679829,0.879778,1.479294
+v3 refit,nta,Gramercy,llegadas_total,13440,2.156399,1.166755,1.784015,0.541066,0.868338,1.278712
+v3 refit,nta,Upper East Side-Yorkville,llegadas_total,17472,1.135245,0.864931,1.354867,0.761889,1.047616,1.188256
+v3 refit,nta,Upper West Side (Central),llegadas_total,31488,1.31034,0.885266,1.427155,0.6756,0.931696,1.264192
+v3 refit,nta,Windsor Terrace-South Slope,llegadas_total,24864,0.430944,0.455652,0.754284,1.057335,1.08994,0.790714
+v3 refit,nta,Park Slope,llegadas_total,38976,1.060473,0.770949,1.194298,0.726986,0.974894,1.076017
+v3 refit,nta,East Williamsburg,llegadas_total,57792,0.615206,0.529689,0.869748,0.860995,0.932326,0.868569
+v3 refit,nta,Prospect Heights,llegadas_total,20448,1.065874,0.749848,1.159326,0.703505,0.963383,1.016211
+v3 refit,nta,Downtown Brooklyn-DUMBO-Boerum Hill,llegadas_total,39360,1.120808,0.803422,1.298102,0.716824,0.877907,1.145059
+v3 refit,nta,Brooklyn Heights,llegadas_total,16128,1.163938,0.809682,1.30456,0.69564,0.948782,1.091499
+v3 refit,nta,Long Island City-Hunters Point,llegadas_total,36288,0.658813,0.54801,0.932819,0.831814,0.942537,0.853126
+v3 refit,nta,East Harlem (North),llegadas_total,34944,0.463856,0.47233,0.734941,1.018267,0.968591,0.818102
+v3 refit,nta,Queensbridge-Ravenswood-Dutch Kills,llegadas_total,31872,0.422189,0.440003,0.699076,1.042194,0.942188,0.809863
+v3 refit,nta,Upper West Side-Manhattan Valley,llegadas_total,14784,1.160782,0.843577,1.27246,0.726731,0.961651,1.17308
+v3 refit,nta,Carroll Gardens-Cobble Hill-Gowanus-Red Hook,llegadas_total,78048,0.612315,0.550469,0.912187,0.898995,0.957569,0.916605
+v3 refit,nta,Clinton Hill,llegadas_total,10752,1.337984,0.875483,1.32933,0.65433,0.951462,1.103608
+v3 refit,nta,Harlem (South),llegadas_total,20160,0.912698,0.780485,1.176299,0.85514,1.054291,1.201423
+v3 refit,nta,Astoria (Central),llegadas_total,24192,0.700934,0.602593,0.904841,0.8597,0.88537,0.980942
+v3 refit,nta,East Harlem (South),llegadas_total,21504,0.616769,0.589301,0.90643,0.955464,0.984226,0.977438
+v3 refit,nta,Bedford-Stuyvesant (West),llegadas_total,47040,0.652955,0.611014,0.930861,0.935768,0.951176,1.144004
+v3 refit,nta,Crown Heights (North),llegadas_total,51648,0.52095,0.482341,0.818491,0.925889,0.892662,0.836643
+v3 refit,nta,Astoria (East)-Woodside (North),llegadas_total,37824,0.35303,0.385344,0.633804,1.091533,0.903878,0.733903
+v3 refit,nta,Brooklyn Navy Yard,llegadas_total,9408,0.736607,0.594284,1.078208,0.806786,0.900291,1.015484
+v3 refit,nta,Morningside Heights,llegadas_total,14784,0.882576,0.693499,1.096264,0.785767,0.815517,1.079775
+v3 refit,nta,Flatbush,llegadas_total,20064,0.317035,0.370288,0.625225,1.167971,0.95088,0.714841
+v3 refit,nta,Astoria (North)-Ditmars-Steinway,llegadas_total,53760,0.241629,0.310449,0.537918,1.284813,0.966002,0.647493
+v3 refit,nta,Bushwick (East),llegadas_total,41280,0.358333,0.41549,0.630896,1.159507,0.928586,0.779646
+v3 refit,nta,Bushwick (West),llegadas_total,40320,0.586037,0.564266,0.836975,0.962851,0.946939,0.944081
+v3 refit,nta,Prospect Lefferts Gardens-Wingate,llegadas_total,41664,0.302755,0.361935,0.592559,1.195471,0.949899,0.706806
+v3 refit,nta,Harlem (North),llegadas_total,38976,0.380311,0.435422,0.674231,1.144911,0.917634,0.839252
+v3 refit,nta,Bedford-Stuyvesant (East),llegadas_total,52416,0.435096,0.467865,0.719394,1.075314,0.944088,0.842909
+v3 refit,nta,South Williamsburg,llegadas_total,14784,0.30763,0.359921,0.611204,1.169981,0.928161,0.724301
+v3 refit,nta,Crown Heights (South),llegadas_total,26880,0.400223,0.452449,0.688543,1.130492,0.839915,0.896805
+v3 refit,nta,Elmhurst,llegadas_total,47040,0.170111,0.22844,0.442308,1.342892,0.853711,0.529782
+v3 refit,nta,Melrose,llegadas_total,26880,0.22128,0.283309,0.499125,1.280319,0.854341,0.60745
+v3 refit,nta,Sunnyside,llegadas_total,47040,0.243495,0.305499,0.515657,1.254643,0.928341,0.616299
+v3 refit,nta,Sunset Park (West),llegadas_total,57792,0.178,0.23368,0.459334,1.312805,0.935945,0.512813
+v3 refit,nta,Old Astoria-Hallets Point,llegadas_total,13440,0.352009,0.407807,0.65039,1.158513,0.959355,0.757081
+v3 refit,nta,Manhattanville-West Harlem,llegadas_total,16128,0.390439,0.429904,0.722166,1.101078,0.855076,0.827981
+v3 refit,nta,Concourse-Concourse Village,llegadas_total,40320,0.249876,0.326122,0.594022,1.305137,0.875366,0.719176
+v3 refit,nta,Astoria Park,llegadas_total,4032,0.388641,0.433848,0.711679,1.116321,0.977413,0.79938
+v3 refit,nta,Hamilton Heights-Sugar Hill,llegadas_total,24192,0.257275,0.33915,0.54156,1.318237,0.969288,0.691503
+v3 refit,nta,Jackson Heights,llegadas_total,57312,0.182021,0.24904,0.448745,1.36819,0.897327,0.553418
+v3 refit,nta,Mount Eden-Claremont (West),llegadas_total,20064,0.186553,0.261303,0.455167,1.40069,0.878953,0.592812
+v3 refit,nta,Randall's Island,llegadas_total,5376,0.320871,0.375633,0.725707,1.170667,0.872731,0.781399
+v3 refit,nta,Woodside,llegadas_total,45696,0.162049,0.22495,0.422467,1.388161,0.856977,0.530161
+v3 refit,nta,Ridgewood,llegadas_total,56448,0.232621,0.309352,0.510583,1.329855,0.915511,0.644562
+v3 refit,nta,Mott Haven-Port Morris,llegadas_total,45120,0.189783,0.260515,0.462273,1.372703,0.849823,0.58953
+v3 refit,nta,The Battery-Governors Island-Ellis Island-Liberty Island,llegadas_total,4032,0.202877,0.260903,0.6269,1.286015,1.181857,0.503156
+v3 refit,nta,Washington Heights (South),llegadas_total,32256,0.193607,0.275425,0.455241,1.422595,0.98837,0.579396
+v3 refit,nta,Belmont,llegadas_total,16128,0.175967,0.244055,0.449428,1.386934,0.814569,0.580323
+v3 refit,nta,Sunset Park (Central),llegadas_total,21504,0.150019,0.225093,0.421,1.500435,0.972669,0.516669
+v3 refit,nta,Sunnyside Yards (North),llegadas_total,4032,0.195685,0.253492,0.467448,1.295409,1.004751,0.508442
+v3 refit,nta,Fordham Heights,llegadas_total,10752,0.177641,0.246665,0.438529,1.388554,0.866198,0.552403
+v3 refit,nta,Washington Heights (North),llegadas_total,33600,0.139673,0.216409,0.40848,1.549401,1.014892,0.493273
+v3 refit,nta,Ocean Hill,llegadas_total,37632,0.12035,0.187764,0.361802,1.560152,0.902257,0.468712
+v3 refit,nta,Morrisania,llegadas_total,14784,0.166396,0.242218,0.426738,1.455673,0.892249,0.548852
+v3 refit,nta,Mount Hope,llegadas_total,22848,0.151961,0.230091,0.408373,1.51415,0.872273,0.553368
+v3 refit,nta,Tremont,llegadas_total,21216,0.113829,0.174937,0.364989,1.536842,0.892161,0.44515
+v3 refit,nta,East Flatbush-Erasmus,llegadas_total,22848,0.115327,0.177518,0.351152,1.539249,0.979262,0.423397
+v3 refit,nta,Longwood,llegadas_total,24192,0.130828,0.196102,0.38125,1.498924,0.862322,0.497004
+v3 refit,nta,Flatbush (West)-Ditmas Park-Parkville,llegadas_total,12096,0.20296,0.287316,0.499486,1.41563,0.967215,0.593182
+v3 refit,nta,University Heights (North)-Fordham,llegadas_total,21504,0.119141,0.179827,0.363929,1.509365,0.84522,0.455996
+v3 refit,nta,Highbridge,llegadas_total,16128,0.144903,0.217558,0.402981,1.501405,0.945142,0.505467
+v3 refit,nta,Maspeth,llegadas_total,33600,0.085565,0.133365,0.315074,1.558632,0.821434,0.380886
+v3 refit,nta,Claremont Village-Claremont (East),llegadas_total,17472,0.172734,0.24817,0.451025,1.43672,0.890969,0.56042
+v3 refit,nta,Bay Ridge,llegadas_total,68928,0.070566,0.115141,0.289678,1.631663,0.865139,0.329503
+v3 refit,nta,Crotona Park East,llegadas_total,20160,0.120784,0.189298,0.365422,1.567251,0.924867,0.462775
+v3 refit,nta,Inwood,llegadas_total,19776,0.090767,0.140988,0.324156,1.553304,0.892901,0.357622
+v3 refit,nta,West Farms,llegadas_total,13440,0.131771,0.199238,0.375078,1.512005,0.850228,0.489649
+v3 refit,nta,Sunnyside Yards (South),llegadas_total,2688,0.210565,0.264862,0.499483,1.257862,0.67966,0.608641
+v3 refit,nta,Kensington,llegadas_total,17472,0.143945,0.224643,0.405788,1.560618,0.998694,0.504502
+v3 refit,nta,Corona,llegadas_total,36288,0.074405,0.124432,0.28994,1.672365,0.88427,0.358416
+v3 refit,nta,Flushing-Willets Point,llegadas_total,2688,0.149182,0.228257,0.515577,1.530064,1.069609,0.494331
+v3 refit,nta,Sunset Park (East)-Borough Park (West),llegadas_total,2688,0.186012,0.272058,0.459982,1.462585,0.894569,0.604469
+v3 refit,nta,Bedford Park,llegadas_total,33600,0.098899,0.152055,0.338063,1.537484,0.82368,0.405718
+v3 refit,nta,Glendale,llegadas_total,5376,0.164062,0.227499,0.417666,1.38666,0.794648,0.544308
+v3 refit,nta,Lincoln Terrace Park,llegadas_total,4032,0.133433,0.235285,0.378788,1.763327,1.211364,0.49988
+v3 refit,nta,Kingsbridge-Marble Hill,llegadas_total,18816,0.12298,0.178644,0.401789,1.452622,0.743737,0.479143
+v3 refit,nta,University Heights (South)-Morris Heights,llegadas_total,28224,0.116815,0.18169,0.360855,1.555356,0.850603,0.467003
+v3 refit,nta,Norwood,llegadas_total,25536,0.082863,0.14139,0.303172,1.706307,0.940565,0.383678
+v3 refit,nta,East Elmhurst,llegadas_total,32256,0.075149,0.126088,0.280852,1.677843,0.86953,0.363115
+v3 refit,nta,Claremont Park,llegadas_total,2688,0.085193,0.158549,0.315439,1.861051,1.15003,0.396106
+v3 refit,nta,Brownsville,llegadas_total,37632,0.03699,0.070065,0.199548,1.894178,1.035516,0.223961
+v3 refit,nta,Inwood Hill Park,llegadas_total,5376,0.088914,0.158348,0.336252,1.780921,1.0545,0.401752
+v3 refit,nta,Kingsbridge Heights-Van Cortlandt Village,llegadas_total,14784,0.079681,0.130067,0.28839,1.632346,0.850821,0.376811
+v3 refit,nta,East Flatbush-Rugby,llegadas_total,20832,0.053571,0.09762,0.239248,1.822231,0.977472,0.293068
+v3 refit,nta,North Corona,llegadas_total,21408,0.057222,0.099942,0.247991,1.746573,0.906333,0.30453
+v3 refit,nta,Borough Park,llegadas_total,5376,0.075335,0.135863,0.3061,1.80346,1.030628,0.366834
+v3 refit,nta,Forest Hills,llegadas_total,50688,0.077119,0.139227,0.300196,1.805357,1.133383,0.34524
+v3 refit,nta,Hunts Point,llegadas_total,9408,0.068559,0.11985,0.267713,1.748144,0.943415,0.340491
+v3 refit,nta,Riverdale-Spuyten Duyvil,llegadas_total,21504,0.0625,0.106151,0.263782,1.698416,0.938001,0.300421
+v3 refit,nta,Rego Park,llegadas_total,10752,0.09375,0.160498,0.320641,1.711975,0.990276,0.407268
+v3 refit,nta,East Flatbush-Farragut,llegadas_total,4032,0.047619,0.083202,0.221982,1.747247,0.907922,0.250439
+v3 refit,nta,Van Cortlandt Park,llegadas_total,6720,0.069643,0.117217,0.2986,1.683117,0.849056,0.354742
+v3 refit,nta,Bronx Park,llegadas_total,1344,0.044643,0.085135,0.236787,1.907017,1.070971,0.248654
+v3 refit,nta,East Flatbush-Remsen Village,llegadas_total,18816,0.047938,0.091683,0.221218,1.912533,1.061931,0.27212
+v3 refit,nta,Cypress Hills,llegadas_total,12096,0.041997,0.078073,0.222356,1.859009,0.99251,0.251369
+v3 refit,nta,unassigned,llegadas_total,9216,0.011176,0.01838,0.124452,1.644551,0.717015,0.078217
+v3 refit,nta,East New York (North),llegadas_total,17472,0.034054,0.063506,0.19073,1.864837,0.962488,0.22053
+v3 refit,nta,East New York-New Lots,llegadas_total,6720,0.039286,0.064923,0.207586,1.65258,0.736613,0.248618
+v3 refit,hour,0,llegadas_total,133616,0.249978,0.303357,0.581002,1.213538,0.884958,0.648665
+v3 refit,hour,1,llegadas_total,133616,0.149121,0.20353,0.442813,1.364862,0.915366,0.482006
+v3 refit,hour,2,llegadas_total,133616,0.092437,0.136727,0.346581,1.479146,0.910656,0.360719
+v3 refit,hour,3,llegadas_total,133616,0.058923,0.093674,0.275072,1.589781,0.891469,0.278213
+v3 refit,hour,4,llegadas_total,133616,0.049859,0.084427,0.243069,1.693298,0.915599,0.256855
+v3 refit,hour,5,llegadas_total,133616,0.104965,0.137506,0.363067,1.310017,0.857655,0.351105
+v3 refit,hour,6,llegadas_total,133616,0.285842,0.274847,0.67027,0.961535,0.847272,0.554546
+v3 refit,hour,7,llegadas_total,133616,0.629311,0.482998,1.049686,0.767503,0.767066,0.826749
+v3 refit,hour,8,llegadas_total,133616,1.040766,0.684655,1.520818,0.657838,0.838032,0.987216
+v3 refit,hour,9,llegadas_total,133616,0.901434,0.642788,1.352855,0.713073,0.911538,0.940556
+v3 refit,hour,10,llegadas_total,133616,0.647363,0.537801,0.99751,0.830757,0.936212,0.859134
+v3 refit,hour,11,llegadas_total,133616,0.653253,0.547906,0.96842,0.838736,0.976945,0.865248
+v3 refit,hour,12,llegadas_total,133616,0.770858,0.613832,1.065796,0.796296,0.989318,0.924882
+v3 refit,hour,13,llegadas_total,133616,0.835072,0.650564,1.117957,0.779051,0.98278,0.970568
+v3 refit,hour,14,llegadas_total,133616,0.892004,0.668872,1.143741,0.749853,0.954178,0.984321
+v3 refit,hour,15,llegadas_total,133616,1.00375,0.719545,1.219689,0.716857,0.930231,1.031016
+v3 refit,hour,16,llegadas_total,133616,1.148538,0.773653,1.304221,0.673598,0.927901,1.061598
+v3 refit,hour,17,llegadas_total,133616,1.527557,0.893273,1.557339,0.584773,0.919556,1.119847
+v3 refit,hour,18,llegadas_total,133616,1.540961,0.905781,1.575771,0.587803,0.933062,1.130654
+v3 refit,hour,19,llegadas_total,133616,1.189117,0.790741,1.367103,0.664982,0.932885,1.076534
+v3 refit,hour,20,llegadas_total,133616,0.822027,0.642435,1.093819,0.781526,0.953472,0.977214
+v3 refit,hour,21,llegadas_total,133616,0.619716,0.547063,0.930297,0.882764,0.946322,0.903732
+v3 refit,hour,22,llegadas_total,133616,0.505658,0.491401,0.847395,0.971804,0.931631,0.867164
+v3 refit,hour,23,llegadas_total,133616,0.374618,0.405235,0.725004,1.081728,0.891355,0.779849
+v3 refit,weekday,3,llegadas_total,459168,0.839187,0.583783,1.161943,0.695652,0.861671,0.872152
+v3 refit,weekday,4,llegadas_total,458976,0.832015,0.59581,1.15247,0.716104,0.88884,0.900747
+v3 refit,weekday,5,llegadas_total,458496,0.570644,0.481059,0.987709,0.84301,0.971164,0.791339
+v3 refit,weekday,6,llegadas_total,458208,0.265002,0.31918,0.61598,1.204443,1.178226,0.61437
+v3 refit,weekday,0,llegadas_total,458016,0.583427,0.465054,0.927675,0.797107,0.98712,0.742418
+v3 refit,weekday,1,llegadas_total,457344,0.776704,0.550579,1.096009,0.708866,0.916194,0.827539
+v3 refit,weekday,2,llegadas_total,456576,0.827008,0.572381,1.160314,0.692111,0.865754,0.862567
+v3 refit,day_type,workday,llegadas_total,2290080,0.771691,0.553543,1.103325,0.717312,0.898342,0.841116
+v3 refit,day_type,weekend,llegadas_total,916704,0.417871,0.400145,0.823161,0.957579,1.0368,0.702882
+v3 train-only,volume_tier,>40,salidas_total,1162848,1.534102,0.968382,1.590366,0.631237,0.918921,1.229755
+v3 train-only,volume_tier,<2,salidas_total,114432,0.009525,0.01641,0.102195,1.722823,0.773972,0.072362
+v3 train-only,volume_tier,15-40,salidas_total,701472,0.335244,0.407135,0.646629,1.214444,0.909437,0.79352
+v3 train-only,volume_tier,5-15,salidas_total,876768,0.12234,0.19196,0.377892,1.569068,0.879123,0.485106
+v3 train-only,volume_tier,no training data,salidas_total,21504,0.263718,0.239453,0.761682,0.907988,0.779739,0.452182
+v3 train-only,volume_tier,2-5,salidas_total,329760,0.050473,0.086714,0.238132,1.718024,0.852878,0.281014
+v3 train-only,borough,Manhattan,salidas_total,923040,1.432758,0.893033,1.590003,0.623297,0.910149,1.143057
+v3 train-only,borough,Brooklyn,salidas_total,1126176,0.534448,0.450078,0.838206,0.842135,0.932849,0.745672
+v3 train-only,borough,Queens,salidas_total,654720,0.235744,0.277481,0.526935,1.177045,0.914052,0.576812
+v3 train-only,borough,Bronx,salidas_total,493632,0.143909,0.208152,0.416074,1.446414,0.854421,0.506735
+v3 train-only,borough,unassigned,salidas_total,9216,0.0,0.000609,0.000936,,,0.001218
+v3 train-only,nta,Chelsea-Hudson Yards,salidas_total,45792,2.926232,1.466721,2.417598,0.501232,0.841907,1.549081
+v3 train-only,nta,Midtown South-Flatiron-Union Square,salidas_total,32256,2.789838,1.322442,2.134335,0.474021,0.896781,1.289114
+v3 train-only,nta,Greenwich Village,salidas_total,26880,2.55186,1.302765,2.087514,0.510516,0.821009,1.417799
+v3 train-only,nta,Midtown-Times Square,salidas_total,58656,1.641605,1.172471,2.188672,0.714222,0.9679,1.592317
+v3 train-only,nta,Murray Hill-Kips Bay,salidas_total,32256,2.091518,1.293387,2.169639,0.618396,0.957485,1.573915
+v3 train-only,nta,Lower East Side,salidas_total,28704,1.726937,1.069018,1.647082,0.619026,0.940427,1.320354
+v3 train-only,nta,SoHo-Little Italy-Hudson Square,salidas_total,26880,2.265588,1.179893,1.858132,0.520789,0.901175,1.272433
+v3 train-only,nta,West Village,salidas_total,29568,2.249425,1.159737,1.883382,0.51557,0.875327,1.226586
+v3 train-only,nta,East Village,salidas_total,55104,1.892168,1.077322,1.701009,0.569358,0.894727,1.221287
+v3 train-only,nta,Upper East Side-Lenox Hill-Roosevelt Island,salidas_total,20160,1.714236,0.969293,1.5633,0.565438,0.90534,1.139719
+v3 train-only,nta,Williamsburg,salidas_total,55104,1.625145,0.93802,1.521545,0.577192,0.935365,1.085543
+v3 train-only,nta,Hell's Kitchen,salidas_total,28224,2.185976,1.265173,1.891858,0.578768,0.930276,1.433055
+v3 train-only,nta,Upper West Side-Lincoln Square,salidas_total,22848,2.13848,1.199998,1.903459,0.561145,0.9481,1.313298
+v3 train-only,nta,Chinatown-Two Bridges,salidas_total,24192,1.291625,0.848751,1.330249,0.657119,0.978412,1.100459
+v3 train-only,nta,Fort Greene,salidas_total,30912,1.151333,0.798225,1.278049,0.693305,0.933904,1.122385
+v3 train-only,nta,Financial District-Battery Park City,salidas_total,44352,1.286999,0.849373,1.421094,0.659964,0.940108,1.128446
+v3 train-only,nta,Upper East Side-Carnegie Hill,salidas_total,28800,1.282118,0.941341,1.647696,0.734207,0.938914,1.306761
+v3 train-only,nta,Stuyvesant Town-Peter Cooper Village,salidas_total,9408,1.695047,0.974787,1.5308,0.57508,0.903917,1.122603
+v3 train-only,nta,Greenpoint,salidas_total,40320,1.122817,0.763028,1.228387,0.679566,0.927272,1.022262
+v3 train-only,nta,Tribeca-Civic Center,salidas_total,34944,1.293555,0.821561,1.503274,0.635119,0.898532,1.042914
+v3 train-only,nta,East Midtown-Turtle Bay,salidas_total,25728,1.625117,1.045015,1.851161,0.64304,0.881283,1.362798
+v3 train-only,nta,Gramercy,salidas_total,13440,2.164881,1.174962,1.782869,0.542737,0.850219,1.291376
+v3 train-only,nta,Upper East Side-Yorkville,salidas_total,17472,1.124771,0.832518,1.246214,0.740166,1.041203,1.122365
+v3 train-only,nta,Upper West Side (Central),salidas_total,31488,1.321678,0.8964,1.468992,0.678229,0.911419,1.280112
+v3 train-only,nta,Windsor Terrace-South Slope,salidas_total,24864,0.434001,0.453049,0.774177,1.043889,1.071764,0.78653
+v3 train-only,nta,Park Slope,salidas_total,38976,1.065399,0.761213,1.196811,0.714486,0.966088,1.041648
+v3 train-only,nta,East Williamsburg,salidas_total,57792,0.612438,0.525419,0.881483,0.857915,0.922239,0.871875
+v3 train-only,nta,Prospect Heights,salidas_total,20448,1.067097,0.757037,1.177389,0.709436,0.964439,1.03589
+v3 train-only,nta,Downtown Brooklyn-DUMBO-Boerum Hill,salidas_total,39360,1.112424,0.778771,1.258028,0.700067,0.886794,1.089781
+v3 train-only,nta,Brooklyn Heights,salidas_total,16128,1.154142,0.789417,1.258744,0.683986,0.94135,1.07085
+v3 train-only,nta,Long Island City-Hunters Point,salidas_total,36288,0.6549,0.533955,0.91802,0.815323,0.936809,0.830019
+v3 train-only,nta,East Harlem (North),salidas_total,34944,0.460995,0.473618,0.750198,1.027383,0.959862,0.840796
+v3 train-only,nta,Queensbridge-Ravenswood-Dutch Kills,salidas_total,31872,0.421185,0.440846,0.713402,1.046681,0.934919,0.805922
+v3 train-only,nta,Upper West Side-Manhattan Valley,salidas_total,14784,1.170996,0.871683,1.323737,0.744395,0.930615,1.226933
+v3 train-only,nta,Carroll Gardens-Cobble Hill-Gowanus-Red Hook,salidas_total,78048,0.599208,0.527271,0.887436,0.879947,0.950287,0.864867
+v3 train-only,nta,Clinton Hill,salidas_total,10752,1.362165,0.895722,1.322725,0.657572,0.934322,1.141891
+v3 train-only,nta,Harlem (South),salidas_total,20160,0.902034,0.748315,1.157604,0.829586,1.041928,1.098134
+v3 train-only,nta,Astoria (Central),salidas_total,24192,0.698041,0.60961,0.902932,0.873316,0.911238,0.978174
+v3 train-only,nta,East Harlem (South),salidas_total,21504,0.612212,0.574076,0.892221,0.937709,0.996316,0.934139
+v3 train-only,nta,Bedford-Stuyvesant (West),salidas_total,47040,0.653125,0.572363,0.892192,0.876345,0.940826,0.913458
+v3 train-only,nta,Crown Heights (North),salidas_total,51648,0.537194,0.497797,0.845628,0.926661,0.88191,0.86141
+v3 train-only,nta,Astoria (East)-Woodside (North),salidas_total,37824,0.354034,0.389188,0.634059,1.099293,0.8967,0.741028
+v3 train-only,nta,Brooklyn Navy Yard,salidas_total,9408,0.729486,0.559087,1.054375,0.766413,0.906702,0.988328
+v3 train-only,nta,Morningside Heights,salidas_total,14784,0.886634,0.695479,1.12218,0.784404,0.792452,1.079764
+v3 train-only,nta,Flatbush,salidas_total,20064,0.316537,0.36677,0.636107,1.158696,0.91517,0.735745
+v3 train-only,nta,Astoria (North)-Ditmars-Steinway,salidas_total,53760,0.242206,0.300203,0.529731,1.239452,0.94345,0.604716
+v3 train-only,nta,Bushwick (East),salidas_total,41280,0.370712,0.429288,0.65358,1.158009,0.924405,0.811899
+v3 train-only,nta,Bushwick (West),salidas_total,40320,0.588194,0.576705,0.832379,0.980466,0.933523,0.976993
+v3 train-only,nta,Prospect Lefferts Gardens-Wingate,salidas_total,41664,0.300379,0.35344,0.59062,1.176645,0.934465,0.693043
+v3 train-only,nta,Harlem (North),salidas_total,38976,0.379079,0.406429,0.670946,1.072146,0.889609,0.749331
+v3 train-only,nta,Bedford-Stuyvesant (East),salidas_total,52416,0.43647,0.467384,0.709815,1.070828,0.935918,0.835582
+v3 train-only,nta,South Williamsburg,salidas_total,14784,0.309456,0.355896,0.608095,1.15007,0.90993,0.71551
+v3 train-only,nta,Crown Heights (South),salidas_total,26880,0.405618,0.459787,0.710195,1.133547,0.836103,0.917637
+v3 train-only,nta,Elmhurst,salidas_total,47040,0.167708,0.225252,0.447726,1.343118,0.846695,0.535322
+v3 train-only,nta,Melrose,salidas_total,26880,0.218527,0.279504,0.505696,1.279037,0.8587,0.601074
+v3 train-only,nta,Sunnyside,salidas_total,47040,0.25878,0.320575,0.546623,1.238793,0.910972,0.648785
+v3 train-only,nta,Sunset Park (West),salidas_total,57792,0.175924,0.22847,0.452361,1.298688,0.931176,0.493836
+v3 train-only,nta,Old Astoria-Hallets Point,salidas_total,13440,0.347693,0.404521,0.618101,1.16344,0.938593,0.755978
+v3 train-only,nta,Manhattanville-West Harlem,salidas_total,16128,0.388145,0.420542,0.732562,1.083467,0.839181,0.80533
+v3 train-only,nta,Concourse-Concourse Village,salidas_total,40320,0.245734,0.324352,0.593563,1.319929,0.868829,0.71122
+v3 train-only,nta,Astoria Park,salidas_total,4032,0.389385,0.441319,0.717409,1.133374,0.933095,0.813228
+v3 train-only,nta,Hamilton Heights-Sugar Hill,salidas_total,24192,0.260954,0.351115,0.552885,1.345506,0.968152,0.712172
+v3 train-only,nta,Jackson Heights,salidas_total,57312,0.184359,0.254561,0.455755,1.380789,0.887258,0.574448
+v3 train-only,nta,Mount Eden-Claremont (West),salidas_total,20064,0.189394,0.26438,0.465439,1.395928,0.858559,0.612695
+v3 train-only,nta,Randall's Island,salidas_total,5376,0.326265,0.39523,0.863625,1.211379,0.862295,0.895564
+v3 train-only,nta,Woodside,salidas_total,45696,0.160911,0.225927,0.426081,1.404045,0.851424,0.535628
+v3 train-only,nta,Ridgewood,salidas_total,56448,0.233613,0.315418,0.513938,1.350173,0.920253,0.656241
+v3 train-only,nta,Mott Haven-Port Morris,salidas_total,45120,0.185527,0.253545,0.459743,1.366617,0.840635,0.569965
+v3 train-only,nta,The Battery-Governors Island-Ellis Island-Liberty Island,salidas_total,4032,0.201637,0.265899,0.651495,1.318704,1.160674,0.514066
+v3 train-only,nta,Washington Heights (South),salidas_total,32256,0.203094,0.2879,0.484783,1.417572,0.981503,0.613543
+v3 train-only,nta,Belmont,salidas_total,16128,0.176153,0.243163,0.472183,1.380408,0.792624,0.600315
+v3 train-only,nta,Sunset Park (Central),salidas_total,21504,0.147693,0.22101,0.401611,1.49641,0.961562,0.509209
+v3 train-only,nta,Sunnyside Yards (North),salidas_total,4032,0.191964,0.258139,0.450766,1.344722,1.038671,0.523111
+v3 train-only,nta,Fordham Heights,salidas_total,10752,0.178199,0.246418,0.436911,1.382821,0.846541,0.567908
+v3 train-only,nta,Washington Heights (North),salidas_total,33600,0.13994,0.219968,0.407237,1.571868,1.00622,0.499928
+v3 train-only,nta,Ocean Hill,salidas_total,37632,0.124415,0.191991,0.370276,1.543147,0.896673,0.469526
+v3 train-only,nta,Morrisania,salidas_total,14784,0.162608,0.239036,0.428927,1.470013,0.885629,0.549765
+v3 train-only,nta,Mount Hope,salidas_total,22848,0.150692,0.228555,0.41515,1.516705,0.858628,0.563436
+v3 train-only,nta,Tremont,salidas_total,21216,0.1102,0.170266,0.367623,1.545064,0.899042,0.428337
+v3 train-only,nta,East Flatbush-Erasmus,salidas_total,22848,0.113708,0.171366,0.347568,1.50707,0.955683,0.404388
+v3 train-only,nta,Longwood,salidas_total,24192,0.130126,0.193422,0.386199,1.486421,0.865118,0.472436
+v3 train-only,nta,Flatbush (West)-Ditmas Park-Parkville,salidas_total,12096,0.198247,0.281802,0.499723,1.421469,0.971935,0.577483
+v3 train-only,nta,University Heights (North)-Fordham,salidas_total,21504,0.119559,0.17708,0.361857,1.481106,0.814705,0.46135
+v3 train-only,nta,Highbridge,salidas_total,16128,0.143601,0.220077,0.406736,1.53256,0.919878,0.523931
+v3 train-only,nta,Maspeth,salidas_total,33600,0.08378,0.132087,0.322057,1.576592,0.797118,0.388453
+v3 train-only,nta,Claremont Village-Claremont (East),salidas_total,17472,0.171989,0.25141,0.457658,1.461777,0.873238,0.5855
+v3 train-only,nta,Bay Ridge,salidas_total,68928,0.069217,0.11097,0.284831,1.603221,0.82647,0.324596
+v3 train-only,nta,Crotona Park East,salidas_total,20160,0.123016,0.188767,0.371288,1.534494,0.887279,0.465957
+v3 train-only,nta,Inwood,salidas_total,19776,0.087126,0.134596,0.320034,1.544845,0.865503,0.347157
+v3 train-only,nta,West Farms,salidas_total,13440,0.134598,0.200317,0.383062,1.488259,0.814053,0.51048
+v3 train-only,nta,Sunnyside Yards (South),salidas_total,2688,0.205357,0.255588,0.497442,1.244601,0.680535,0.6062
+v3 train-only,nta,Kensington,salidas_total,17472,0.143544,0.221589,0.401719,1.543699,0.968761,0.506348
+v3 train-only,nta,Corona,salidas_total,36288,0.072641,0.120672,0.28301,1.661205,0.853565,0.362111
+v3 train-only,nta,Flushing-Willets Point,salidas_total,2688,0.122024,0.204585,0.537953,1.676603,1.027019,0.533274
+v3 train-only,nta,Sunset Park (East)-Borough Park (West),salidas_total,2688,0.181176,0.267169,0.463287,1.474641,0.892242,0.599384
+v3 train-only,nta,Bedford Park,salidas_total,33600,0.098601,0.152007,0.344342,1.541636,0.808829,0.417073
+v3 train-only,nta,Glendale,salidas_total,5376,0.164993,0.226466,0.42434,1.372581,0.749775,0.557904
+v3 train-only,nta,Lincoln Terrace Park,salidas_total,4032,0.133185,0.244321,0.427832,1.834453,1.250893,0.540519
+v3 train-only,nta,Kingsbridge-Marble Hill,salidas_total,18816,0.120323,0.175306,0.434937,1.456962,0.731956,0.499296
+v3 train-only,nta,University Heights (South)-Morris Heights,salidas_total,28224,0.117063,0.180989,0.361661,1.546077,0.828967,0.471351
+v3 train-only,nta,Norwood,salidas_total,25536,0.080866,0.137292,0.298453,1.697764,0.927689,0.372879
+v3 train-only,nta,East Elmhurst,salidas_total,32256,0.074684,0.125499,0.280874,1.680402,0.876021,0.359479
+v3 train-only,nta,Claremont Park,salidas_total,2688,0.091518,0.164489,0.315001,1.797341,1.089974,0.402608
+v3 train-only,nta,Brownsville,salidas_total,37632,0.036405,0.066265,0.197921,1.820215,0.954956,0.225308
+v3 train-only,nta,Inwood Hill Park,salidas_total,5376,0.083333,0.149539,0.326377,1.794466,1.056421,0.385958
+v3 train-only,nta,Kingsbridge Heights-Van Cortlandt Village,salidas_total,14784,0.078463,0.127214,0.295575,1.621324,0.81562,0.376987
+v3 train-only,nta,East Flatbush-Rugby,salidas_total,20832,0.051747,0.092207,0.229939,1.781867,0.944616,0.277691
+v3 train-only,nta,North Corona,salidas_total,21408,0.056054,0.097598,0.244908,1.741157,0.899397,0.298856
+v3 train-only,nta,Borough Park,salidas_total,5376,0.072917,0.127801,0.296445,1.752701,1.023908,0.342041
+v3 train-only,nta,Forest Hills,salidas_total,50688,0.076251,0.136263,0.301484,1.787036,1.128223,0.343429
+v3 train-only,nta,Hunts Point,salidas_total,9408,0.066752,0.116635,0.265205,1.7473,0.948796,0.336144
+v3 train-only,nta,Riverdale-Spuyten Duyvil,salidas_total,21504,0.060593,0.103079,0.260513,1.701158,0.911577,0.297868
+v3 train-only,nta,Rego Park,salidas_total,10752,0.091239,0.155475,0.321084,1.70404,0.988917,0.399505
+v3 train-only,nta,East Flatbush-Farragut,salidas_total,4032,0.044643,0.078097,0.209866,1.749373,0.887439,0.253988
+v3 train-only,nta,Van Cortlandt Park,salidas_total,6720,0.06994,0.115184,0.287162,1.646891,0.810091,0.349221
+v3 train-only,nta,Bronx Park,salidas_total,1344,0.045387,0.087394,0.234676,1.925538,1.112577,0.247494
+v3 train-only,nta,East Flatbush-Remsen Village,salidas_total,18816,0.048151,0.086991,0.227747,1.80664,0.948008,0.269633
+v3 train-only,nta,Cypress Hills,salidas_total,12096,0.042328,0.067491,0.222788,1.594475,0.679925,0.265384
+v3 train-only,nta,unassigned,salidas_total,9216,0.0,0.000609,0.000936,,,0.001218
+v3 train-only,nta,East New York (North),salidas_total,17472,0.031937,0.06661,0.189874,2.085672,1.181798,0.231601
+v3 train-only,nta,East New York-New Lots,salidas_total,6720,0.03497,0.142553,0.227363,4.076409,3.37962,0.32206
+v3 train-only,hour,0,salidas_total,133616,0.224344,0.270068,0.586018,1.203811,0.910706,0.582979
+v3 train-only,hour,1,salidas_total,133616,0.133592,0.179536,0.453222,1.343916,0.940131,0.432622
+v3 train-only,hour,2,salidas_total,133616,0.083755,0.121803,0.34723,1.454281,0.942763,0.322132
+v3 train-only,hour,3,salidas_total,133616,0.054148,0.085108,0.272461,1.571775,0.922221,0.253133
+v3 train-only,hour,4,salidas_total,133616,0.050211,0.084455,0.247181,1.682008,0.920654,0.258065
+v3 train-only,hour,5,salidas_total,133616,0.121295,0.161599,0.392739,1.33228,0.855283,0.401352
+v3 train-only,hour,6,salidas_total,133616,0.330275,0.319092,0.656213,0.96614,0.833554,0.625532
+v3 train-only,hour,7,salidas_total,133616,0.711951,0.525868,1.017558,0.73863,0.756847,0.853816
+v3 train-only,hour,8,salidas_total,133616,1.085506,0.685468,1.340182,0.631473,0.834068,0.9414
+v3 train-only,hour,9,salidas_total,133616,0.835656,0.601873,1.09105,0.72024,0.923589,0.883276
+v3 train-only,hour,10,salidas_total,133616,0.63898,0.536101,0.934851,0.838994,0.95381,0.852281
+v3 train-only,hour,11,salidas_total,133616,0.676498,0.566118,0.981163,0.836836,0.959816,0.893655
+v3 train-only,hour,12,salidas_total,133616,0.789456,0.620505,1.069324,0.78599,0.971623,0.929762
+v3 train-only,hour,13,salidas_total,133616,0.849576,0.66067,1.131143,0.777646,0.991398,0.97453
+v3 train-only,hour,14,salidas_total,133616,0.914127,0.682418,1.172162,0.746524,0.951476,1.001495
+v3 train-only,hour,15,salidas_total,133616,1.028814,0.725518,1.255128,0.705199,0.918527,1.034046
+v3 train-only,hour,16,salidas_total,133616,1.196189,0.782158,1.380232,0.653875,0.909836,1.052445
+v3 train-only,hour,17,salidas_total,133616,1.594951,0.917367,1.773756,0.57517,0.896134,1.133711
+v3 train-only,hour,18,salidas_total,133616,1.484987,0.878817,1.631451,0.591801,0.909748,1.102339
+v3 train-only,hour,19,salidas_total,133616,1.096366,0.729746,1.286071,0.665605,0.939486,0.997497
+v3 train-only,hour,20,salidas_total,133616,0.767139,0.600852,1.062113,0.783238,0.959389,0.918662
+v3 train-only,hour,21,salidas_total,133616,0.595498,0.519487,0.953765,0.872357,0.926199,0.869361
+v3 train-only,hour,22,salidas_total,133616,0.480953,0.467029,0.900803,0.97105,0.918104,0.847614
+v3 train-only,hour,23,salidas_total,133616,0.344824,0.369714,0.741618,1.072183,0.898932,0.718124
+v3 train-only,weekday,3,salidas_total,459168,0.840037,0.576996,1.164548,0.686869,0.847199,0.855747
+v3 train-only,weekday,4,salidas_total,458976,0.83281,0.587605,1.14201,0.705569,0.891847,0.877073
+v3 train-only,weekday,5,salidas_total,458496,0.569935,0.479703,0.991874,0.841681,0.984109,0.779636
+v3 train-only,weekday,6,salidas_total,458208,0.262422,0.312052,0.624867,1.189123,1.125371,0.603801
+v3 train-only,weekday,0,salidas_total,458016,0.584436,0.463635,0.933543,0.793303,0.977891,0.739076
+v3 train-only,weekday,1,salidas_total,457344,0.77738,0.543542,1.09339,0.699197,0.90325,0.811365
+v3 train-only,weekday,2,salidas_total,456576,0.825786,0.563108,1.141403,0.681905,0.858967,0.839842
+v3 train-only,day_type,workday,salidas_total,2290080,0.772114,0.547,1.098222,0.708444,0.890415,0.824653
+v3 train-only,day_type,weekend,salidas_total,916704,0.416227,0.395904,0.828993,0.951174,1.028627,0.691746
+v3 train-only,volume_tier,>40,llegadas_total,1162848,1.50557,0.96193,1.587221,0.638914,0.924006,1.229767
+v3 train-only,volume_tier,<2,llegadas_total,114432,0.328186,0.298766,0.818161,0.910354,0.599688,0.73321
+v3 train-only,volume_tier,15-40,llegadas_total,701472,0.332221,0.404262,0.640014,1.216846,0.912068,0.789339
+v3 train-only,volume_tier,5-15,llegadas_total,876768,0.121724,0.191254,0.373841,1.571204,0.889877,0.479162
+v3 train-only,volume_tier,no training data,llegadas_total,21504,0.256278,0.235034,0.68998,0.917107,0.863862,0.428611
+v3 train-only,volume_tier,2-5,llegadas_total,329760,0.050691,0.088485,0.236221,1.745552,0.888273,0.279485
+v3 train-only,borough,Manhattan,llegadas_total,923040,1.431766,0.905325,1.599251,0.632314,0.909137,1.177241
+v3 train-only,borough,Brooklyn,llegadas_total,1126176,0.535235,0.459508,0.852405,0.858516,0.935621,0.775004
+v3 train-only,borough,Queens,llegadas_total,654720,0.235466,0.277168,0.526412,1.177106,0.910657,0.577524
+v3 train-only,borough,Bronx,llegadas_total,493632,0.145222,0.209648,0.412558,1.443646,0.857009,0.508162
+v3 train-only,borough,unassigned,llegadas_total,9216,0.011176,0.018279,0.1247,1.635507,0.703278,0.079619
+v3 train-only,nta,Chelsea-Hudson Yards,llegadas_total,45792,2.937194,1.44719,2.376007,0.492712,0.841004,1.512538
+v3 train-only,nta,Midtown South-Flatiron-Union Square,llegadas_total,32256,2.782924,1.335059,2.116824,0.479733,0.869234,1.311098
+v3 train-only,nta,Greenwich Village,llegadas_total,26880,2.566592,1.356908,2.184176,0.528681,0.837484,1.544081
+v3 train-only,nta,Midtown-Times Square,llegadas_total,58656,1.625153,1.195168,2.177039,0.735419,0.954095,1.643931
+v3 train-only,nta,Murray Hill-Kips Bay,llegadas_total,32256,2.049541,1.223328,1.992545,0.596879,0.96399,1.453002
+v3 train-only,nta,Lower East Side,llegadas_total,28704,1.731431,1.06477,1.668123,0.614965,0.951016,1.306776
+v3 train-only,nta,SoHo-Little Italy-Hudson Square,llegadas_total,26880,2.291257,1.245163,2.019072,0.543441,0.893976,1.361984
+v3 train-only,nta,West Village,llegadas_total,29568,2.26576,1.201964,2.001443,0.53049,0.868227,1.305186
+v3 train-only,nta,East Village,llegadas_total,55104,1.892403,1.116687,1.77697,0.590089,0.90592,1.336585
+v3 train-only,nta,Upper East Side-Lenox Hill-Roosevelt Island,llegadas_total,20160,1.720288,1.004337,1.623144,0.583819,0.907668,1.205028
+v3 train-only,nta,Williamsburg,llegadas_total,55104,1.637395,1.021504,1.626479,0.62386,0.939172,1.292572
+v3 train-only,nta,Hell's Kitchen,llegadas_total,28224,2.162521,1.19607,1.826861,0.553091,0.934613,1.331081
+v3 train-only,nta,Upper West Side-Lincoln Square,llegadas_total,22848,2.131784,1.208685,1.879253,0.566983,0.956307,1.360283
+v3 train-only,nta,Chinatown-Two Bridges,llegadas_total,24192,1.294229,0.8922,1.401099,0.689368,0.995348,1.18479
+v3 train-only,nta,Fort Greene,llegadas_total,30912,1.151592,0.791405,1.241052,0.687227,0.936769,1.074598
+v3 train-only,nta,Financial District-Battery Park City,llegadas_total,44352,1.298115,0.867984,1.428545,0.66865,0.911502,1.166729
+v3 train-only,nta,Upper East Side-Carnegie Hill,llegadas_total,28800,1.292847,0.992539,1.655629,0.767716,0.939396,1.423631
+v3 train-only,nta,Stuyvesant Town-Peter Cooper Village,llegadas_total,9408,1.675808,0.92421,1.455755,0.551501,0.924932,1.039313
+v3 train-only,nta,Greenpoint,llegadas_total,40320,1.128522,0.778403,1.239752,0.689755,0.938077,1.0618
+v3 train-only,nta,Tribeca-Civic Center,llegadas_total,34944,1.302885,0.871346,1.492114,0.668782,0.88616,1.16369
+v3 train-only,nta,East Midtown-Turtle Bay,llegadas_total,25728,1.60269,1.094551,1.955801,0.682946,0.872336,1.494217
+v3 train-only,nta,Gramercy,llegadas_total,13440,2.156399,1.175018,1.80319,0.544898,0.856597,1.300836
+v3 train-only,nta,Upper East Side-Yorkville,llegadas_total,17472,1.135245,0.866953,1.357939,0.763671,1.045129,1.193408
+v3 train-only,nta,Upper West Side (Central),llegadas_total,31488,1.31034,0.885747,1.433278,0.675967,0.92215,1.287198
+v3 train-only,nta,Windsor Terrace-South Slope,llegadas_total,24864,0.430944,0.456578,0.758742,1.059483,1.088494,0.793997
+v3 train-only,nta,Park Slope,llegadas_total,38976,1.060473,0.771763,1.195652,0.727753,0.971006,1.078557
+v3 train-only,nta,East Williamsburg,llegadas_total,57792,0.615206,0.530789,0.872729,0.862782,0.926819,0.873368
+v3 train-only,nta,Prospect Heights,llegadas_total,20448,1.065874,0.75066,1.160429,0.704267,0.962613,1.016596
+v3 train-only,nta,Downtown Brooklyn-DUMBO-Boerum Hill,llegadas_total,39360,1.120808,0.805651,1.304225,0.718813,0.869034,1.151703
+v3 train-only,nta,Brooklyn Heights,llegadas_total,16128,1.163938,0.810226,1.306355,0.696107,0.940071,1.094973
+v3 train-only,nta,Long Island City-Hunters Point,llegadas_total,36288,0.658813,0.547122,0.935025,0.830466,0.935135,0.852789
+v3 train-only,nta,East Harlem (North),llegadas_total,34944,0.463856,0.473526,0.736801,1.020845,0.965087,0.820659
+v3 train-only,nta,Queensbridge-Ravenswood-Dutch Kills,llegadas_total,31872,0.422189,0.440089,0.700033,1.042398,0.935385,0.813166
+v3 train-only,nta,Upper West Side-Manhattan Valley,llegadas_total,14784,1.160782,0.849062,1.282992,0.731457,0.95039,1.187725
+v3 train-only,nta,Carroll Gardens-Cobble Hill-Gowanus-Red Hook,llegadas_total,78048,0.612315,0.551234,0.914423,0.900246,0.951472,0.920533
+v3 train-only,nta,Clinton Hill,llegadas_total,10752,1.337984,0.878223,1.335776,0.656378,0.944429,1.111337
+v3 train-only,nta,Harlem (South),llegadas_total,20160,0.912698,0.781106,1.177438,0.855821,1.049831,1.2023
+v3 train-only,nta,Astoria (Central),llegadas_total,24192,0.700934,0.603673,0.907734,0.86124,0.876553,0.986647
+v3 train-only,nta,East Harlem (South),llegadas_total,21504,0.616769,0.590393,0.909252,0.957234,0.976988,0.982197
+v3 train-only,nta,Bedford-Stuyvesant (West),llegadas_total,47040,0.652955,0.610937,0.932859,0.935649,0.943784,1.185787
+v3 train-only,nta,Crown Heights (North),llegadas_total,51648,0.52095,0.482645,0.821702,0.926471,0.884162,0.841537
+v3 train-only,nta,Astoria (East)-Woodside (North),llegadas_total,37824,0.35303,0.385181,0.635193,1.091072,0.895088,0.736736
+v3 train-only,nta,Brooklyn Navy Yard,llegadas_total,9408,0.736607,0.595798,1.085688,0.808841,0.892285,1.020059
+v3 train-only,nta,Morningside Heights,llegadas_total,14784,0.882576,0.695583,1.103428,0.788128,0.799023,1.09072
+v3 train-only,nta,Flatbush,llegadas_total,20064,0.317035,0.369969,0.626869,1.166965,0.937771,0.718986
+v3 train-only,nta,Astoria (North)-Ditmars-Steinway,llegadas_total,53760,0.241629,0.310195,0.53877,1.283761,0.958729,0.651447
+v3 train-only,nta,Bushwick (East),llegadas_total,41280,0.358333,0.415578,0.631868,1.159752,0.920105,0.782778
+v3 train-only,nta,Bushwick (West),llegadas_total,40320,0.586037,0.564509,0.838304,0.963265,0.93926,0.947528
+v3 train-only,nta,Prospect Lefferts Gardens-Wingate,llegadas_total,41664,0.302755,0.361104,0.59311,1.192725,0.940861,0.708439
+v3 train-only,nta,Harlem (North),llegadas_total,38976,0.380311,0.435584,0.674966,1.145337,0.909142,0.846457
+v3 train-only,nta,Bedford-Stuyvesant (East),llegadas_total,52416,0.435096,0.467877,0.720631,1.07534,0.936054,0.846019
+v3 train-only,nta,South Williamsburg,llegadas_total,14784,0.30763,0.358933,0.611583,1.166769,0.919668,0.726189
+v3 train-only,nta,Crown Heights (South),llegadas_total,26880,0.400223,0.451825,0.690425,1.128932,0.822603,0.90341
+v3 train-only,nta,Elmhurst,llegadas_total,47040,0.170111,0.229014,0.445265,1.346264,0.844796,0.533648
+v3 train-only,nta,Melrose,llegadas_total,26880,0.22128,0.28307,0.500235,1.279241,0.844121,0.609891
+v3 train-only,nta,Sunnyside,llegadas_total,47040,0.243495,0.305031,0.516321,1.252722,0.917945,0.617984
+v3 train-only,nta,Sunset Park (West),llegadas_total,57792,0.178,0.233258,0.459828,1.310434,0.926968,0.51501
+v3 train-only,nta,Old Astoria-Hallets Point,llegadas_total,13440,0.352009,0.407252,0.651075,1.156935,0.948137,0.759008
+v3 train-only,nta,Manhattanville-West Harlem,llegadas_total,16128,0.390439,0.430697,0.727066,1.103109,0.834234,0.836328
+v3 train-only,nta,Concourse-Concourse Village,llegadas_total,40320,0.249876,0.325805,0.595469,1.303867,0.863784,0.724368
+v3 train-only,nta,Astoria Park,llegadas_total,4032,0.388641,0.430161,0.710621,1.106833,0.950054,0.795669
+v3 train-only,nta,Hamilton Heights-Sugar Hill,llegadas_total,24192,0.257275,0.338655,0.541708,1.316315,0.961061,0.692691
+v3 train-only,nta,Jackson Heights,llegadas_total,57312,0.182021,0.248346,0.449337,1.364381,0.886912,0.555408
+v3 train-only,nta,Mount Eden-Claremont (West),llegadas_total,20064,0.186553,0.260536,0.455593,1.39658,0.869479,0.594809
+v3 train-only,nta,Randall's Island,llegadas_total,5376,0.320871,0.376658,0.727386,1.173864,0.871153,0.787387
+v3 train-only,nta,Woodside,llegadas_total,45696,0.162049,0.22447,0.423013,1.385195,0.847106,0.531738
+v3 train-only,nta,Ridgewood,llegadas_total,56448,0.232621,0.309025,0.511266,1.328447,0.905123,0.647083
+v3 train-only,nta,Mott Haven-Port Morris,llegadas_total,45120,0.189783,0.260328,0.463292,1.371713,0.839167,0.592259
+v3 train-only,nta,The Battery-Governors Island-Ellis Island-Liberty Island,llegadas_total,4032,0.202877,0.259941,0.623215,1.281274,1.165432,0.500588
+v3 train-only,nta,Washington Heights (South),llegadas_total,32256,0.193607,0.274676,0.455509,1.418727,0.977025,0.580527
+v3 train-only,nta,Belmont,llegadas_total,16128,0.175967,0.243475,0.449891,1.383639,0.804595,0.58201
+v3 train-only,nta,Sunset Park (Central),llegadas_total,21504,0.150019,0.224123,0.421314,1.493965,0.959033,0.517877
+v3 train-only,nta,Sunnyside Yards (North),llegadas_total,4032,0.195685,0.253794,0.467405,1.296955,1.0098,0.509163
+v3 train-only,nta,Fordham Heights,llegadas_total,10752,0.177641,0.246368,0.439316,1.386884,0.854774,0.554184
+v3 train-only,nta,Washington Heights (North),llegadas_total,33600,0.139673,0.215808,0.408811,1.545102,1.004632,0.494754
+v3 train-only,nta,Ocean Hill,llegadas_total,37632,0.12035,0.18732,0.362449,1.556462,0.891889,0.471454
+v3 train-only,nta,Morrisania,llegadas_total,14784,0.166396,0.24214,0.427347,1.455203,0.884526,0.550744
+v3 train-only,nta,Mount Hope,llegadas_total,22848,0.151961,0.229262,0.408745,1.508691,0.861922,0.555326
+v3 train-only,nta,Tremont,llegadas_total,21216,0.113829,0.174656,0.365427,1.534371,0.88496,0.447643
+v3 train-only,nta,East Flatbush-Erasmus,llegadas_total,22848,0.115327,0.176797,0.351385,1.532999,0.966179,0.423932
+v3 train-only,nta,Longwood,llegadas_total,24192,0.130828,0.195563,0.381621,1.494809,0.850882,0.499537
+v3 train-only,nta,Flatbush (West)-Ditmas Park-Parkville,llegadas_total,12096,0.20296,0.288148,0.499603,1.419729,0.974023,0.593872
+v3 train-only,nta,University Heights (North)-Fordham,llegadas_total,21504,0.119141,0.178682,0.364381,1.499755,0.827784,0.458109
+v3 train-only,nta,Highbridge,llegadas_total,16128,0.144903,0.217128,0.403177,1.498432,0.936445,0.50676
+v3 train-only,nta,Maspeth,llegadas_total,33600,0.085565,0.132524,0.315423,1.548807,0.805676,0.382524
+v3 train-only,nta,Claremont Village-Claremont (East),llegadas_total,17472,0.172734,0.24803,0.451956,1.435909,0.882642,0.562621
+v3 train-only,nta,Bay Ridge,llegadas_total,68928,0.070566,0.114611,0.289841,1.624162,0.853295,0.330244
+v3 train-only,nta,Crotona Park East,llegadas_total,20160,0.120784,0.188939,0.365821,1.564279,0.91612,0.464685
+v3 train-only,nta,Inwood,llegadas_total,19776,0.090767,0.140574,0.324914,1.548739,0.879913,0.359155
+v3 train-only,nta,West Farms,llegadas_total,13440,0.131771,0.198925,0.375455,1.509628,0.842148,0.491093
+v3 train-only,nta,Sunnyside Yards (South),llegadas_total,2688,0.210565,0.264299,0.50113,1.255186,0.665635,0.611832
+v3 train-only,nta,Kensington,llegadas_total,17472,0.143945,0.22395,0.405999,1.55581,0.989457,0.505211
+v3 train-only,nta,Corona,llegadas_total,36288,0.074405,0.123415,0.290143,1.658691,0.86384,0.35981
+v3 train-only,nta,Flushing-Willets Point,llegadas_total,2688,0.149182,0.225621,0.519243,1.51239,1.011007,0.502382
+v3 train-only,nta,Sunset Park (East)-Borough Park (West),llegadas_total,2688,0.186012,0.271417,0.460114,1.459139,0.886928,0.605033
+v3 train-only,nta,Bedford Park,llegadas_total,33600,0.098899,0.151509,0.338345,1.531964,0.812419,0.407107
+v3 train-only,nta,Glendale,llegadas_total,5376,0.164062,0.225981,0.418032,1.377406,0.778081,0.54529
+v3 train-only,nta,Lincoln Terrace Park,llegadas_total,4032,0.133433,0.235711,0.378358,1.766516,1.214611,0.500031
+v3 train-only,nta,Kingsbridge-Marble Hill,llegadas_total,18816,0.12298,0.178058,0.40326,1.447858,0.729269,0.484208
+v3 train-only,nta,University Heights (South)-Morris Heights,llegadas_total,28224,0.116815,0.180567,0.361294,1.545747,0.833588,0.469652
+v3 train-only,nta,Norwood,llegadas_total,25536,0.082863,0.141247,0.303613,1.704579,0.933695,0.386024
+v3 train-only,nta,East Elmhurst,llegadas_total,32256,0.075149,0.125412,0.28105,1.668844,0.856617,0.364492
+v3 train-only,nta,Claremont Park,llegadas_total,2688,0.085193,0.159369,0.315482,1.870672,1.160802,0.39693
+v3 train-only,nta,Brownsville,llegadas_total,37632,0.03699,0.070403,0.200101,1.903297,1.042066,0.228386
+v3 train-only,nta,Inwood Hill Park,llegadas_total,5376,0.088914,0.157457,0.336349,1.770902,1.040062,0.402178
+v3 train-only,nta,Kingsbridge Heights-Van Cortlandt Village,llegadas_total,14784,0.079681,0.129425,0.288546,1.624292,0.839326,0.37823
+v3 train-only,nta,East Flatbush-Rugby,llegadas_total,20832,0.053571,0.096879,0.239303,1.808411,0.960072,0.293524
+v3 train-only,nta,North Corona,llegadas_total,21408,0.057222,0.099471,0.248074,1.738355,0.895288,0.305014
+v3 train-only,nta,Borough Park,llegadas_total,5376,0.075335,0.13501,0.3062,1.792137,1.014101,0.367539
+v3 train-only,nta,Forest Hills,llegadas_total,50688,0.077119,0.139664,0.300904,1.811021,1.1338,0.34859
+v3 train-only,nta,Hunts Point,llegadas_total,9408,0.068559,0.11958,0.267871,1.744197,0.936043,0.34138
+v3 train-only,nta,Riverdale-Spuyten Duyvil,llegadas_total,21504,0.0625,0.105558,0.264236,1.688931,0.91922,0.302704
+v3 train-only,nta,Rego Park,llegadas_total,10752,0.09375,0.161225,0.321234,1.719736,0.992153,0.410409
+v3 train-only,nta,East Flatbush-Farragut,llegadas_total,4032,0.047619,0.083422,0.222073,1.751859,0.911418,0.251418
+v3 train-only,nta,Van Cortlandt Park,llegadas_total,6720,0.069643,0.11677,0.298879,1.676696,0.839613,0.355665
+v3 train-only,nta,Bronx Park,llegadas_total,1344,0.044643,0.084917,0.236667,1.902133,1.065026,0.24925
+v3 train-only,nta,East Flatbush-Remsen Village,llegadas_total,18816,0.047938,0.090575,0.221624,1.889418,1.032966,0.275868
+v3 train-only,nta,Cypress Hills,llegadas_total,12096,0.041997,0.071548,0.222819,1.703629,0.807962,0.25826
+v3 train-only,nta,unassigned,llegadas_total,9216,0.011176,0.018279,0.1247,1.635507,0.703278,0.079619
+v3 train-only,nta,East New York (North),llegadas_total,17472,0.034054,0.078195,0.193859,2.296177,1.426099,0.234627
+v3 train-only,nta,East New York-New Lots,llegadas_total,6720,0.039286,0.14646,0.234808,3.728071,3.040535,0.325681
+v3 train-only,hour,0,llegadas_total,133616,0.249978,0.304566,0.580615,1.218375,0.899615,0.649498
+v3 train-only,hour,1,llegadas_total,133616,0.149121,0.204656,0.442723,1.372412,0.935175,0.483241
+v3 train-only,hour,2,llegadas_total,133616,0.092437,0.138839,0.346964,1.501991,0.949329,0.362697
+v3 train-only,hour,3,llegadas_total,133616,0.058923,0.095303,0.275692,1.617422,0.927427,0.279902
+v3 train-only,hour,4,llegadas_total,133616,0.049859,0.08484,0.243349,1.701587,0.923351,0.258067
+v3 train-only,hour,5,llegadas_total,133616,0.104965,0.13796,0.363971,1.314343,0.85625,0.352869
+v3 train-only,hour,6,llegadas_total,133616,0.285842,0.275882,0.674307,0.965158,0.84506,0.558149
+v3 train-only,hour,7,llegadas_total,133616,0.629311,0.483675,1.058896,0.768579,0.749455,0.839057
+v3 train-only,hour,8,llegadas_total,133616,1.040766,0.686958,1.533672,0.66005,0.828597,0.997943
+v3 train-only,hour,9,llegadas_total,133616,0.901434,0.644873,1.365788,0.715386,0.893788,0.95206
+v3 train-only,hour,10,llegadas_total,133616,0.647363,0.542441,1.004523,0.837925,0.941496,0.869138
+v3 train-only,hour,11,llegadas_total,133616,0.653253,0.552318,0.975167,0.845489,0.979162,0.876056
+v3 train-only,hour,12,llegadas_total,133616,0.770858,0.613153,1.067178,0.795416,0.977954,0.928189
+v3 train-only,hour,13,llegadas_total,133616,0.835072,0.654598,1.123152,0.783882,0.989126,0.978108
+v3 train-only,hour,14,llegadas_total,133616,0.892004,0.669992,1.146759,0.751108,0.949389,0.989574
+v3 train-only,hour,15,llegadas_total,133616,1.00375,0.718074,1.223114,0.715392,0.912556,1.036262
+v3 train-only,hour,16,llegadas_total,133616,1.148538,0.772418,1.310761,0.672523,0.910075,1.067386
+v3 train-only,hour,17,llegadas_total,133616,1.527557,0.893128,1.565918,0.584677,0.910273,1.125452
+v3 train-only,hour,18,llegadas_total,133616,1.540961,0.904116,1.586244,0.586722,0.910749,1.139742
+v3 train-only,hour,19,llegadas_total,133616,1.189117,0.790949,1.373033,0.665156,0.920324,1.085098
+v3 train-only,hour,20,llegadas_total,133616,0.822027,0.644135,1.097599,0.783594,0.950731,0.985134
+v3 train-only,hour,21,llegadas_total,133616,0.619716,0.548852,0.932563,0.88565,0.945898,0.909114
+v3 train-only,hour,22,llegadas_total,133616,0.505658,0.492669,0.848847,0.974312,0.933331,0.871088
+v3 train-only,hour,23,llegadas_total,133616,0.374618,0.406584,0.726287,1.085329,0.894273,0.783553
+v3 train-only,weekday,3,llegadas_total,459168,0.839187,0.586225,1.173779,0.698563,0.846064,0.882757
+v3 train-only,weekday,4,llegadas_total,458976,0.832015,0.596678,1.154956,0.717148,0.887575,0.905611
+v3 train-only,weekday,5,llegadas_total,458496,0.570644,0.48617,0.9942,0.851968,0.981751,0.79838
+v3 train-only,weekday,6,llegadas_total,458208,0.265002,0.316517,0.614801,1.194395,1.12457,0.614836
+v3 train-only,weekday,0,llegadas_total,458016,0.583427,0.466196,0.931189,0.799064,0.985163,0.747693
+v3 train-only,weekday,1,llegadas_total,457344,0.776704,0.551219,1.102334,0.70969,0.905815,0.833787
+v3 train-only,weekday,2,llegadas_total,456576,0.827008,0.573106,1.165773,0.692987,0.85798,0.868595
+v3 train-only,day_type,workday,llegadas_total,2290080,0.771691,0.554708,1.109339,0.718821,0.890623,0.847722
+v3 train-only,day_type,weekend,llegadas_total,916704,0.417871,0.40137,0.826622,0.960512,1.027023,0.706637

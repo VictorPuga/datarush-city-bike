@@ -1,0 +1,29 @@
+bike,quantity,level,coverage,mean_width
+classic,station-day net,0.8,0.927404,13.634402
+classic,station-day net,0.9,0.961921,17.216079
+classic,cumulative net to 06:00,0.8,0.924859,3.208385
+classic,cumulative net to 06:00,0.9,0.951892,3.834431
+classic,cumulative net to 09:00,0.8,0.901389,5.820694
+classic,cumulative net to 09:00,0.9,0.942791,7.187294
+classic,cumulative net to 12:00,0.8,0.904712,8.012523
+classic,cumulative net to 12:00,0.9,0.947312,10.000476
+classic,cumulative net to 15:00,0.8,0.914292,9.842768
+classic,cumulative net to 15:00,0.9,0.955155,12.34957
+classic,cumulative net to 18:00,0.8,0.922405,11.65474
+classic,cumulative net to 18:00,0.9,0.959316,14.675211
+classic,cumulative net to 21:00,0.8,0.926506,13.105521
+classic,cumulative net to 21:00,0.9,0.960574,16.537268
+electric,station-day net,0.8,0.930158,22.913044
+electric,station-day net,0.9,0.959586,29.125087
+electric,cumulative net to 06:00,0.8,0.904053,5.54177
+electric,cumulative net to 06:00,0.9,0.945516,6.829298
+electric,cumulative net to 09:00,0.8,0.860256,9.917271
+electric,cumulative net to 09:00,0.9,0.920369,12.445194
+electric,cumulative net to 12:00,0.8,0.876033,13.065215
+electric,cumulative net to 12:00,0.9,0.93417,16.485536
+electric,cumulative net to 15:00,0.8,0.89639,15.973583
+electric,cumulative net to 15:00,0.9,0.944408,20.218386
+electric,cumulative net to 18:00,0.8,0.915699,19.185367
+electric,cumulative net to 18:00,0.9,0.955005,24.340666
+electric,cumulative net to 21:00,0.8,0.926177,21.803007
+electric,cumulative net to 21:00,0.9,0.958239,27.70037

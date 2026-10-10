@@ -37,7 +37,8 @@ See [docs/nta-dataset.md](docs/nta-dataset.md) for the download command and fiel
 ## Quick start
 
 1. Download trip data into `data/raw/`.
-2. Run `python3 scripts/extract_stations.py`. It reads every zip in `data/raw/`, so with the 12 months used by the model it rebuilds `stations.json` from all of them, see [docs/ml-data.md](docs/ml-data.md).
+2. Run `python3 scripts/extract_stations.py`.
+   It reads every zip in `data/raw/`, so with the 12 months used by the model it rebuilds `stations.json` from all of them, see [docs/ml-data.md](docs/ml-data.md).
 3. Run `cd ui && yarn install && yarn dev`.
 4. Open http://localhost:3000.
 
@@ -91,9 +92,14 @@ Requests return 503 if the model files in `ui/models/` are missing.
 ## Model
 
 The demand model and its evaluation live in `notebooks/`.
-See [docs/ml-data.md](docs/ml-data.md) for the training tables and [docs/evaluation.md](docs/evaluation.md) for the evaluation protocol and results.
+See [docs/ml-data.md](docs/ml-data.md) for the training tables, [docs/evaluation.md](docs/evaluation.md) for the evaluation protocol and [docs/model.md](docs/model.md) for the v3 model.
 
-1. Put the monthly Citi Bike zips in `data/raw/`. The model uses 12 consecutive months, Oct 2025 to Sep 2026.
+1. Put the monthly Citi Bike zips in `data/raw/`.
+   The model uses 12 consecutive months, Oct 2025 to Sep 2026.
 2. Install `notebooks/requirements.txt` in a virtual environment.
-3. Run `notebooks/LIMPIEZA_citibike.ipynb` to build `notebooks/data_procesada/`. It needs about 6 GB of memory.
-4. Run `notebooks/EVALUACION_protocolo.ipynb` to score the baselines and the shipped network. It writes the tables in `data/results/`.
+3. Run `notebooks/LIMPIEZA_citibike.ipynb` to build `notebooks/data_procesada/`.
+   It needs about 6 GB of memory.
+4. Run `notebooks/EVALUACION_protocolo.ipynb` to score the baselines and the shipped network.
+   It writes the tables in `data/results/`.
+5. Run `notebooks/MODELO_v3.ipynb` to train, score and export the v3 model, see [docs/model.md](docs/model.md).
+   It writes `notebooks/modelos/demanda_net_v3.onnx` and more tables in `data/results/`.

@@ -531,3 +531,34 @@ def choose_bar(metrics):
   val = metrics[(metrics['block'] == 'val') & (metrics['fit'] == 'train-only') & (metrics['model'].isin(BAR_CANDIDATES))]
   table = summary(val).loc[lambda t: t.index.isin(BAR_CANDIDATES)].sort_values('deviance_15min')
   return table.index[0], table
+
+
+def logscore_mean(Y, act, mu, alpha=None):
+  """Mean -log P(y) over active cells and the four targets. Poisson when ``alpha`` is None, else negative binomial."""
+  y, m = Y[act].astype(np.float64), mu[act].astype(np.float64)
+  if alpha is None:
+    return float(poisson_logscore(y, m).mean())
+  return float(nb_logscore(y, m, alpha[act].astype(np.float64)).mean())
+
+
+def block_summary(data, name, mu, alpha, block, fit=''):
+  """One row of headline numbers for a forecast of a block (mean of departures and arrivals totals)."""
+  Yb, ab, _ = block_arrays(data, block)
+  pm = point_metrics(Yb, mu, ab)
+  t = pm[pm['target'].isin(['salidas_total', 'llegadas_total'])]
+
+  def g(level, metric):
+    return float(t[t['level'] == level][metric].mean())
+
+  row = dict(model=name,
+             fit=fit,
+             block=block.name,
+             deviance_15min=g('15min', 'deviance'),
+             mae_15min=g('15min', 'mae'),
+             wape_hour=g('hour', 'wape'),
+             wape_day=g('day', 'wape'),
+             bias=g('15min', 'bias'),
+             logscore_poisson=logscore_mean(Yb, ab, mu))
+  if alpha is not None:
+    row['logscore_nb'] = logscore_mean(Yb, ab, mu, alpha)
+  return row

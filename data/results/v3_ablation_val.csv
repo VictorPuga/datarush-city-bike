@@ -1,0 +1,5 @@
+model,fit,block,deviance_15min,mae_15min,wape_hour,wape_day,bias,logscore_poisson,logscore_nb
+nb_prior,train-only,val,0.86986,0.575551,0.449639,0.190787,0.946766,0.556651,0.546181
+poisson,train-only,val,0.869317,0.575757,0.449796,0.190964,0.948643,0.556509,
+nb_noprior,train-only,val,0.874496,0.578015,0.452857,0.194482,0.949265,0.55784,0.547206
+nb_rank48,train-only,val,0.86942,0.574823,0.448798,0.191294,0.943157,0.556522,0.546097

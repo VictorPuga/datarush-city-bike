@@ -12,5 +12,6 @@ Each page covers one process: what it does, how to run it, and what it produces.
 | [dashboard.md](dashboard.md) | How the UI uses stations and regions |
 | [ml-data.md](ml-data.md) | Building the training tables from the raw trip files |
 | [evaluation.md](evaluation.md) | The fixed model evaluation protocol and its results |
+| [model.md](model.md) | The v3 demand model, its calibrated intervals, results and the UI changes it needs |
 
 Add a new page here when a new process is introduced, and link it in the table.

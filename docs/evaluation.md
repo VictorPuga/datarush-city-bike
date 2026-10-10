@@ -194,11 +194,17 @@ Log score at 15 minutes with a Poisson forecast, lower is better:
 | `data/results/breakdown_test.csv` | Test block metrics by tier, borough, neighborhood, hour, weekday and day type |
 | `data/results/intervals_poisson_test.csv` | Coverage, width and Winkler score under the Poisson assumption |
 | `data/results/logscore_poisson_test.csv` | Poisson log score per target |
+| `data/results/point_metrics_v3.csv`, `breakdown_test_v3.csv` | The same tables for the v3 model and the v2 recipe retrained on 12 months |
+| `data/results/intervals_v3_test.csv`, `intervals_v3_net_test.csv` | Coverage of the calibrated intervals, see [model.md](model.md) |
+| `data/results/v3_*.csv`, `v3_shocks.json` | Variants on the validation block, folds, frozen-model drift and the fitted shock variances |
+
+The v3 model is scored with the same blocks and metrics, see [model.md](model.md) for its results.
+It lowers the test deviance by 13.2% and the station-day WAPE by 37.5% against the baseline to beat.
 
 ## Known limits
 
 - With 12 months, only one summer-to-autumn transition is available, so the folds are all late summer and September.
 - Demand is only the satisfied demand: an empty or full station hides trips that did not happen, and trip data cannot show it.
-- The shipped network was trained on 92 days, so its station embeddings do not cover the 54 stations that appear only in the 12-month table.
+- The shipped network was trained on 64 days (Jul 1 to Sep 2), so its station embeddings do not cover the 54 stations that appear only in the 12-month table.
 - Holidays: 12 federal holidays are in the table.
   The validation block contains Labor Day (Sep 7) and the test block contains none, so holiday error is only visible in the validation block.

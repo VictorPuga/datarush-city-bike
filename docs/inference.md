@@ -30,6 +30,9 @@ Inputs, one row per 15-minute slot:
 Output `lambda` is float32 `[S, 2461, 4]`: expected bikes per 15 minutes for `salidas_classic`, `salidas_electric`, `llegadas_classic`, `llegadas_electric` (departures then arrivals).
 One call with `S = 96` predicts a whole day, so the result is cached per date (8 dates).
 
+The v3 model in `notebooks/modelos/` has the same inputs, a second output `alpha` and 2,515 stations, see [model.md](model.md).
+The dashboard serves v2 until the UI changes listed there are made.
+
 ## Weather
 
 `weather.ts` fetches hourly values from Open-Meteo for NYC in the Open-Meteo default units (°C, km/h, mm).
