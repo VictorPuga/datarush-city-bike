@@ -1,12 +1,15 @@
 # Dashboard
 
-The Next.js app in `ui/` shows predicted classic and electric bikes per station on a react-leaflet map.
+The Next.js app in `ui/` shows predicted classic and electric bikes per NTA neighborhood on a react-leaflet map.
 Predictions come from a mock API until the ML model is ready.
 
-## Views
+## Map
 
-- **Stations:** one density circle per station, with optional bike markers. Circle size and color grow with the predicted count.
-- **Regions:** one polygon per NTA neighborhood. Color follows bikes per station. Gray polygons have no stations.
+- **Regions:** one polygon per NTA neighborhood, always shown. Color follows bikes per station. Gray polygons have no stations.
+- **Stations:** small circle markers appear from zoom 15, colored by the predicted count for the selected bike type. Below that zoom only regions show.
+- Clicking a region selects it. Clicking a station opens the station panel.
+- Searching for a station flies the map to zoom 15, so its marker is visible.
+- The zoom threshold is `STATION_MIN_ZOOM` in `ui/src/components/Map.tsx`.
 
 ## Regions in the UI
 

@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { useMemo, useState } from 'react';
 import { aggregateRegions, regionIdOf } from '@/lib/regions';
 import { useJson } from '@/lib/useJson';
-import type { Layer, PredictionsResponse, StationDayResponse, View } from '@/lib/types';
+import type { Layer, PredictionsResponse, StationDayResponse } from '@/lib/types';
 import type { FlyTarget } from './Map';
 import Controls from './Controls';
 import styles from './Dashboard.module.css';
@@ -14,7 +14,6 @@ import LayerToggle from './LayerToggle';
 import StationPanel from './StationPanel';
 import StationSearch from './StationSearch';
 import Summary from './Summary';
-import ViewToggle from './ViewToggle';
 
 const BikeMap = dynamic(() => import('./Map'), { ssr: false });
 
@@ -29,8 +28,6 @@ export default function Dashboard() {
   const [date, setDate] = useState(todayISO);
   const [hour, setHour] = useState(8);
   const [layer, setLayer] = useState<Layer>('both');
-  const [view, setView] = useState<View>('stations');
-  const [showMarkers, setShowMarkers] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedRegionId, setSelectedRegionId] = useState<string | null>(null);
   const [flyTarget, setFlyTarget] = useState<FlyTarget | null>(null);
@@ -55,9 +52,7 @@ export default function Dashboard() {
         <BikeMap
           stations={stations}
           regions={regions}
-          view={view}
           layer={layer}
-          showMarkers={showMarkers}
           selectedId={selectedId}
           selectedRegionId={selectedRegionId}
           flyTarget={flyTarget}
@@ -83,41 +78,27 @@ export default function Dashboard() {
         <div className={styles.content}>
           <h1>NYC bike availability forecast</h1>
           <Controls date={date} hour={hour} onDateChange={setDate} onHourChange={setHour} />
-          <ViewToggle view={view} onChange={setView} />
           <LayerToggle layer={layer} onChange={setLayer} />
           <StationSearch
             stations={stations}
             onSelect={(id) => {
-              setView('stations');
               setSelectedId(id);
               const station = stations.find((item) => item.id === id);
               if (station) flyTo(station.lat, station.lon, 15);
             }}
           />
           <Summary stations={stations} />
-          <Legend view={view} />
-          {view === 'stations' && (
-            <button
-              type="button"
-              className={styles.toggle}
-              aria-pressed={showMarkers}
-              onClick={() => setShowMarkers((value) => !value)}
-            >
-              {showMarkers ? 'Hide markers' : 'Show markers'}
-            </button>
-          )}
-          {view === 'regions' && (
-            <RegionList
-              regions={regions}
-              layer={layer}
-              selectedId={selectedRegionId}
-              onSelect={(id) => {
-                setSelectedRegionId(id);
-                const region = regions.find((item) => item.id === id);
-                if (region) flyTo(region.lat, region.lon, 14);
-              }}
-            />
-          )}
+          <Legend />
+          <RegionList
+            regions={regions}
+            layer={layer}
+            selectedId={selectedRegionId}
+            onSelect={(id) => {
+              setSelectedRegionId(id);
+              const region = regions.find((item) => item.id === id);
+              if (region) flyTo(region.lat, region.lon, 14);
+            }}
+          />
           {predictions.error && (
             <p role="alert" className={styles.error}>
               {predictions.error}{' '}

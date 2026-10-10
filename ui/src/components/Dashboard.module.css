@@ -48,13 +48,6 @@
   font-size: 20px;
 }
 
-.toggle {
-  align-self: flex-start;
-  padding: 6px 12px;
-  font: inherit;
-  cursor: pointer;
-}
-
 .error {
   font-size: 14px;
 }

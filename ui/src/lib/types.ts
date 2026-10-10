@@ -49,5 +49,3 @@ export type StationDayResponse = {
 };
 
 export type Layer = 'both' | 'classic' | 'electric';
-
-export type View = 'stations' | 'regions';
