@@ -1,7 +1,12 @@
 import { MAX_BIKES, RAMP } from '@/lib/density';
+import type { View } from '@/lib/types';
 import styles from './Legend.module.css';
 
-export default function Legend() {
+type LegendProps = {
+  view: View;
+};
+
+export default function Legend({ view }: LegendProps) {
   return (
     <div className={styles.legend}>
       <span className={styles.title}>Bikes per station</span>
@@ -10,7 +15,11 @@ export default function Legend() {
         <span>0</span>
         <span>{MAX_BIKES}+</span>
       </div>
-      <span className={styles.note}>Circle size and color grow with the predicted count.</span>
+      <span className={styles.note}>
+        {view === 'clusters'
+          ? 'Circle size grows with the cluster total. Color shows bikes per station.'
+          : 'Circle size and color grow with the predicted count.'}
+      </span>
     </div>
   );
 }

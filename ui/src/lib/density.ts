@@ -1,4 +1,4 @@
-import type { Layer, StationPrediction } from './types';
+import type { BikeCounts, Layer } from './types';
 
 export const MAX_BIKES = 40;
 
@@ -7,7 +7,7 @@ export const RAMP = ['#ffe08a', '#f59e0b', '#e4572e', '#8b1e3f'];
 const BASE_RADIUS_METERS = 40;
 const RADIUS_PER_SQRT_BIKE = 25;
 
-export function layerValue(station: StationPrediction, layer: Layer): number {
+export function layerValue(station: Pick<BikeCounts, 'classic' | 'electric'>, layer: Layer): number {
   if (layer === 'classic') return station.classic;
   if (layer === 'electric') return station.electric;
   return station.classic + station.electric;
@@ -15,6 +15,13 @@ export function layerValue(station: StationPrediction, layer: Layer): number {
 
 export function radiusFor(value: number): number {
   return BASE_RADIUS_METERS + RADIUS_PER_SQRT_BIKE * Math.sqrt(value);
+}
+
+const CLUSTER_BASE_RADIUS_METERS = 200;
+const CLUSTER_RADIUS_PER_SQRT_BIKE = 30;
+
+export function clusterRadiusFor(value: number): number {
+  return CLUSTER_BASE_RADIUS_METERS + CLUSTER_RADIUS_PER_SQRT_BIKE * Math.sqrt(value);
 }
 
 function hexToRgb(hex: string): [number, number, number] {

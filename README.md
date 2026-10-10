@@ -36,6 +36,12 @@ Run `python3 scripts/extract_stations.py` to derive all start stations from `dat
 Pass `--top N` to keep only the N busiest.
 It writes `ui/src/data/stations.json`.
 
+### Clusters
+Run `python3 scripts/cluster_stations.py` to group stations by location with k-means (standard library only).
+Pass `-k N` for the number of clusters (default 150), `--seed` and `--restarts` to tune reproducibility.
+It reads `stations.json` and writes `ui/src/data/clusters.json`, with a station-to-cluster `assignments` map and per-cluster centroid, station count, trips, and electric share.
+The dashboard's **Clusters** view sums the station predictions per cluster, and replaces the former marker clustering.
+
 ### Run the UI
 ```sh
 cd ui

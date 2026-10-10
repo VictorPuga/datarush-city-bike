@@ -5,11 +5,9 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Circle, MapContainer, Marker, TileLayer, Tooltip, useMap } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-cluster';
-import 'react-leaflet-cluster/dist/assets/MarkerCluster.css';
-import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css';
-import { colorFor, layerValue, radiusFor } from '@/lib/density';
-import type { Layer, StationPrediction } from '@/lib/types';
+import { clusterLabel } from '@/lib/clusters';
+import { clusterRadiusFor, colorFor, layerValue, radiusFor } from '@/lib/density';
+import type { ClusterPrediction, Layer, StationPrediction, View } from '@/lib/types';
 import { ClassicBikeIcon, ElectricBikeIcon } from './BikeIcons';
 import styles from './Map.module.css';
 
@@ -34,13 +32,19 @@ function stationIcon(station: StationPrediction, layer: Layer) {
   return electric ? icons.electric : icons.classic;
 }
 
+export type FlyTarget = { lat: number; lon: number; zoom: number; request: number };
+
 type MapProps = {
   stations: StationPrediction[];
+  clusters: ClusterPrediction[];
+  view: View;
   layer: Layer;
   showMarkers: boolean;
   selectedId: string | null;
-  flyTarget: { id: string; request: number } | null;
+  selectedClusterId: number | null;
+  flyTarget: FlyTarget | null;
   onSelect: (id: string) => void;
+  onSelectCluster: (id: number) => void;
 };
 
 function StationTooltip({ station }: { station: StationPrediction }) {
@@ -55,19 +59,41 @@ function StationTooltip({ station }: { station: StationPrediction }) {
   );
 }
 
-function FlyToStation({ stations, target }: { stations: StationPrediction[]; target: MapProps['flyTarget'] }) {
+function ClusterTooltip({ cluster }: { cluster: ClusterPrediction }) {
+  return (
+    <Tooltip sticky>
+      <strong>{clusterLabel(cluster.id)}</strong> · {cluster.stations} stations
+      <br />
+      <ClassicBikeIcon size={14} /> Classic: {cluster.classic} ({cluster.classicLow}–{cluster.classicHigh})
+      <br />
+      <ElectricBikeIcon size={14} /> Electric: {cluster.electric} ({cluster.electricLow}–{cluster.electricHigh})
+    </Tooltip>
+  );
+}
+
+function FlyToTarget({ target }: { target: FlyTarget | null }) {
   const map = useMap();
   useEffect(() => {
-    if (!target) return;
-    const station = stations.find((item) => item.id === target.id);
-    if (station) map.flyTo([station.lat, station.lon], Math.max(map.getZoom(), 15));
+    if (target) map.flyTo([target.lat, target.lon], Math.max(map.getZoom(), target.zoom));
     // eslint-disable-next-line react-hooks/exhaustive-deps -- fly only on a new request, not on data refresh
   }, [target?.request, map]);
   return null;
 }
 
-export default function BikeMap({ stations, layer, showMarkers, selectedId, flyTarget, onSelect }: MapProps) {
+export default function BikeMap({
+  stations,
+  clusters,
+  view,
+  layer,
+  showMarkers,
+  selectedId,
+  selectedClusterId,
+  flyTarget,
+  onSelect,
+  onSelectCluster,
+}: MapProps) {
   const selected = stations.find((station) => station.id === selectedId);
+  const selectedCluster = clusters.find((cluster) => cluster.id === selectedClusterId);
 
   return (
     <MapContainer center={NYC_CENTER} zoom={13} preferCanvas className={styles.map}>
@@ -75,22 +101,23 @@ export default function BikeMap({ stations, layer, showMarkers, selectedId, flyT
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <FlyToStation stations={stations} target={flyTarget} />
-      {stations.map((station) => {
-        const value = layerValue(station, layer);
-        return (
-          <Circle
-            key={`density-${station.id}`}
-            center={[station.lat, station.lon]}
-            radius={radiusFor(value)}
-            pathOptions={{ stroke: false, fillColor: colorFor(value), fillOpacity: 0.45 }}
-            eventHandlers={{ click: () => onSelect(station.id) }}
-          >
-            {!showMarkers && <StationTooltip station={station} />}
-          </Circle>
-        );
-      })}
-      {selected && (
+      <FlyToTarget target={flyTarget} />
+      {view === 'stations' &&
+        stations.map((station) => {
+          const value = layerValue(station, layer);
+          return (
+            <Circle
+              key={`density-${station.id}`}
+              center={[station.lat, station.lon]}
+              radius={radiusFor(value)}
+              pathOptions={{ stroke: false, fillColor: colorFor(value), fillOpacity: 0.45 }}
+              eventHandlers={{ click: () => onSelect(station.id) }}
+            >
+              {!showMarkers && <StationTooltip station={station} />}
+            </Circle>
+          );
+        })}
+      {view === 'stations' && selected && (
         <Circle
           center={[selected.lat, selected.lon]}
           radius={radiusFor(layerValue(selected, layer)) + 10}
@@ -98,19 +125,45 @@ export default function BikeMap({ stations, layer, showMarkers, selectedId, flyT
           interactive={false}
         />
       )}
-      {showMarkers && (
-        <MarkerClusterGroup chunkedLoading>
-          {stations.map((station) => (
-            <Marker
-              key={station.id}
-              position={[station.lat, station.lon]}
-              icon={stationIcon(station, layer)}
-              eventHandlers={{ click: () => onSelect(station.id) }}
+      {view === 'stations' &&
+        showMarkers &&
+        stations.map((station) => (
+          <Marker
+            key={station.id}
+            position={[station.lat, station.lon]}
+            icon={stationIcon(station, layer)}
+            eventHandlers={{ click: () => onSelect(station.id) }}
+          >
+            <StationTooltip station={station} />
+          </Marker>
+        ))}
+      {view === 'clusters' &&
+        clusters.map((cluster) => {
+          const value = layerValue(cluster, layer);
+          return (
+            <Circle
+              key={`cluster-${cluster.id}`}
+              center={[cluster.lat, cluster.lon]}
+              radius={clusterRadiusFor(value)}
+              pathOptions={{
+                color: '#111',
+                weight: cluster.id === selectedClusterId ? 3 : 1,
+                fillColor: colorFor(value / cluster.stations),
+                fillOpacity: 0.55,
+              }}
+              eventHandlers={{ click: () => onSelectCluster(cluster.id) }}
             >
-              <StationTooltip station={station} />
-            </Marker>
-          ))}
-        </MarkerClusterGroup>
+              <ClusterTooltip cluster={cluster} />
+            </Circle>
+          );
+        })}
+      {view === 'clusters' && selectedCluster && (
+        <Circle
+          center={[selectedCluster.lat, selectedCluster.lon]}
+          radius={clusterRadiusFor(layerValue(selectedCluster, layer)) + 30}
+          pathOptions={{ color: '#111', weight: 3, fill: false }}
+          interactive={false}
+        />
       )}
     </MapContainer>
   );
