@@ -52,12 +52,24 @@
 }
 
 .map :global(.leaflet-control-attribution) {
-  color: var(--secondary);
-  background: var(--surface);
+  color: #fff;
+  background: rgb(0 0 0 / 0.5);
   backdrop-filter: blur(20px);
   border-radius: 8px 0 0 0;
 }
 
 .map :global(.leaflet-control-attribution a) {
-  color: var(--accent);
+  color: #fff;
+  text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+  .map :global(.leaflet-bottom.leaflet-right) {
+    top: 0;
+    bottom: auto;
+  }
+
+  .map :global(.leaflet-control-attribution) {
+    border-radius: 0 0 0 8px;
+  }
 }
