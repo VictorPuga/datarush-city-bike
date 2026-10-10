@@ -10,11 +10,20 @@ comark: true
 duration: 5min
 ---
 
+<img class="cover-bg" src="https://images.pexels.com/photos/12473031/pexels-photo-12473031.jpeg?w=1280" />
+<div class="cover-overlay"></div>
+
+<div class="cover-text">
+
 # City Bike Rebalancer
 
 ## Cuántas bicis mover, a qué estación y cuándo
 
-<div class="mt-12 text-sm opacity-60">DataRush · Citi Bike NYC · TODO: nombres del equipo</div>
+<div class="mt-12 text-sm">DataRush · Citi Bike NYC · TODO: nombres del equipo</div>
+
+</div>
+
+<div class="credit credit-cover">Foto: Jer Rey, Pexels</div>
 
 <!--
 (0:00–0:15) Somos [equipo]. Les mostramos una herramienta para que operaciones de Citi Bike deje de reaccionar y empiece a planear.
@@ -24,7 +33,10 @@ duration: 5min
 
 # Una estación vacía es un viaje que no ocurre
 
-<div class="grid grid-cols-2 gap-6 mt-8 text-left">
+<div class="grid grid-cols-5 gap-8 mt-8 text-left items-center">
+<div class="col-span-3">
+
+<div class="grid grid-cols-2 gap-6">
 <div class="card">
 
 ### Estación vacía
@@ -39,12 +51,18 @@ El usuario no puede **terminarlo**.
 </div>
 </div>
 
-<div class="mt-8 text-left">
+<div class="mt-8">
 
 Rebalancear cuesta vehículos, personal y tiempo.
 Hoy es **reactivo**.
 Queremos que sea **planeado**.
 
+</div>
+</div>
+<div class="col-span-2 photo">
+<img src="https://images.unsplash.com/photo-1772209254647-34caf1ebaae3?w=1280" />
+<div class="credit">Foto: adam roye, Unsplash</div>
+</div>
 </div>
 
 <!--
