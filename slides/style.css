@@ -97,3 +97,16 @@ table {
   bottom: 0.6rem;
   color: #fff;
 }
+
+.slidev-layout code:not(pre code) {
+  background: rgb(0 122 255 / 0.1);
+  color: var(--slidev-theme-primary);
+  border-radius: 6px;
+  padding: 0.1em 0.4em;
+}
+
+.slidev-layout pre,
+.slidev-layout pre code {
+  background: #1c1c1e;
+  color: #f2f2f7;
+}

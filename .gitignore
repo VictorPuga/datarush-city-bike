@@ -1,3 +1,6 @@
 /data/raw/*.zip
 /data/raw/*.csv
 /tmp/
+/notebooks/*/*.csv
+/notebooks/data_procesada
+.DS_Store

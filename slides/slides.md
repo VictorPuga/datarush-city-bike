@@ -19,7 +19,7 @@ duration: 5min
 
 ## Cuántas bicis mover, a qué estación y cuándo
 
-<div class="mt-12 text-sm">DataRush · Citi Bike NYC · TODO: nombres del equipo</div>
+<div class="mt-12 text-sm">DataRush · Citi Bike NYC · Víctor Puga y Eduardo Porto</div>
 
 </div>
 
@@ -102,17 +102,20 @@ Una bici y un anclaje cuando los necesitan.
 
 # Hallazgo con datos
 
-<div class="todo mt-8">
+<div class="mt-8 text-left">
 
-TODO: reemplazar con un hallazgo real del análisis (septiembre 2026).
-Ideas: flujo neto por barrio entre 8 y 9 AM, miembros vs casuales, participación de bicis eléctricas.
+Julio a septiembre 2026: **la demanda se concentra en dos picos y la mayoría de los viajes son en bici eléctrica**.
+A las 8 AM las estaciones de oficinas se llenan y las residenciales se vacían, y a las 5 PM ocurre lo contrario.
+
+- `9 Ave & W 33 St`: **+125** bicis netas en la mañana y **−119** en la tarde
+- `W 43 St & 10 Ave`: **−68** en la mañana y **+48** en la tarde
 
 </div>
 
 <div class="grid grid-cols-3 gap-6 mt-8">
-<div class="card"><div class="big">TODO</div>viajes analizados</div>
-<div class="card"><div class="big">TODO</div>hora pico</div>
-<div class="card"><div class="big">TODO</div>% eléctricas</div>
+<div class="card"><div class="big">15.2 M</div>viajes analizados</div>
+<div class="card"><div class="big">5 PM</div>hora pico en días laborables (8 AM es el segundo pico)</div>
+<div class="card"><div class="big">73%</div>de viajes en bici eléctrica</div>
 </div>
 
 <!--
@@ -154,16 +157,18 @@ Ideas: flujo neto por barrio entre 8 y 9 AM, miembros vs casuales, participació
 <table class="mt-6 w-full">
 <thead><tr><th>Modelo</th><th>MAE</th><th>RMSE</th><th>Cobertura IC 80%</th></tr></thead>
 <tbody>
-<tr><td>Baseline: promedio estación·hora·día</td><td>TODO</td><td>TODO</td><td>—</td></tr>
-<tr><td>LightGBM / XGBoost</td><td>TODO</td><td>TODO</td><td>TODO</td></tr>
+<tr><td>Baseline: promedio estación·día·slot de 15 min</td><td>0.584</td><td>1.165</td><td>—</td></tr>
+<tr><td>Red neuronal PyTorch (Poisson, embeddings por estación)</td><td>0.515</td><td>1.049</td><td>±1.28√λ (ruido Poisson)</td></tr>
 </tbody>
 </table>
 
 <div class="mt-6 text-left">
 
-- Tarea: demanda por estación y hora, y bicis necesarias
+- Tarea: salidas y llegadas por estación cada 15 min, clásicas y eléctricas
+- Métricas sobre salidas totales en test (17–30 sep): **−11.9% MAE**, **−9.9% RMSE** y **−48% devianza de Poisson** vs. el baseline
+- Entrenado con 2,461 estaciones y 20.9 M de filas
 - Validación **temporal**: entrenar en el pasado, probar en el futuro, sin fuga
-- MAPE solo donde la demanda no es cercana a cero
+- Sin lags: predice cualquier fecha con calendario y pronóstico de clima (Open-Meteo)
 
 </div>
 
@@ -200,14 +205,14 @@ Una estación vacía no genera viajes que contar.
 
 # Demo: el dashboard
 
-<div class="todo mt-6">TODO: capturas o demo en vivo (mapa de barrios, panel de estación con intervalo, insights)</div>
+<img src="/dashboard.png" class="mt-4 mx-auto rounded-xl shadow-lg" style="max-height:230px" />
 
-<div class="mt-6 text-left">
+<div class="mt-4 text-left text-sm">
 
 - Mapa por barrio, estaciones desde zoom 16
 - Pronóstico de 24 horas por estación con banda de confianza
 - Flujo neto: qué barrios ganan o pierden bicis en la siguiente hora
-- Hoy sirve un API simulado; el modelo se conecta en un solo handler
+- El API ejecuta el modelo ONNX con `onnxruntime-node` y clima en vivo
 
 </div>
 
@@ -242,8 +247,8 @@ Una estación vacía no genera viajes que contar.
 <div class="grid grid-cols-3 gap-6 mt-10 text-left">
 <div class="card">
 
-### Modelo en producción
-Conectar el modelo entrenado al API.
+### Reentrenar
+Más meses de datos y confirmar festivos y unidades del clima con el modelo.
 
 </div>
 <div class="card">
