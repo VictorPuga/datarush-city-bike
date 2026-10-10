@@ -100,206 +100,182 @@ Una bici y un anclaje cuando los necesitan.
 
 ---
 
-# Hallazgo con datos
+# Arquitectura del modelo
 
-<img src="/findings_tide_es.png" class="mt-2 mx-auto rounded-xl" style="max-height:285px" />
+<div class="grid grid-cols-5 gap-3 mt-10 items-stretch text-left text-sm">
+<div class="card">
 
-<div class="mt-2 text-left text-sm">
-
-Octubre 2025 a septiembre 2026: **la demanda sigue una marea de commuting**.
-A las 8 AM las estaciones de oficinas se llenan y las residenciales se vacían, y a las 5 PM ocurre lo contrario.
-`9 Ave & W 33 St`: **+103** bicis netas en la mañana y **−104** en la tarde.
-`W 43 St & 10 Ave`: **−72** en la mañana y **+49** en la tarde.
+### Hora
+Calendario y clima de cada intervalo de 15 min.
 
 </div>
+<div class="card">
 
-<div class="grid grid-cols-3 gap-6 mt-3">
-<div class="card"><div class="big">766</div>estaciones ganan o pierden 5 bicis o más cada mañana</div>
-<div class="card"><div class="big">97%</div>invierten el sentido en la tarde</div>
-<div class="card"><div class="big">45.2 M</div>de viajes analizados, 72% en bici eléctrica</div>
-</div>
-
-<!--
-(0:50–1:30) El momento de storytelling: una gráfica, un número, una conclusión.
-Las estaciones se parten en dos grupos: las que pierden bicis entre 6 y 10 AM y las que las ganan.
-El 97% invierte el sentido en la tarde, así que la mañana anticipa la tarde.
--->
-
----
-
-# Qué explica la demanda: el clima
-
-<img src="/findings_weather_es.png" class="mt-2 mx-auto rounded-xl" style="max-height:300px" />
-
-<div class="mt-3 text-left text-sm">
-
-- Lluvia ligera, moderada y fuerte: **−22%**, **−47%** y **−59%** de viajes, y el pico de la mañana cae más (−62% con lluvia moderada)
-- Cada +10 °C: **+30%** de viajes, y **+48%** entre usuarios ocasionales contra **+27%** entre socios
-- Con 11 a 50 mm de lluvia el perfil histórico se pasa hasta **4.5x** y el modelo hasta **1.5x**
+### Estación
+Embedding propio, de barrio y coordenadas.
 
 </div>
+<div class="card">
 
-<!--
-(1:30–2:00) Otra causa de la demanda es el clima. Se compara cada hora con horas secas del mismo mes, tipo de día y hora.
-Con lluvia moderada baja casi la mitad de la demanda.
-El modelo sigue la caída, pero con tormentas muy fuertes todavía se pasa.
--->
+### Producto punto
+Factores de la hora × factores de la estación.
 
----
+</div>
+<div class="card">
 
-# Datos y flujo reproducible
+### Binomial negativa
+Tasa esperada y dispersión de cada celda.
 
-<div class="grid grid-cols-2 gap-6 mt-6 text-left">
+</div>
+<div class="card">
+
+### Intervalos
+Choques compartidos de día, hora y barrio.
+
+</div>
+</div>
+
+<div class="grid grid-cols-2 gap-6 mt-8 text-left text-sm">
 <div class="card">
 
 ### Entradas
-- Viajes Citi Bike: 12 CSV mensuales, oct 2025 a sep 2026
-- 262 barrios NTA 2020 (NYC Open Data)
-- Clima por hora (Open-Meteo) y festivos federales
+- **Calendario:** hora del día, día de la semana, fin de semana, festivo
+- **Clima:** temperatura, humedad, viento, lluvia, lluvia de las 2 horas previas y tipo de clima
 
 </div>
 <div class="card">
 
-### Proceso
-1. Limpieza: nulos, duración, coordenadas, estaciones de prueba y duplicados → **45.2 M viajes**
-2. Tabla estación × 15 min: **2,515 estaciones**, 81 M de filas
-3. `extract_stations.py` y `assign_regions.py` → estación → barrio NTA
-4. Modelo exportado a ONNX y dashboard Next.js
+### Salidas, por estación cada 15 min
+- **Tasa esperada** de bicis (`lambda`) y **dispersión** (`alpha`)
+- Para salidas y llegadas, clásicas y eléctricas: 4 series por estación
 
 </div>
 </div>
 
 <!--
-(2:00–2:15) Todo reproducible desde los CSV crudos, con semilla fija.
+(0:50–1:30) Una red neuronal chica que separa lo que depende de la hora de lo que depende de la estación.
+Para la estación s, el intervalo t y el objetivo c (salidas y llegadas, clásicas y eléctricas): log mu = b[s,c] + g0[t,c] + suma de U[s,r,c] * G[t,r,c].
+Una red toma el calendario y el clima del intervalo (13 entradas: hora del día, día de la semana, fin de semana, festivo, temperatura, humedad, viento, lluvia, lluvia de las 2 horas previas y tipo de clima) y produce g0 y G una sola vez por intervalo.
+Cada estación aporta su sesgo b y 24 factores U, a partir de un embedding libre, un embedding de su barrio y sus coordenadas. La parte del barrio es lo que permite pronosticar estaciones nuevas sin historia.
+Cada celda cuesta un producto punto, así que entrenar toma unos 6 minutos en 8 núcleos de CPU.
+La verosimilitud es binomial negativa: varianza = mu + alpha * mu^2, con la dispersión según la tasa, el objetivo y la estación. Da el mismo pronóstico puntual que Poisson, pero un intervalo mucho más realista.
+Entrenamos con ruido en el clima, promedio móvil exponencial de los pesos y calendario coseno.
+Intervalos calibrados: parte del ruido es independiente entre celdas y parte es compartida (el clima de un día, un evento en un barrio, una estación fuera de servicio). Cinco choques compartidos, ajustados en cinco folds, hacen que los intervalos de totales por barrio no queden demasiado angostos.
+Se exporta a ONNX (1.2 MB) y el dashboard lo ejecuta con `onnxruntime-node`.
 -->
 
 ---
 
-# Modelado
+# Nuestro valor agregado: el clima
 
-<table class="mt-4 w-full">
-<thead><tr><th>Modelo</th><th>Error por estación-día</th><th>Error por estación-hora</th><th>Cobertura del IC 80% por estación-día</th></tr></thead>
-<tbody>
-<tr><td>Baseline: perfil histórico de la estación, ajustado al nivel reciente</td><td>33%</td><td>57%</td><td>—</td></tr>
-<tr><td>Red neuronal v2 (Poisson)</td><td>26%</td><td>50%</td><td>63%</td></tr>
-<tr><td><b>Modelo v3: red factorizada, binomial negativa</b></td><td><b>21%</b></td><td><b>47%</b></td><td><b>84%</b></td></tr>
-</tbody>
-</table>
+<img src="/findings_weather_es.png" class="mt-2 mx-auto rounded-xl" style="max-height:180px" />
 
-<div class="mt-4 text-left text-sm">
-
-- Tarea: salidas y llegadas por estación cada 15 min, clásicas y eléctricas
-- **−37.5%** de error por estación-día y **−17.5%** por estación-hora contra el baseline
-- Validación **temporal**: se entrena con el pasado y se prueba en las dos últimas semanas (17 a 30 sep), que no se usaron para elegir nada
-- Entrenado con 12 meses, 2,515 estaciones y 81 M de filas; las estaciones nuevas se pronostican por barrio y coordenadas
-- Sin lags: predice cualquier fecha con calendario y pronóstico de clima
-
+<div class="grid grid-cols-3 gap-6 mt-6">
+<div class="card"><div class="big">−47%</div>de viajes con lluvia moderada</div>
+<div class="card"><div class="big">+30%</div>de viajes por cada +10 °C</div>
+<div class="card"><div class="big">1.5x</div>error máximo del modelo en tormenta, contra 4.5x del perfil histórico</div>
 </div>
 
+<div class="mt-4 text-lg font-semibold">El clima convierte un pronóstico histórico en una decisión de mañana.</div>
+
 <!--
-(2:15–2:50) Baseline contra al menos un modelo más complejo, con validación temporal.
-La mayor parte de la mejora viene de entrenar con 12 meses y no con 3; la arquitectura aporta el resto, más rapidez, estaciones nuevas e intervalos calibrados.
-El error es la suma de errores absolutos entre la suma de salidas (WAPE), en el bloque de prueba.
+(1:30–2:15) Esto es lo que añade nuestra propuesta: una herramienta que no solo repite el pasado, sino que incorpora el pronóstico del clima.
+Se compara cada hora con horas secas del mismo mes, tipo de día y hora.
+Lluvia ligera, moderada y fuerte: −22%, −47% y −59% de viajes, y el pico de la mañana cae más (−62% con lluvia moderada).
+Cada +10 °C: +30% de viajes, y +48% entre usuarios ocasionales contra +27% entre socios.
+Con 11 a 50 mm de lluvia el perfil histórico se pasa hasta 4.5x y el modelo hasta 1.5x.
+El modelo sigue la caída, pero con tormentas muy fuertes todavía se pasa.
+Un operador que ignora el clima manda camiones a reponer estaciones que ese día no se van a vaciar.
 -->
 
 ---
 
-# Incertidumbre
+# Cómo lo construimos
 
-<img src="/findings_trust_es.png" class="mt-2 mx-auto rounded-xl" style="max-height:270px" />
-
-<div class="grid grid-cols-2 gap-6 mt-3 text-left text-sm">
+<div class="grid grid-cols-3 gap-6 mt-10 text-left">
 <div class="card">
 
-### Lo que mostramos
-- Intervalo de 80% por estación y hora, calibrado: por día-estación cubre **84%** (con ruido Poisson: 63%)
-- Las 924 estaciones más usadas (84% de los viajes) se pronostican con **19%** de error por día
+### Datos
+12 meses de viajes, barrios NTA y clima por hora.
 
 </div>
 <div class="card">
 
-### Lo que no se ve
-Los datos solo registran la demanda **satisfecha**.
-Una estación vacía no genera viajes que contar.
-En las 377 estaciones de menos de 5 salidas al día, el intervalo importa más que el punto.
+### Modelo
+Iteramos varias versiones hasta una red factorizada, validada en el tiempo.
 
 </div>
+<div class="card">
+
+### Dashboard
+Modelo ONNX con pronóstico de clima en vivo.
+
+</div>
+</div>
+
+<div class="grid grid-cols-3 gap-6 mt-8">
+<div class="card"><div class="big">21%</div>de error por estación-día</div>
+<div class="card"><div class="big">2,515</div>estaciones pronosticadas cada 15 min</div>
+<div class="card"><div class="big">84%</div>de cobertura del intervalo de 80%</div>
 </div>
 
 <!--
-(2:50–3:15) Un promedio que parece bueno puede fallar justo donde más importa.
-Las estaciones grandes se planean con el punto y las chicas con el intervalo.
+(2:15–3:00) Todo reproducible desde los CSV crudos, con semilla fija.
+Entradas: 12 CSV mensuales de Citi Bike (oct 2025 a sep 2026), 262 barrios NTA 2020 (NYC Open Data), clima por hora (Open-Meteo) y festivos federales.
+Proceso: limpieza de nulos, duración, coordenadas, estaciones de prueba y duplicados (45.2 M viajes); tabla estación × 15 min con 2,515 estaciones y 81 M de filas; `extract_stations.py` y `assign_regions.py` para estación → barrio; modelo exportado a ONNX y dashboard Next.js.
+Iteramos el modelo varias veces; la versión final es una red factorizada con binomial negativa.
+Resultados en el bloque de prueba (17 a 30 sep, no usado para elegir nada): 21% de error por estación-día y 47% por estación-hora, contra 33% y 57% del baseline (perfil histórico de la estación ajustado al nivel reciente). Eso es −37.5% y −17.5%.
+El error es la suma de errores absolutos entre la suma de salidas (WAPE).
+Validación temporal: se entrena con el pasado y se prueba en las dos últimas semanas.
+La tarea es salidas y llegadas por estación cada 15 min, clásicas y eléctricas. Sin lags: predice cualquier fecha con calendario y pronóstico de clima. Las estaciones nuevas se pronostican por barrio y coordenadas.
+El intervalo de 80% por estación y hora está calibrado: por día-estación cubre 84%.
+Las 924 estaciones más usadas (84% de los viajes) se pronostican con 19% de error por día.
+Límite: los datos solo registran la demanda satisfecha. Una estación vacía no genera viajes que contar. En las 377 estaciones de menos de 5 salidas al día, el intervalo importa más que el punto.
 -->
 
 ---
 
 # Demo: el dashboard
 
-<img src="/dashboard.png" class="mt-4 mx-auto rounded-xl shadow-lg" style="max-height:230px" />
-
-<div class="mt-4 text-left text-sm">
-
-- Mapa por barrio, estaciones desde zoom 16
-- Pronóstico de 24 horas por estación con intervalo de 80% calibrado
-- Flujo neto: qué barrios ganan o pierden bicis en la siguiente hora
-- El API ejecuta el modelo ONNX con `onnxruntime-node` y clima en vivo
-
-</div>
-
 <!--
-(3:15–4:05) Demo en vivo: elegir fecha y hora, abrir un barrio, abrir una estación, mostrar el intervalo.
+(3:00–4:00) Demo en vivo: elegir fecha y hora, abrir un barrio, abrir una estación, mostrar el intervalo.
+Mapa por barrio, estaciones desde zoom 16.
+Pronóstico de 24 horas por estación con intervalo de 80% calibrado.
+Flujo neto: qué barrios ganan o pierden bicis en la siguiente hora.
+El API ejecuta el modelo ONNX con `onnxruntime-node` y clima en vivo.
 -->
 
 ---
 
-# Una acción distinta por tipo de estación
+# Conclusión
 
-<table class="mt-4 w-full text-sm">
-<thead><tr><th>Tipo (estaciones)</th><th>Qué se mide</th><th>Acción</th></tr></thead>
-<tbody>
-<tr><td>Origen de commuting (460)</td><td>−14 bicis netas de 6 a 10 AM y +9 en la tarde</td><td>Reponer antes de las 6 AM</td></tr>
-<tr><td>Destino de oficinas (306)</td><td>+20 bicis netas en la mañana; 32% menos demanda en fin de semana</td><td>Retirar antes de las 10 AM, solo en días laborables</td></tr>
-<tr><td>Ocio (78)</td><td>29% más demanda en fin de semana; 25% de viajes ocasionales</td><td>Reforzar el viernes por la tarde y el fin de semana</td></tr>
-<tr><td>Equilibradas (843)</td><td>Balance neto cercano a cero</td><td>Sin ruta programada; vigilar el intervalo</td></tr>
-<tr><td>Baja demanda (650)</td><td>Menos de 10 salidas por día laborable</td><td>No planear con el punto; usar el intervalo</td></tr>
-</tbody>
-</table>
+<div class="grid grid-cols-3 gap-6 mt-8 text-left">
+<div class="card">
 
-<div class="mt-4 text-sm">Con lluvia moderada baja la demanda 47%: la reposición se ajusta al pronóstico.</div>
-<div class="mt-2 text-sm opacity-60">Tipos medidos con 12 meses de viajes; umbrales redondos, sin ajustar a ninguna métrica.</div>
+### Anticipamos
+Pronósticos por estación y hora, con intervalos calibrados, para saber dónde faltarán o sobrarán bicis.
+
+</div>
+<div class="card">
+
+### Incorporamos el clima
+Lluvia moderada baja la demanda **47%**. Nuestro pronóstico ya lo incluye.
+
+</div>
+<div class="card">
+
+### Operamos
+Un dashboard que provee información para que un proveedor pueda organizar el inventario de las estaciones.
+
+</div>
+</div>
+
+<div class="mt-10 text-3xl font-bold">Dejar de reaccionar. Empezar a planear.</div>
+
+<div class="mt-4 text-sm opacity-70">Siguiente paso: un segundo año de datos, inventario en tiempo real con GBFS y rutas de rebalanceo.</div>
 
 <!--
-(4:05–4:40) Qué explica la demanda y qué hacer en cada caso: hora y tipo de estación, tipo de usuario y clima.
-El 38% de los viajes laborables sale de estaciones de origen y el 32% de destinos de oficinas.
--->
-
----
-
-# Siguiente paso
-
-<div class="grid grid-cols-3 gap-6 mt-10 text-left">
-<div class="card">
-
-### Un segundo año
-Separar la tendencia de la estacionalidad: hoy el modelo se queda corto en días fríos y se pasa en tormentas.
-
-</div>
-<div class="card">
-
-### Tiempo real
-Inventario con GBFS: medir el stock y no solo el flujo.
-
-</div>
-<div class="card">
-
-### Rutas de rebalanceo
-Optimizar camiones y turnos.
-
-</div>
-</div>
-
-<div class="mt-10 text-xl font-semibold">Pasar de reaccionar a planear.</div>
-
-<!--
-(4:40–5:00) Cierre conciso. Repetir el mensaje.
+(4:00–5:00) Cierre firme. Repetir el mensaje: cada estación vacía es un viaje perdido, y hoy podemos verla venir.
+Nuestra contribución: pasar de un perfil histórico a un pronóstico que entiende la marea de commuting y el clima, y ponerlo en una herramienta lista para operar.
+Siguiente paso: un segundo año para separar tendencia de estacionalidad (hoy el modelo se queda corto en días fríos y se pasa en tormentas), inventario en tiempo real con GBFS para medir el stock y no solo el flujo, y optimización de camiones y turnos.
 -->
