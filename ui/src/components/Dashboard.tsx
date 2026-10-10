@@ -15,6 +15,7 @@ import LayerToggle from './LayerToggle';
 import StationPanel from './StationPanel';
 import StationSearch from './StationSearch';
 import Summary from './Summary';
+import ThemeToggle from './ThemeToggle';
 
 const BikeMap = dynamic(() => import('./Map'), { ssr: false });
 
@@ -60,6 +61,9 @@ export default function Dashboard() {
           onSelect={setSelectedId}
           onSelectRegion={setSelectedRegionId}
         />
+        <div className={styles.theme}>
+          <ThemeToggle />
+        </div>
         {predictions.loading && (
           <div className={styles.loading} role="status">
             Loading predictions…

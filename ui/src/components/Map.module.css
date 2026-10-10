@@ -56,9 +56,13 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .map .tiles {
+  :global(html:not([data-theme='light'])) .map .tiles {
     filter: invert(1) hue-rotate(180deg) saturate(0.7) contrast(0.85) brightness(0.9);
   }
+}
+
+:global(html[data-theme='dark']) .map .tiles {
+  filter: invert(1) hue-rotate(180deg) saturate(0.7) contrast(0.85) brightness(0.9);
 }
 
 .map :global(.leaflet-control-attribution) {
@@ -76,10 +80,12 @@
 @media (max-width: 767px) {
   .map :global(.leaflet-bottom.leaflet-right) {
     top: 0;
+    right: auto;
     bottom: auto;
+    left: 0;
   }
 
   .map :global(.leaflet-control-attribution) {
-    border-radius: 0 0 0 8px;
+    border-radius: 0 0 8px 0;
   }
 }

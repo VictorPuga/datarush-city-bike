@@ -23,6 +23,19 @@
   box-shadow: var(--shadow);
 }
 
+.theme {
+  position: absolute;
+  top: 12px;
+  right: 56px;
+  z-index: 1000;
+  width: 200px;
+  padding: 2px;
+  background: var(--surface);
+  backdrop-filter: blur(30px) saturate(180%);
+  border-radius: 11px;
+  box-shadow: var(--shadow);
+}
+
 .sidebar {
   position: absolute;
   top: 12px;
