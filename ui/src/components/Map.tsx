@@ -1,18 +1,37 @@
 'use client';
 
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
-import { CircleMarker, MapContainer, Polygon, TileLayer, Tooltip, useMap, useMapEvents } from 'react-leaflet';
+import { MapContainer, Marker, Polygon, TileLayer, Tooltip, useMap, useMapEvents } from 'react-leaflet';
 import { colorFor, layerValue } from '@/lib/density';
 import { regionShapes } from '@/lib/regions';
 import type { Layer, RegionPrediction, StationPrediction } from '@/lib/types';
-import { ClassicBikeIcon, ElectricBikeIcon } from './BikeIcons';
+import { ClassicBikeIcon, ElectricBikeIcon, PEDAL_BIKE_PATH } from './BikeIcons';
 import styles from './Map.module.css';
 
 const NYC_CENTER: [number, number] = [40.7306, -73.9866];
 const INITIAL_ZOOM = 13;
 const STATION_MIN_ZOOM = 16;
-const STATION_MARKER_RADIUS = 6;
+const STATION_MARKER_SIZE = 26;
+const BIKE_GLYPH_SIZE = 16;
+
+const stationIcons = new Map<string, L.DivIcon>();
+
+function stationIcon(color: string, selected: boolean) {
+  const key = `${color}-${selected}`;
+  let icon = stationIcons.get(key);
+  if (!icon) {
+    icon = L.divIcon({
+      className: styles.stationMarker,
+      html: `<span style="background:${color};border-width:${selected ? 3 : 1}px"><svg width="${BIKE_GLYPH_SIZE}" height="${BIKE_GLYPH_SIZE}" viewBox="0 -960 960 960" fill="#111"><path d="${PEDAL_BIKE_PATH}"/></svg></span>`,
+      iconSize: [STATION_MARKER_SIZE, STATION_MARKER_SIZE],
+      iconAnchor: [STATION_MARKER_SIZE / 2, STATION_MARKER_SIZE / 2],
+    });
+    stationIcons.set(key, icon);
+  }
+  return icon;
+}
 
 export type FlyTarget = { lat: number; lon: number; zoom: number; request: number };
 
@@ -119,20 +138,14 @@ export default function BikeMap({
       })}
       {showStations &&
         stations.map((station) => (
-          <CircleMarker
+          <Marker
             key={`station-${station.id}`}
-            center={[station.lat, station.lon]}
-            radius={STATION_MARKER_RADIUS}
-            pathOptions={{
-              color: '#111',
-              weight: station.id === selectedId ? 3 : 1,
-              fillColor: colorFor(layerValue(station, layer)),
-              fillOpacity: 0.9,
-            }}
+            position={[station.lat, station.lon]}
+            icon={stationIcon(colorFor(layerValue(station, layer)), station.id === selectedId)}
             eventHandlers={{ click: () => onSelect(station.id) }}
           >
             <StationTooltip station={station} />
-          </CircleMarker>
+          </Marker>
         ))}
     </MapContainer>
   );

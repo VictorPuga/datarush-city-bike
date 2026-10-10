@@ -6,7 +6,7 @@ Predictions come from a mock API until the ML model is ready.
 ## Map
 
 - **Regions:** one polygon per NTA neighborhood, always shown. Color follows bikes per station. Gray polygons have no stations.
-- **Stations:** small circle markers appear from zoom 16, colored by the predicted count for the selected bike type. Below that zoom only regions show. From that zoom the region fill is removed and only the outlines stay, which are still clickable.
+- **Stations:** small bike-icon markers appear from zoom 16, colored by the predicted count for the selected bike type. Below that zoom only regions show. From that zoom the region fill is removed and only the outlines stay, which are still clickable.
 - Clicking a region selects it. Clicking a station opens the station panel.
 - Searching for a station flies the map to zoom 16, so its marker is visible.
 - The zoom threshold is `STATION_MIN_ZOOM` in `ui/src/components/Map.tsx`.

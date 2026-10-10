@@ -2,3 +2,15 @@
   width: 100%;
   height: 100%;
 }
+
+.stationMarker span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid #111;
+  border-radius: 50%;
+  opacity: 0.9;
+}
