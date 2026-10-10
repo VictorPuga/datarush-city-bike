@@ -43,7 +43,7 @@ export default function DemandHistogram({ selectedId }: DemandHistogramProps) {
           theme={nivoTheme}
           margin={{ top: 12, right: 8, bottom: 40, left: 44 }}
           padding={0.1}
-          colors={(bar) => (bar.data.bin === selectedBin ? '#e4572e' : '#2563eb')}
+          colors={(bar) => (bar.data.bin === selectedBin ? '#ff9500' : '#007aff')}
           axisBottom={{ legend: 'Trips per station (log scale)', legendOffset: 34, legendPosition: 'middle' }}
           axisLeft={{ tickValues: 5 }}
           enableLabel={false}

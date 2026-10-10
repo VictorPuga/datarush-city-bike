@@ -1,8 +1,8 @@
 .group {
   display: flex;
-  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
-  border-radius: 8px;
-  overflow: hidden;
+  padding: 2px;
+  background: var(--fill);
+  border-radius: 9px;
 }
 
 .option {
@@ -11,20 +11,18 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 8px 10px;
+  padding: 6px 10px;
   font: inherit;
   font-size: 14px;
+  font-weight: 500;
   color: inherit;
   background: transparent;
   border: 0;
+  border-radius: 7px;
   cursor: pointer;
 }
 
-.option + .option {
-  border-left: 1px solid color-mix(in srgb, currentColor 30%, transparent);
-}
-
 .option[aria-checked='true'] {
-  color: #fff;
-  background: #e4572e;
+  background: var(--solid-surface);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2), 0 0 0 0.5px rgb(0 0 0 / 0.04);
 }

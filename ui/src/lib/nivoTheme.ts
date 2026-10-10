@@ -15,5 +15,5 @@ export const nivoTheme: Theme = {
   },
 };
 
-export const LOSS_COLOR = '#e4572e';
-export const GAIN_COLOR = '#2563eb';
+export const LOSS_COLOR = '#ff3b30';
+export const GAIN_COLOR = '#007aff';

@@ -2,14 +2,22 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: 24px;
+  gap: 16px 24px;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+.field input[type='date'] {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--foreground);
 }
 
 .slider {

@@ -2,7 +2,7 @@ import type { BikeCounts, Layer } from './types';
 
 export const MAX_BIKES = 40;
 
-export const RAMP = ['#ffe08a', '#f59e0b', '#e4572e', '#8b1e3f'];
+export const RAMP = ['#ffd60a', '#ff9f0a', '#ff3b30', '#a1122a'];
 
 export function layerValue(station: Pick<BikeCounts, 'classic' | 'electric'>, layer: Layer): number {
   if (layer === 'classic') return station.classic;
@@ -24,5 +24,5 @@ export function colorFor(value: number): string {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
-export const CLASSIC_COLOR = '#2563eb';
-export const ELECTRIC_COLOR = '#16a34a';
+export const CLASSIC_COLOR = '#007aff';
+export const ELECTRIC_COLOR = '#34c759';

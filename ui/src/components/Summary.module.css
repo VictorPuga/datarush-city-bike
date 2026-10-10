@@ -2,17 +2,20 @@
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
+  padding: 12px 16px;
+  background: var(--solid-surface);
+  border-radius: 12px;
 }
 
 .summary dt {
-  font-size: 12px;
-  text-transform: uppercase;
-  opacity: 0.7;
+  font-size: 13px;
+  color: var(--secondary);
 }
 
 .summary dd {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .summary dt svg {

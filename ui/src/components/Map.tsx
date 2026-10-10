@@ -3,7 +3,7 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
-import { MapContainer, Marker, Polygon, TileLayer, Tooltip, useMap, useMapEvents } from 'react-leaflet';
+import { MapContainer, Marker, Polygon, TileLayer, Tooltip, ZoomControl, useMap, useMapEvents } from 'react-leaflet';
 import { colorFor, layerValue } from '@/lib/density';
 import { regionShapes } from '@/lib/regions';
 import type { Layer, RegionPrediction, StationPrediction } from '@/lib/types';
@@ -107,7 +107,8 @@ export default function BikeMap({
   const regionById = new Map(regions.map((region) => [region.id, region]));
 
   return (
-    <MapContainer center={NYC_CENTER} zoom={INITIAL_ZOOM} preferCanvas className={styles.map}>
+    <MapContainer center={NYC_CENTER} zoom={INITIAL_ZOOM} preferCanvas zoomControl={false} className={styles.map}>
+      <ZoomControl position="topright" />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
