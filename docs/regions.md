@@ -17,10 +17,10 @@ The script uses the standard library only and runs in about a second.
 
 1. Reads the 262 NTA polygons and `ui/src/data/stations.json`.
 2. Assigns each station to the polygon that contains it, with ray casting and a bounding-box check first. Holes are respected.
-3. Falls back to the nearest polygon for any station outside every NTA, so no station is dropped. Currently none need it.
-4. Moves stations that land in a park or cemetery listed in `PARK_REGIONS` (Central Park, Prospect Park, Flushing Meadows-Corona Park and several cemeteries) to the nearest neighboring NTA, measured to the polygon edges. Those stations sit on the park's edge streets, so they belong to the adjoining neighborhood. Currently 55 move. Add ids to `PARK_REGIONS` in the script to treat other regions the same way.
+3. Falls back to the nearest polygon for any station outside every NTA, so no station is dropped. Currently 2 need it.
+4. Moves stations that land in a park or cemetery listed in `PARK_REGIONS` (Central Park, Prospect Park, Flushing Meadows-Corona Park and several cemeteries) to the nearest neighboring NTA, measured to the polygon edges. Those stations sit on the park's edge streets, so they belong to the adjoining neighborhood. Currently 56 move. Add ids to `PARK_REGIONS` in the script to treat other regions the same way.
 5. Simplifies the polygons with Douglas-Peucker and rounds them to 5 decimals. Assignment uses the original geometry.
-6. Keeps every NTA, including those with no stations and the park regions themselves. Currently 142 of 262 are empty.
+6. Keeps every NTA, including those with no stations and the park regions themselves. Currently 141 of 262 are empty.
 
 ## Output
 
@@ -33,7 +33,7 @@ The script uses the standard library only and runs in about a second.
 
 `lat`/`lon` is the mean of the region's stations, or the bounding-box center for empty regions.
 `polygons` is GeoJSON `MultiPolygon` coordinates in lon/lat.
-A region holds 0 to 57 stations.
+A region holds 0 to 63 stations.
 
 ## History
 

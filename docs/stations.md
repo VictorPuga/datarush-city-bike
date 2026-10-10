@@ -15,7 +15,8 @@ It uses the standard library only.
 
 ## Output
 
-`ui/src/data/stations.json` is an array with 2,393 stations.
+`ui/src/data/stations.json` is an array with 2,490 stations.
+It was built from the 12 months Oct 2025 to Sep 2026, so `trips` and `electricShare` cover that period.
 
 | Field | Meaning |
 | --- | --- |

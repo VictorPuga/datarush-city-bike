@@ -253,3 +253,65 @@ def evaluate_net(Y, mu, al, act, shocks, levels=(0.8, 0.9), cut_hours=(6, 9, 12,
                  coverage=float((np.abs(Yo[keep] - M[keep]) <= half).mean()),
                  mean_width=float((2 * half).mean())))
   return pd.DataFrame(rows)
+
+
+def evaluate_net_groups(Y, mu, al, act, shocks, region, levels=(0.8, 0.9), cut_hours=(6, 9, 12, 15, 18, 21)):
+  """Coverage of the cumulative net flow (arrivals minus departures since midnight) of every neighbourhood and of the city.
+
+  The variance is the one of ``evaluate_net`` for a group G: noise plus the shock terms with
+  a_D = M_G^2, a_H = sum over hours of M_Gh^2, a_R = sum over neighbourhoods of M_r^2,
+  a_Ds = sum over stations of M_s^2 and a_Hs = sum over station-hours of M_sh^2, where M is the net mean up to the cut hour.
+  ``sum of station bounds`` is the dashboard of v2: the bounds of every station (Poisson noise, 1.28 sigma) added up.
+  """
+  n = Y.shape[0]
+  full = act.reshape(n, -1, ce.SLOTS_DIA).all(2)
+  reg = np.unique(np.asarray(region), return_inverse=True)[1]
+  onehot_r = np.zeros((reg.max() + 1, n))
+  onehot_r[reg, np.arange(n)] = 1
+  onehot_c = np.ones((1, n))
+  rows = []
+  for bike, (dep, arr) in BIKES.items():
+    s = shocks[bike]
+    tot = sum(s[k] for k in SHOCKS)
+    ya, ma, na = _series(Y, mu, al, full, arr, tot)
+    yd, md, nd = _series(Y, mu, al, full, dep, tot)
+    M_sh, N_sh, Y_sh = ma - md, na + nd, ya - yd
+    P_sh = (ma + md)  # Poisson variance of the net flow
+    for label, onehot in (('neighbourhood', onehot_r), ('city', onehot_c)):
+      for cut in cut_hours:
+        Ms, Ns, Ys, Ps = (a[:, :, :cut] for a in (M_sh, N_sh, Y_sh, P_sh))
+        M_gh = np.einsum('gn,ndh->gdh', onehot, Ms)
+        M = M_gh.sum(2)
+        N = np.einsum('gn,nd->gd', onehot, Ns.sum(2))
+        Yo = np.einsum('gn,nd->gd', onehot, Ys.sum(2))
+        M_rd = np.einsum('rn,nd->rd', onehot_r, Ms.sum(2))
+        a_R = (np.einsum('gn,rn->gr', onehot, onehot_r) > 0).astype(float)  # neighbourhoods inside group
+        a_R = np.einsum('gr,rd->gd', a_R, M_rd**2)
+        a_Ds = np.einsum('gn,nd->gd', onehot, Ms.sum(2)**2)
+        a_Hs = np.einsum('gn,nd->gd', onehot, (Ms**2).sum(2))
+        V = N + s['D'] * M**2 + s['H'] * (M_gh**2).sum(2) + s['R'] * a_R + s['Ds'] * a_Ds + s['Hs'] * a_Hs
+        # dashboard of v2: each station's own 80% half-width (Poisson noise) added up
+        half_old = 1.2816 * np.einsum('gn,nd->gd', onehot, np.sqrt(Ps.sum(2)))
+        valid = np.einsum('gn,nd->gd', onehot, full.astype(float)) > 0
+        keep = valid & (N > 0)
+        for level in levels:
+          z = stats.norm.ppf(0.5 + level / 2)
+          half = z * np.sqrt(V) + 0.5
+          rows.append(
+              dict(bike=bike,
+                   group=label,
+                   quantity=f'cumulative net to {cut:02d}:00',
+                   level=level,
+                   method='calibrated',
+                   coverage=float((np.abs(Yo[keep] - M[keep]) <= half[keep]).mean()),
+                   mean_width=float((2 * half[keep]).mean())))
+          if level == 0.8:
+            rows.append(
+                dict(bike=bike,
+                     group=label,
+                     quantity=f'cumulative net to {cut:02d}:00',
+                     level=level,
+                     method='sum of station bounds',
+                     coverage=float((np.abs(Yo[keep] - M[keep]) <= half_old[keep]).mean()),
+                     mean_width=float((2 * half_old[keep]).mean())))
+  return pd.DataFrame(rows)

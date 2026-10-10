@@ -11,6 +11,7 @@ The dashboard still serves v2 until the UI changes listed below are made.
 | `notebooks/citibike_model.py` | The network, its training loop and the ONNX wrapper |
 | `notebooks/citibike_intervals.py` | The shared shocks and the calibrated intervals |
 | `notebooks/citibike_v2recipe.py` | The v2 network recipe retrained on the same data, as a reference |
+| `notebooks/ui_reference.py` | What the dashboard code must compute, in Python, and the writer of its test numbers |
 | `notebooks/MODELO_v3.ipynb` | Experiments, final fit, test scoring and export |
 | `notebooks/modelos/demanda_net_v3.onnx` | The model for the dashboard (1.2 MB) |
 | `notebooks/modelos/demanda_net_v3.pt` | PyTorch checkpoint |
@@ -63,6 +64,48 @@ V = sum(mu + alpha_idio * mu^2) + D*M^2 + H*sum_h(M_h^2) + R*sum_r(M_r^2) + Ds*s
 The interval is the negative binomial with mean `M` and variance `V`.
 For one station the neighbourhood and city shocks look the same as the station ones, so the dashboard needs two numbers per bike type: `day = D + R + Ds` and `hour = H + Hs`.
 The cumulative net flow (arrivals minus departures since midnight, the quantity behind the stock band) uses the net mean in the shock terms, because both flows share the shocks.
+
+### Stock bands and sums over neighbourhoods
+
+The stock the dashboard shows is a baseline plus the cumulative net flow, and the baseline is an assumption, so only the net flow can be scored.
+For one station the variance of the net flow since midnight, at the start of a slot, is:
+
+```
+V = noise + (D + R + Ds) * M^2 + (H + Hs) * sum_h(M_h^2)
+```
+
+`M` is the net mean (arrivals minus departures) so far, `M_h` the net mean accumulated in each hour so far, the current hour included, and `noise` the sum of `mu + alpha_idio * mu^2` of the arrivals and departures so far.
+For a neighbourhood the shocks `D` and `R` act on the group total, `H` on its hourly totals and `Ds` and `Hs` on each station, so `V = noise + (D + R) * M^2 + H * sum_h(M_h^2) + Ds * sum_s(M_s^2) + Hs * sum_sh(M_sh^2)`.
+The dashboard of v2 added up the bounds of every station.
+
+Coverage of the cumulative net flow on the test block, mean of six whole-hour cuts (06:00 to 21:00), both bike types and 14 days, with the v3 forecast in both rows:
+
+| window | bounds | coverage 80% | coverage 90% | mean width of the 80% interval, bikes |
+| --- | --- | --- | --- | --- |
+| neighbourhood | calibrated | 0.868 | 0.931 | 47.5 |
+| neighbourhood | station bounds added up (v2 dashboard) | 0.993 | | 184.9 |
+| city | calibrated | 0.798 | 0.869 | 696 |
+| city | station bounds added up (v2 dashboard) | 1.000 | | 22,374 |
+
+- Added-up bounds cover almost everything because they assume that all stations err in the same direction at once, and they are 3.9 times wider for a neighbourhood.
+- For single stations the old and the new bounds cover about the same (0.93 and 0.92 at 80%, 150 stations, bounds rounded to whole bikes), because the counts are small and the rounding dominates.
+  The gain is in the sums.
+- The table is in `data/results/intervals_v3_net_groups_test.csv`, made by `evaluate_net_groups` in `citibike_intervals.py`.
+
+## Reference for the dashboard
+
+`notebooks/ui_reference.py` computes in Python what `ui/src/lib` has to compute, so that the TypeScript code can be checked number by number:
+
+- The `clima` input from the hourly Open-Meteo values of the day before, the day and the day after.
+  It matches the training table to 1e-6 on four days, including the 49.8 mm day.
+- The 10% and 90% quantiles of a negative binomial, by the recursion `p(0) = (1 + alpha*mu)^(-1/alpha)` and `p(k+1) = p(k) * (k + 1/alpha) / (k + 1) * alpha*mu / (1 + alpha*mu)`.
+  They equal the SciPy quantiles on 40,000 random cells.
+- The stock mean, its standard deviation and the 80% band of a station and of a neighbourhood, and the bands of the departures and arrivals of a station, of a neighbourhood and of a 15-minute cell.
+
+`python ui_reference.py` from `notebooks/` writes `data/results/ui_reference_v3.json`.
+It holds two days, the wettest of the test block (Sep 27, 49.8 mm) and a dry weekday (Sep 22), with the hourly weather as the input and every expected output.
+Each day has six stations (the busiest, top 10%, median, bottom 10%, one that v2 does not have and one that is inactive) and two neighbourhoods (the largest and a median one, active stations only).
+`lambda` and `alpha` are the ONNX outputs of Python, so a difference in TypeScript beyond float32 rounding is a bug in the port.
 
 ## ONNX contract
 
@@ -198,15 +241,17 @@ It is not used.
 
 ## UI changes needed to serve v3
 
-The v2 contract is kept, so the UI keeps working if `ui/models/` receives `demanda_net_v3.onnx` and `station_ids_v3.json` renamed as the UI expects.
+The v2 contract is kept, so the UI keeps working if `ui/models/` receives `demanda_net_v3.onnx` and the v3 station ids renamed as the UI expects.
 To use the new outputs:
 
-1. `ui/src/lib/model.ts`: read the `alpha` output, replace the Poisson bands (`Z_80 * sqrt(value)`) with negative binomial quantiles, and compute the stock band from the cumulative net variance above.
-2. `ui/src/lib/weather.ts`: use the rain stamped at hour h+1 for hour h, interpolate temperature, humidity and wind to 15 minutes, and compute `precip_prev2h` as training does (see [inference.md](inference.md)).
-3. Hide stations marked `active: false`, and regenerate `stations.json` and `regions.json` from the 12 months so the 54 new stations have a region.
+1. `ui/src/lib/model.ts`: load `demanda_net_v3.onnx` and `estaciones_onnx_v3.json` (station ids in model order, `active` flags and the shocks), read the `alpha` output, replace the Poisson bands (`Z_80 * sqrt(value)`) of departures and arrivals with negative binomial quantiles, and compute the stock band from the cumulative net variance above.
+2. `ui/src/lib/weather.ts`: request `end_date` one day after the date, use the rain stamped at hour h+1 for hour h, interpolate temperature, humidity and wind to 15 minutes, and compute `precip_prev2h` as training does (see [inference.md](inference.md)).
+3. Hide stations marked `active: false`, which are 74 of the 2,462 in `stations.json`.
+   `stations.json` and `regions.json` already come from the 12 months.
 4. Region ranges in `lib/regions.ts` are plain sums of the station bounds.
-   Use the variance formula for sums instead.
-5. Update `docs/inference.md` and `docs/dashboard.md` in the same change.
+   Use the variance formulas for sums instead.
+5. Check the port against `data/results/ui_reference_v3.json`.
+6. Update `docs/inference.md` and `docs/dashboard.md` in the same change.
 
 ## Run
 

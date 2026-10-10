@@ -1,0 +1,73 @@
+bike,group,quantity,level,method,coverage,mean_width
+classic,neighbourhood,cumulative net to 06:00,0.8,calibrated,0.8778040141676505,10.415026544723153
+classic,neighbourhood,cumulative net to 06:00,0.8,sum of station bounds,0.9834710743801653,41.058247606446045
+classic,neighbourhood,cumulative net to 06:00,0.9,calibrated,0.9368358913813459,13.084055746403996
+classic,neighbourhood,cumulative net to 09:00,0.8,calibrated,0.871900826446281,22.564190891042852
+classic,neighbourhood,cumulative net to 09:00,0.8,sum of station bounds,0.987012987012987,85.70770964127837
+classic,neighbourhood,cumulative net to 09:00,0.9,calibrated,0.9321133412042503,28.677339369744864
+classic,neighbourhood,cumulative net to 12:00,0.8,calibrated,0.8837072018890201,32.54845131384284
+classic,neighbourhood,cumulative net to 12:00,0.8,sum of station bounds,0.9940968122786304,124.32335815523736
+classic,neighbourhood,cumulative net to 12:00,0.9,calibrated,0.9332939787485242,41.491998889037575
+classic,neighbourhood,cumulative net to 15:00,0.8,calibrated,0.9014167650531287,40.090144159106984
+classic,neighbourhood,cumulative net to 15:00,0.8,sum of station bounds,0.9958677685950413,158.4826686525907
+classic,neighbourhood,cumulative net to 15:00,0.9,calibrated,0.9456906729634003,51.17165686254655
+classic,neighbourhood,cumulative net to 18:00,0.8,calibrated,0.9262101534828807,47.08638877473989
+classic,neighbourhood,cumulative net to 18:00,0.8,sum of station bounds,0.9970484061393152,193.25482774052873
+classic,neighbourhood,cumulative net to 18:00,0.9,calibrated,0.9533648170011806,60.15123961244021
+classic,neighbourhood,cumulative net to 21:00,0.8,calibrated,0.9344746162927982,52.96503856497282
+classic,neighbourhood,cumulative net to 21:00,0.8,sum of station bounds,0.9958677685950413,220.43628457435017
+classic,neighbourhood,cumulative net to 21:00,0.9,calibrated,0.974616292798111,67.69640493314508
+classic,city,cumulative net to 06:00,0.8,calibrated,1.0,138.535592563248
+classic,city,cumulative net to 06:00,0.8,sum of station bounds,1.0,4968.047960379969
+classic,city,cumulative net to 06:00,0.9,calibrated,1.0,177.52502196932105
+classic,city,cumulative net to 09:00,0.8,calibrated,0.7857142857142857,340.5728736239365
+classic,city,cumulative net to 09:00,0.8,sum of station bounds,1.0,10370.632866594684
+classic,city,cumulative net to 09:00,0.9,calibrated,0.9285714285714286,436.83706486075624
+classic,city,cumulative net to 12:00,0.8,calibrated,0.8571428571428571,491.23639317243095
+classic,city,cumulative net to 12:00,0.8,sum of station bounds,1.0,15043.12633678372
+classic,city,cumulative net to 12:00,0.9,calibrated,0.9285714285714286,630.2115987003707
+classic,city,cumulative net to 15:00,0.8,calibrated,0.7857142857142857,593.6125873530427
+classic,city,cumulative net to 15:00,0.8,sum of station bounds,1.0,19176.402906963478
+classic,city,cumulative net to 15:00,0.9,calibrated,0.8571428571428571,761.6100213927168
+classic,city,cumulative net to 18:00,0.8,calibrated,0.9285714285714286,694.4278618207079
+classic,city,cumulative net to 18:00,0.8,sum of station bounds,1.0,23383.834156604007
+classic,city,cumulative net to 18:00,0.9,calibrated,0.9285714285714286,891.0050253227995
+classic,city,cumulative net to 21:00,0.8,calibrated,1.0,774.6484426154038
+classic,city,cumulative net to 21:00,0.8,sum of station bounds,1.0,26672.79043349637
+classic,city,cumulative net to 21:00,0.9,calibrated,1.0,993.9670260911698
+electric,neighbourhood,cumulative net to 06:00,0.8,calibrated,0.859504132231405,20.74248597723494
+electric,neighbourhood,cumulative net to 06:00,0.8,sum of station bounds,0.9946871310507674,83.7657092261596
+electric,neighbourhood,cumulative net to 06:00,0.9,calibrated,0.9273907910271547,26.33920642584032
+electric,neighbourhood,cumulative net to 09:00,0.8,calibrated,0.768004722550177,43.37519646412857
+electric,neighbourhood,cumulative net to 09:00,0.8,sum of station bounds,0.9881936245572609,153.30121395126002
+electric,neighbourhood,cumulative net to 09:00,0.9,calibrated,0.8636363636363636,55.387975849558075
+electric,neighbourhood,cumulative net to 12:00,0.8,calibrated,0.7863046044864227,57.876437467396094
+electric,neighbourhood,cumulative net to 12:00,0.8,sum of station bounds,0.9917355371900827,207.5065298723877
+electric,neighbourhood,cumulative net to 12:00,0.9,calibrated,0.8884297520661157,74.00011717949809
+electric,neighbourhood,cumulative net to 15:00,0.8,calibrated,0.8128689492325856,69.30458279338488
+electric,neighbourhood,cumulative net to 15:00,0.8,sum of station bounds,0.9940968122786304,261.2438233593016
+electric,neighbourhood,cumulative net to 15:00,0.9,calibrated,0.897874852420307,88.66798290895319
+electric,neighbourhood,cumulative net to 18:00,0.8,calibrated,0.8819362455726092,81.16142891832787
+electric,neighbourhood,cumulative net to 18:00,0.8,sum of station bounds,0.9952774498229043,321.29245681615686
+electric,neighbourhood,cumulative net to 18:00,0.9,calibrated,0.9492325855962219,103.88608015697942
+electric,neighbourhood,cumulative net to 21:00,0.8,calibrated,0.9132231404958677,91.74567533736088
+electric,neighbourhood,cumulative net to 21:00,0.8,sum of station bounds,0.9940968122786304,368.57516109439445
+electric,neighbourhood,cumulative net to 21:00,0.9,calibrated,0.9669421487603306,117.47081336550725
+electric,city,cumulative net to 06:00,0.8,calibrated,0.7857142857142857,280.087533396848
+electric,city,cumulative net to 06:00,0.8,sum of station bounds,1.0,10135.650816365316
+electric,city,cumulative net to 06:00,0.9,calibrated,0.8571428571428571,359.20497113564613
+electric,city,cumulative net to 09:00,0.8,calibrated,0.42857142857142855,647.3617506893273
+electric,city,cumulative net to 09:00,0.8,sum of station bounds,1.0,18549.446888102473
+electric,city,cumulative net to 09:00,0.9,calibrated,0.5714285714285714,830.5963256790567
+electric,city,cumulative net to 12:00,0.8,calibrated,0.7142857142857143,853.1020726641239
+electric,city,cumulative net to 12:00,0.8,sum of station bounds,1.0,25108.29011455889
+electric,city,cumulative net to 12:00,0.9,calibrated,0.7857142857142857,1094.6611701292272
+electric,city,cumulative net to 15:00,0.8,calibrated,0.7857142857142857,1012.3131312180548
+electric,city,cumulative net to 15:00,0.8,sum of station bounds,1.0,31610.502626475496
+electric,city,cumulative net to 15:00,0.9,calibrated,0.8571428571428571,1299.0063515124907
+electric,city,cumulative net to 18:00,0.8,calibrated,0.7857142857142857,1199.190754372166
+electric,city,cumulative net to 18:00,0.8,sum of station bounds,1.0,38876.387274755
+electric,city,cumulative net to 18:00,0.9,calibrated,0.8571428571428571,1538.8611841274276
+electric,city,cumulative net to 21:00,0.8,calibrated,0.7142857142857143,1322.4388726566501
+electric,city,cumulative net to 21:00,0.8,sum of station bounds,1.0,44597.594492421726
+electric,city,cumulative net to 21:00,0.9,calibrated,0.8571428571428571,1697.0484313873756

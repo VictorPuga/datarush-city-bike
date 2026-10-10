@@ -66,5 +66,5 @@ The baseline is an assumption, not a measured stock.
 
 ## Station coverage
 
-2,366 of the 2,393 stations in `stations.json` are in the model.
-The other 27 and the 95 model stations without a region are left out.
+2,422 of the 2,490 stations in `stations.json` are in the model.
+The other 68 and the 39 model stations that are not in `stations.json` are left out.

@@ -90,7 +90,8 @@ Station coordinates differ by less than 0.0000041 degrees, about 0.4 m.
   It reads `data_procesada/` and writes `notebooks/modelos/demanda_net_v2.*`.
   Running it now would train on 12 months with the new station order and overwrite the v2 files.
   `MODELO_v3.ipynb` writes only `demanda_net_v3.*`, see [model.md](model.md).
-- `scripts/extract_stations.py` reads every zip in `data/raw/`.
-  Running it now would rebuild `ui/src/data/stations.json` from 12 months and change its trip counts, so run it when the new model ships and rerun `scripts/assign_regions.py` after it.
+- `scripts/extract_stations.py` and then `scripts/assign_regions.py` were rerun on the 12 months, see [stations.md](stations.md) and [regions.md](regions.md).
+  `stations.json` has 2,490 stations (2,393 before) with 12-month trip counts.
+  No model station changed neighbourhood (0 of 2,515), so the neighbourhood groups behind the v3 results are unchanged.
 - The 12 monthly files are 8.5 GB extracted.
   Delete the extracted `notebooks/YYYYMM-citibike-tripdata/` folders after the run if disk space matters, the zips are enough.

@@ -93,6 +93,7 @@ Requests return 503 if the model files in `ui/models/` are missing.
 
 The demand model and its evaluation live in `notebooks/`.
 See [docs/ml-data.md](docs/ml-data.md) for the training tables, [docs/evaluation.md](docs/evaluation.md) for the evaluation protocol and [docs/model.md](docs/model.md) for the v3 model.
+`notebooks/ui_reference.py` writes the numbers that the dashboard code has to reproduce, see [docs/model.md](docs/model.md).
 
 1. Put the monthly Citi Bike zips in `data/raw/`.
    The model uses 12 consecutive months, Oct 2025 to Sep 2026.
