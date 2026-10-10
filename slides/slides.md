@@ -96,6 +96,7 @@ Una bici y un anclaje cuando los necesitan.
 
 <!--
 (0:35–0:50) Quién se beneficia y con qué decisión. Nivel estación-hora, porque ahí se opera.
+Con la cantidad de bicis que habrá en cada estación durante el día, el operador decide cuáles bicis mover y a dónde.
 -->
 
 ---
@@ -179,7 +180,9 @@ Se exporta a ONNX (1.2 MB) y el dashboard lo ejecuta con `onnxruntime-node`.
 <div class="mt-4 text-lg font-semibold">El clima convierte un pronóstico histórico en una decisión de mañana.</div>
 
 <!--
-(1:30–2:15) Esto es lo que añade nuestra propuesta: una herramienta que no solo repite el pasado, sino que incorpora el pronóstico del clima.
+(1:30–2:15) Como valor agregado incorporamos el clima, porque las condiciones afectan la cantidad de viajes.
+Una de las cosas que encontramos: la lluvia moderada baja la demanda de bicicletas 47%.
+Nuestro pronóstico ya lo incluye, así que no solo repite el pasado.
 Se compara cada hora con horas secas del mismo mes, tipo de día y hora.
 Lluvia ligera, moderada y fuerte: −22%, −47% y −59% de viajes, y el pico de la mañana cae más (−62% con lluvia moderada).
 Cada +10 °C: +30% de viajes, y +48% entre usuarios ocasionales contra +27% entre socios.
@@ -239,6 +242,14 @@ Límite: los datos solo registran la demanda satisfecha. Una estación vacía no
 
 <!--
 (3:00–4:00) Demo en vivo: elegir fecha y hora, abrir un barrio, abrir una estación, mostrar el intervalo.
+Aquí vemos la cantidad de bicicletas alrededor de la ciudad a una fecha y hora dada.
+También vemos cuántas salidas y llegadas hay; por ejemplo, más salidas durante la mañana.
+Podemos verlo por barrio y por estación.
+Eso nos da métricas de la cantidad de bicis en cada estación durante el día, y nos ayuda a decidir cuáles mover.
+Además hay gráficas con información relevante: el flujo de bicicletas durante la semana, las diferencias entre días y la demanda.
+Podemos predecir, por ejemplo, dentro de dos semanas, un día entre semana, y ver cuándo habrá más flujo durante todo el día.
+La respuesta es casi instantánea.
+Anticipamos los pronósticos con intervalos calibrados de 15 minutos para saber si faltarán o sobrarán bicis.
 Mapa por barrio, estaciones desde zoom 16.
 Pronóstico de 24 horas por estación con intervalo de 80% calibrado.
 Flujo neto: qué barrios ganan o pierden bicis en la siguiente hora.
@@ -276,6 +287,7 @@ Un dashboard que provee información para que un proveedor pueda organizar el in
 
 <!--
 (4:00–5:00) Cierre firme. Repetir el mensaje: cada estación vacía es un viaje perdido, y hoy podemos verla venir.
-Nuestra contribución: pasar de un perfil histórico a un pronóstico que entiende la marea de commuting y el clima, y ponerlo en una herramienta lista para operar.
-Siguiente paso: un segundo año para separar tendencia de estacionalidad (hoy el modelo se queda corto en días fríos y se pasa en tormentas), inventario en tiempo real con GBFS para medir el stock y no solo el flujo, y optimización de camiones y turnos.
+Construimos un dashboard que provee información para que un proveedor pueda organizar el inventario de las estaciones.
+Con este proyecto podemos dejar de reaccionar a datos del pasado y empezar a planear con datos del futuro sobre cómo organizar el sistema de bicicletas.
+Siguientes pasos: agregar más años de datos para tener un modelo más completo (hoy el modelo se queda corto en días fríos y se pasa en tormentas), inventario en tiempo real con GBFS para medir el stock y no solo el flujo, y optimización de camiones y turnos.
 -->
