@@ -1,0 +1,45 @@
+.tabs {
+  display: flex;
+  margin-bottom: 8px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-radius: 8px;
+}
+
+.tab {
+  flex: 1;
+  padding: 6px 4px;
+  font: inherit;
+  font-size: 12px;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.tab + .tab {
+  border-left: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+}
+
+.tab[aria-selected='true'] {
+  color: #fff;
+  background: #e4572e;
+}
+
+.chart {
+  height: 240px;
+}
+
+.title {
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.note {
+  margin-top: 4px;
+  font-size: 12px;
+  opacity: 0.7;
+}

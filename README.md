@@ -74,4 +74,8 @@ yarn dev
 ```
 `GET /api/predictions/day?date=YYYY-MM-DD&station=ID` returns `{ date, station, hours: [{ hour, ...counts }] }` with 24 entries, used by the station chart.
 Counts are deterministic per station, date and hour.
+`GET /api/insights?date=YYYY-MM-DD&hour=0-23` returns `{ date, hour, week, netFlow }`.
+`week` has the Monday to Sunday days around `date`, each with 24 citywide `{ classic, electric }` totals.
+`netFlow` has one `{ id, classic, electric }` per neighborhood: the change in bikes from `hour` to the next hour.
+
 Replace the route handler in `ui/src/app/api/predictions/route.ts` with a call to the inference API when it is ready.

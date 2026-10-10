@@ -7,6 +7,7 @@ import { useJson } from '@/lib/useJson';
 import type { Layer, PredictionsResponse, StationDayResponse } from '@/lib/types';
 import type { FlyTarget } from './Map';
 import Controls from './Controls';
+import Insights from './Insights';
 import styles from './Dashboard.module.css';
 import Legend from './Legend';
 import RegionList from './RegionList';
@@ -89,6 +90,23 @@ export default function Dashboard() {
           />
           <Summary stations={stations} />
           <Legend />
+          <Insights
+            date={date}
+            hour={hour}
+            layer={layer}
+            regions={regions}
+            selectedId={selectedId}
+            onSelectSlot={(nextDate, nextHour) => {
+              setDate(nextDate);
+              setHour(nextHour);
+            }}
+            onHourChange={setHour}
+            onSelectRegion={(id) => {
+              setSelectedRegionId(id);
+              const region = regions.find((item) => item.id === id);
+              if (region) flyTo(region.lat, region.lon, 14);
+            }}
+          />
           <RegionList
             regions={regions}
             layer={layer}

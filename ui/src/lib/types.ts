@@ -49,3 +49,24 @@ export type StationDayResponse = {
 };
 
 export type Layer = 'both' | 'classic' | 'electric';
+
+export type CityHour = {
+  classic: number;
+  electric: number;
+};
+
+export type DayTotals = {
+  date: string;
+  hours: CityHour[];
+};
+
+export type RegionFlow = CityHour & {
+  id: string;
+};
+
+export type InsightsResponse = {
+  date: string;
+  hour: number;
+  week: DayTotals[];
+  netFlow: RegionFlow[];
+};
