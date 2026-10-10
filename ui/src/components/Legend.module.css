@@ -1,0 +1,25 @@
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.title {
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.bar {
+  height: 10px;
+  border-radius: 5px;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.note {
+  opacity: 0.7;
+}

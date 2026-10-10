@@ -1,5 +1,6 @@
-"""Derive the top stations from raw Citi Bike trip files into ui/src/data/stations.json."""
+"""Derive stations from raw Citi Bike trip files into ui/src/data/stations.json."""
 
+import argparse
 import csv
 import io
 import json
@@ -11,7 +12,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = ROOT / "data" / "raw"
 OUTPUT = ROOT / "ui" / "src" / "data" / "stations.json"
-TOP_N = 50
 
 
 def open_sources():
@@ -25,6 +25,10 @@ def open_sources():
 
 
 def main():
+  parser = argparse.ArgumentParser(description=__doc__)
+  parser.add_argument("--top", type=int, default=None, help="keep only the N busiest stations (default: all)")
+  args = parser.parse_args()
+
   stats = defaultdict(lambda: {"name": "", "lat": 0.0, "lon": 0.0, "trips": 0, "electric": 0})
 
   for name, handle in open_sources():
@@ -50,7 +54,7 @@ def main():
   if not stats:
     sys.exit(f"no trip files found in {RAW_DIR}")
 
-  top = sorted(stats.items(), key=lambda item: item[1]["trips"], reverse=True)[:TOP_N]
+  top = sorted(stats.items(), key=lambda item: item[1]["trips"], reverse=True)[: args.top]
   stations = [
     {
       "id": station_id,

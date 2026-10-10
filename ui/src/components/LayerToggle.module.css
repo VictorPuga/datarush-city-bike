@@ -1,0 +1,30 @@
+.group {
+  display: flex;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.option + .option {
+  border-left: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+}
+
+.option[aria-checked='true'] {
+  color: #fff;
+  background: #e4572e;
+}

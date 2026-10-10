@@ -7,13 +7,24 @@ export type StationInfo = {
   electricShare: number;
 };
 
-export type StationPrediction = {
+export type BikeCounts = {
+  classic: number;
+  classicLow: number;
+  classicHigh: number;
+  electric: number;
+  electricLow: number;
+  electricHigh: number;
+};
+
+export type StationPrediction = BikeCounts & {
   id: string;
   name: string;
   lat: number;
   lon: number;
-  classic: number;
-  electric: number;
+};
+
+export type HourPrediction = BikeCounts & {
+  hour: number;
 };
 
 export type PredictionsResponse = {
@@ -21,3 +32,11 @@ export type PredictionsResponse = {
   hour: number;
   stations: StationPrediction[];
 };
+
+export type StationDayResponse = {
+  date: string;
+  station: Pick<StationPrediction, 'id' | 'name' | 'lat' | 'lon'>;
+  hours: HourPrediction[];
+};
+
+export type Layer = 'both' | 'classic' | 'electric';

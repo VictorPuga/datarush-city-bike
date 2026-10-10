@@ -1,0 +1,56 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.header h2 {
+  font-size: 16px;
+}
+
+.header button {
+  font-size: 20px;
+  line-height: 1;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.counts {
+  display: flex;
+  gap: 24px;
+}
+
+.counts dt {
+  font-size: 12px;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.counts dt svg {
+  vertical-align: -3px;
+}
+
+.counts dd {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.counts small {
+  opacity: 0.7;
+}
+
+.status {
+  font-size: 14px;
+}
