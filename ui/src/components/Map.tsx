@@ -4,10 +4,10 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Circle, MapContainer, Marker, TileLayer, Tooltip, useMap } from 'react-leaflet';
-import { clusterLabel } from '@/lib/clusters';
-import { clusterRadiusFor, colorFor, layerValue, radiusFor } from '@/lib/density';
-import type { ClusterPrediction, Layer, StationPrediction, View } from '@/lib/types';
+import { Circle, MapContainer, Marker, Polygon, TileLayer, Tooltip, useMap } from 'react-leaflet';
+import { colorFor, layerValue, radiusFor } from '@/lib/density';
+import { regionShapes } from '@/lib/regions';
+import type { RegionPrediction, Layer, StationPrediction, View } from '@/lib/types';
 import { ClassicBikeIcon, ElectricBikeIcon } from './BikeIcons';
 import styles from './Map.module.css';
 
@@ -36,15 +36,15 @@ export type FlyTarget = { lat: number; lon: number; zoom: number; request: numbe
 
 type MapProps = {
   stations: StationPrediction[];
-  clusters: ClusterPrediction[];
+  regions: RegionPrediction[];
   view: View;
   layer: Layer;
   showMarkers: boolean;
   selectedId: string | null;
-  selectedClusterId: number | null;
+  selectedRegionId: string | null;
   flyTarget: FlyTarget | null;
   onSelect: (id: string) => void;
-  onSelectCluster: (id: number) => void;
+  onSelectRegion: (id: string) => void;
 };
 
 function StationTooltip({ station }: { station: StationPrediction }) {
@@ -59,14 +59,20 @@ function StationTooltip({ station }: { station: StationPrediction }) {
   );
 }
 
-function ClusterTooltip({ cluster }: { cluster: ClusterPrediction }) {
+function RegionTooltip({ region }: { region: RegionPrediction }) {
   return (
     <Tooltip sticky>
-      <strong>{clusterLabel(cluster.id)}</strong> · {cluster.stations} stations
+      <strong>{region.name}</strong> · {region.borough}
       <br />
-      <ClassicBikeIcon size={14} /> Classic: {cluster.classic} ({cluster.classicLow}–{cluster.classicHigh})
-      <br />
-      <ElectricBikeIcon size={14} /> Electric: {cluster.electric} ({cluster.electricLow}–{cluster.electricHigh})
+      {region.stations} stations
+      {region.stations > 0 && (
+        <>
+          <br />
+          <ClassicBikeIcon size={14} /> Classic: {region.classic} ({region.classicLow}–{region.classicHigh})
+          <br />
+          <ElectricBikeIcon size={14} /> Electric: {region.electric} ({region.electricLow}–{region.electricHigh})
+        </>
+      )}
     </Tooltip>
   );
 }
@@ -82,18 +88,18 @@ function FlyToTarget({ target }: { target: FlyTarget | null }) {
 
 export default function BikeMap({
   stations,
-  clusters,
+  regions,
   view,
   layer,
   showMarkers,
   selectedId,
-  selectedClusterId,
+  selectedRegionId,
   flyTarget,
   onSelect,
-  onSelectCluster,
+  onSelectRegion,
 }: MapProps) {
   const selected = stations.find((station) => station.id === selectedId);
-  const selectedCluster = clusters.find((cluster) => cluster.id === selectedClusterId);
+  const regionById = new Map(regions.map((region) => [region.id, region]));
 
   return (
     <MapContainer center={NYC_CENTER} zoom={13} preferCanvas className={styles.map}>
@@ -137,34 +143,28 @@ export default function BikeMap({
             <StationTooltip station={station} />
           </Marker>
         ))}
-      {view === 'clusters' &&
-        clusters.map((cluster) => {
-          const value = layerValue(cluster, layer);
+      {view === 'regions' &&
+        regionShapes.map((shape) => {
+          const region = regionById.get(shape.id);
+          if (!region) return null;
+          const occupied = region.stations > 0;
+          const selected = shape.id === selectedRegionId;
           return (
-            <Circle
-              key={`cluster-${cluster.id}`}
-              center={[cluster.lat, cluster.lon]}
-              radius={clusterRadiusFor(value)}
+            <Polygon
+              key={`region-${shape.id}`}
+              positions={shape.positions}
               pathOptions={{
-                color: '#111',
-                weight: cluster.id === selectedClusterId ? 3 : 1,
-                fillColor: colorFor(value / cluster.stations),
-                fillOpacity: 0.55,
+                color: selected ? '#111' : '#555',
+                weight: selected ? 3 : 1,
+                fillColor: occupied ? colorFor(layerValue(region, layer) / region.stations) : '#9ca3af',
+                fillOpacity: occupied ? 0.55 : 0.12,
               }}
-              eventHandlers={{ click: () => onSelectCluster(cluster.id) }}
+              eventHandlers={{ click: () => onSelectRegion(shape.id) }}
             >
-              <ClusterTooltip cluster={cluster} />
-            </Circle>
+              <RegionTooltip region={region} />
+            </Polygon>
           );
         })}
-      {view === 'clusters' && selectedCluster && (
-        <Circle
-          center={[selectedCluster.lat, selectedCluster.lon]}
-          radius={clusterRadiusFor(layerValue(selectedCluster, layer)) + 30}
-          pathOptions={{ color: '#111', weight: 3, fill: false }}
-          interactive={false}
-        />
-      )}
     </MapContainer>
   );
 }

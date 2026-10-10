@@ -23,8 +23,10 @@ export type StationPrediction = BikeCounts & {
   lon: number;
 };
 
-export type ClusterPrediction = BikeCounts & {
-  id: number;
+export type RegionPrediction = BikeCounts & {
+  id: string;
+  name: string;
+  borough: string;
   lat: number;
   lon: number;
   stations: number;
@@ -48,4 +50,4 @@ export type StationDayResponse = {
 
 export type Layer = 'both' | 'classic' | 'electric';
 
-export type View = 'stations' | 'clusters';
+export type View = 'stations' | 'regions';

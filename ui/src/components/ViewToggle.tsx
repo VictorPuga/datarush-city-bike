@@ -8,7 +8,7 @@ type ViewToggleProps = {
 
 const OPTIONS: { value: View; label: string }[] = [
   { value: 'stations', label: 'Stations' },
-  { value: 'clusters', label: 'Clusters' },
+  { value: 'regions', label: 'Regions' },
 ];
 
 export default function ViewToggle({ view, onChange }: ViewToggleProps) {

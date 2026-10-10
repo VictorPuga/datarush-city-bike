@@ -17,13 +17,6 @@ export function radiusFor(value: number): number {
   return BASE_RADIUS_METERS + RADIUS_PER_SQRT_BIKE * Math.sqrt(value);
 }
 
-const CLUSTER_BASE_RADIUS_METERS = 200;
-const CLUSTER_RADIUS_PER_SQRT_BIKE = 30;
-
-export function clusterRadiusFor(value: number): number {
-  return CLUSTER_BASE_RADIUS_METERS + CLUSTER_RADIUS_PER_SQRT_BIKE * Math.sqrt(value);
-}
-
 function hexToRgb(hex: string): [number, number, number] {
   const n = Number.parseInt(hex.slice(1), 16);
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];

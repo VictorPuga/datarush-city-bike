@@ -2,14 +2,14 @@
 
 import dynamic from 'next/dynamic';
 import { useMemo, useState } from 'react';
-import { aggregateClusters, clusterIdOf } from '@/lib/clusters';
+import { aggregateRegions, regionIdOf } from '@/lib/regions';
 import { useJson } from '@/lib/useJson';
 import type { Layer, PredictionsResponse, StationDayResponse, View } from '@/lib/types';
 import type { FlyTarget } from './Map';
-import ClusterList from './ClusterList';
 import Controls from './Controls';
 import styles from './Dashboard.module.css';
 import Legend from './Legend';
+import RegionList from './RegionList';
 import LayerToggle from './LayerToggle';
 import StationPanel from './StationPanel';
 import StationSearch from './StationSearch';
@@ -32,7 +32,7 @@ export default function Dashboard() {
   const [view, setView] = useState<View>('stations');
   const [showMarkers, setShowMarkers] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [selectedClusterId, setSelectedClusterId] = useState<number | null>(null);
+  const [selectedRegionId, setSelectedRegionId] = useState<string | null>(null);
   const [flyTarget, setFlyTarget] = useState<FlyTarget | null>(null);
   const [collapsed, setCollapsed] = useState(false);
 
@@ -42,9 +42,9 @@ export default function Dashboard() {
   );
 
   const stations = useMemo(() => predictions.data?.stations ?? [], [predictions.data]);
-  const clusters = useMemo(() => aggregateClusters(stations), [stations]);
+  const regions = useMemo(() => aggregateRegions(stations), [stations]);
   const selected = stations.find((station) => station.id === selectedId);
-  const selectedStationCluster = clusters.find((cluster) => cluster.id === (selected && clusterIdOf(selected.id)));
+  const selectedStationRegion = regions.find((region) => region.id === (selected && regionIdOf(selected.id)));
 
   const flyTo = (lat: number, lon: number, zoom: number) =>
     setFlyTarget((previous) => ({ lat, lon, zoom, request: (previous?.request ?? 0) + 1 }));
@@ -54,15 +54,15 @@ export default function Dashboard() {
       <div className={styles.map}>
         <BikeMap
           stations={stations}
-          clusters={clusters}
+          regions={regions}
           view={view}
           layer={layer}
           showMarkers={showMarkers}
           selectedId={selectedId}
-          selectedClusterId={selectedClusterId}
+          selectedRegionId={selectedRegionId}
           flyTarget={flyTarget}
           onSelect={setSelectedId}
-          onSelectCluster={setSelectedClusterId}
+          onSelectRegion={setSelectedRegionId}
         />
         {predictions.loading && (
           <div className={styles.loading} role="status">
@@ -106,15 +106,15 @@ export default function Dashboard() {
               {showMarkers ? 'Hide markers' : 'Show markers'}
             </button>
           )}
-          {view === 'clusters' && (
-            <ClusterList
-              clusters={clusters}
+          {view === 'regions' && (
+            <RegionList
+              regions={regions}
               layer={layer}
-              selectedId={selectedClusterId}
+              selectedId={selectedRegionId}
               onSelect={(id) => {
-                setSelectedClusterId(id);
-                const cluster = clusters.find((item) => item.id === id);
-                if (cluster) flyTo(cluster.lat, cluster.lon, 13);
+                setSelectedRegionId(id);
+                const region = regions.find((item) => item.id === id);
+                if (region) flyTo(region.lat, region.lon, 14);
               }}
             />
           )}
@@ -129,7 +129,7 @@ export default function Dashboard() {
           {selected && (
             <StationPanel
               station={selected}
-              cluster={selectedStationCluster}
+              region={selectedStationRegion}
               hour={hour}
               day={day.data}
               loading={day.loading}

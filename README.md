@@ -13,6 +13,7 @@ Until it is ready, a mock backend returns deterministic counts for a fixed list 
 | `ui/` | Next.js dashboard and mock API |
 | `scripts/` | Data preparation scripts |
 | `data/raw/` | Raw Citi Bike trip files (gitignored) |
+| `docs/` | Notes on each data process, see [docs/README.md](docs/README.md) |
 
 ## Data sources
 
@@ -21,6 +22,13 @@ Until it is ready, a mock backend returns deterministic counts for a fixed list 
 - [Trip data archive](https://s3.amazonaws.com/tripdata/index.html)
 
 Download the trip files into `data/raw/`.
+
+### NYC regions
+
+- [2020 Neighborhood Tabulation Areas (NTAs)](https://data.cityofnewyork.us/d/9nt8-h7nd), NYC Open Data id `9nt8-h7nd`
+- 262 neighborhood polygons, used to divide the city into regions and group stations by the polygon that contains them.
+
+See [docs/nta-dataset.md](docs/nta-dataset.md) for the download command and fields.
 
 ## Quick start
 
@@ -36,11 +44,12 @@ Run `python3 scripts/extract_stations.py` to derive all start stations from `dat
 Pass `--top N` to keep only the N busiest.
 It writes `ui/src/data/stations.json`.
 
-### Clusters
-Run `python3 scripts/cluster_stations.py` to group stations by location with k-means (standard library only).
-Pass `-k N` for the number of clusters (default 150), `--seed` and `--restarts` to tune reproducibility.
-It reads `stations.json` and writes `ui/src/data/clusters.json`, with a station-to-cluster `assignments` map and per-cluster centroid, station count, trips, and electric share.
-The dashboard's **Clusters** view sums the station predictions per cluster, and replaces the former marker clustering.
+### Regions
+Run `python3 scripts/assign_regions.py` to assign each station to its NTA polygon (standard library only).
+It reads `stations.json` and `tmp/nta.geojson`, and writes `ui/src/data/regions.json` with a station-to-region map and the simplified polygons.
+Every NTA is kept, including the ones with no stations.
+The dashboard's **Regions** view colors each neighborhood by predicted bikes per station.
+See [docs/regions.md](docs/regions.md).
 
 ### Run the UI
 ```sh

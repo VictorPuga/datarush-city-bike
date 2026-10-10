@@ -16,8 +16,8 @@ export default function Legend({ view }: LegendProps) {
         <span>{MAX_BIKES}+</span>
       </div>
       <span className={styles.note}>
-        {view === 'clusters'
-          ? 'Circle size grows with the cluster total. Color shows bikes per station.'
+        {view === 'regions'
+          ? 'Neighborhood color shows bikes per station. Gray areas have no stations.'
           : 'Circle size and color grow with the predicted count.'}
       </span>
     </div>

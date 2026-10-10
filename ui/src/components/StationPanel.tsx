@@ -1,12 +1,11 @@
-import { clusterLabel } from '@/lib/clusters';
-import type { ClusterPrediction, StationDayResponse, StationPrediction } from '@/lib/types';
+import type { RegionPrediction, StationDayResponse, StationPrediction } from '@/lib/types';
 import { ClassicBikeIcon, ElectricBikeIcon } from './BikeIcons';
 import StationChart from './StationChart';
 import styles from './StationPanel.module.css';
 
 type StationPanelProps = {
   station: StationPrediction;
-  cluster?: ClusterPrediction;
+  region?: RegionPrediction;
   hour: number;
   day?: StationDayResponse;
   loading: boolean;
@@ -18,7 +17,7 @@ type StationPanelProps = {
 
 export default function StationPanel({
   station,
-  cluster,
+  region,
   hour,
   day,
   loading,
@@ -35,9 +34,9 @@ export default function StationPanel({
           ×
         </button>
       </header>
-      {cluster && (
-        <p className={styles.cluster}>
-          {clusterLabel(cluster.id)} · {cluster.stations} stations · {cluster.classic} classic, {cluster.electric}{' '}
+      {region && (
+        <p className={styles.region}>
+          {region.name}, {region.borough} · {region.stations} stations · {region.classic} classic, {region.electric}{' '}
           electric
         </p>
       )}
