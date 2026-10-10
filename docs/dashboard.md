@@ -1,7 +1,26 @@
 # Dashboard
 
 The Next.js app in `ui/` shows predicted classic and electric bikes per NTA neighborhood on a react-leaflet map.
-Predictions come from the ONNX demand model through the Next.js API. See [inference.md](inference.md).
+Predictions come from the ONNX demand model through the Next.js API. See [inference.md](inference.md) and [api.md](api.md).
+
+## Run
+
+```sh
+cd ui
+yarn install
+yarn dev
+```
+
+Open http://localhost:3000.
+The dashboard needs `ui/models/demanda_net_v3.onnx`, see [inference.md](inference.md).
+`cd ui && yarn check:reference` checks the TypeScript port of the model code against `data/results/ui_reference_v3.json`, see [model.md](model.md).
+
+## Features
+
+A date picker and a 15-minute time slider choose the forecast slot.
+Neighborhood polygons show bike density, with station markers when zoomed in.
+A classic/electric toggle, a bikes/departures/arrivals toggle, station search, and a per-station day forecast with an 80% range calibrated on held-out weeks are included.
+Neighborhood totals and their ranges are computed on the server with the variance formulas of [model.md](model.md).
 
 ## Map
 

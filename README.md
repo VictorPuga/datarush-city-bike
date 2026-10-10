@@ -1,112 +1,154 @@
 # DataRush City Bike
 
 Predicts how many classic and electric Citi Bikes will be around NYC stations at a given date and 15-minute slot.
-A Next.js dashboard shows the predictions on a react-leaflet map, with a date picker and a 15-minute time slider.
-Neighborhood polygons show bike density, with station markers when zoomed in.
-A classic/electric toggle, a bikes/departures/arrivals toggle, station search, and a per-station day forecast with an 80% range calibrated on held-out weeks are included.
-The ML model (`demanda_net_v3.onnx`) runs inside the Next.js API with `onnxruntime-node`.
-Neighborhood totals and their ranges are computed on the server with the variance formulas of [docs/model.md](docs/model.md).
-`cd ui && yarn check:reference` checks the TypeScript port against `data/results/ui_reference_v3.json`.
-See [docs/inference.md](docs/inference.md).
+A negative binomial demand model (v3, `demanda_net_v3.onnx`) forecasts departures and arrivals per station, with calibrated 80% ranges.
+A Next.js dashboard serves it on a map, see [docs/dashboard.md](docs/dashboard.md).
+
+This README is the guide for evaluators.
+It reproduces the data extraction, the evaluation and the training of the final model, from the raw Citi Bike files to the ONNX file the dashboard serves.
+
+## Reproduction at a glance
+
+| Step | Command | Time | Output |
+| --- | --- | --- | --- |
+| 1. Install | `pip install -r notebooks/requirements.txt` | | Python environment |
+| 2. Download data | see below | | `data/raw/*.zip` |
+| 3. Clean and extract | `LIMPIEZA_citibike.ipynb` | 3 min, 6 GB RAM | `notebooks/data_procesada/` |
+| 4. Evaluation protocol | `EVALUACION_protocolo.ipynb` | 3 min, 3 GB RAM | Baseline tables in `data/results/` |
+| 5. Train the final model | `MODELO_v3.ipynb` | 90 min, 4 GB RAM, 8 CPU cores | `notebooks/modelos/demanda_net_v3.onnx` |
+| 6. Check the results | compare with `data/results/` | | Metrics of [docs/model.md](docs/model.md) |
+| 7. Serve it | `cd ui && yarn dev` | | Dashboard on http://localhost:3000 |
+
+No GPU is needed.
+Each notebook states what it reads and writes in its first cell.
+
+## 1. Environment
+
+Requirements: Python 3, about 10 GB of free disk space (the extracted trip files take 8.5 GB), and network access for the weather download.
+For the dashboard also Node.js and Yarn.
+
+```sh
+cd notebooks
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+## 2. Download the data
+
+The model uses 12 consecutive months, Oct 2025 to Sep 2026.
+Download the monthly zips from the [Citi Bike trip data archive](https://s3.amazonaws.com/tripdata/index.html) into `data/raw/`:
+
+```sh
+cd data/raw
+for m in 202510 202511 202512 202601 202602 202603 202604 202605 202606 202607 202608 202609; do
+  curl -O "https://s3.amazonaws.com/tripdata/${m}-citibike-tripdata.zip"
+done
+```
+
+The months must be consecutive, the cleaning notebook stops if one is missing.
+Hourly weather comes from the Open-Meteo archive API and is downloaded and cached by the cleaning notebook, there is nothing to fetch by hand.
+More sources: [Citi Bike system data](https://citibikenyc.com/system-data) and the NYC neighborhoods of [docs/nta-dataset.md](docs/nta-dataset.md).
+
+## 3. Clean the trips and build the training table
+
+```sh
+cd notebooks
+jupyter nbconvert --to notebook --execute --inplace LIMPIEZA_citibike.ipynb
+```
+
+Or open it with `jupyter lab LIMPIEZA_citibike.ipynb` and run all cells.
+It extracts the zips, cleans each trip file, counts departures and arrivals per station, 15-minute slot and bike type, and adds calendar and weather features.
+It writes `notebooks/data_procesada/`.
+Expected: 45,384,105 raw trips, 45,226,146 after cleaning, 35,040 slots and 81,158,880 rows in `demanda_15min.parquet`.
+Steps, outputs and checks: [docs/ml-data.md](docs/ml-data.md).
+
+## 4. Run the evaluation protocol
+
+```sh
+jupyter nbconvert --to notebook --execute --inplace EVALUACION_protocolo.ipynb
+```
+
+It fixes the train, validation and test blocks, scores the baselines and writes the tables in `data/results/`.
+Every model is scored with the same helpers in `citibike_eval.py`.
+Protocol and baselines: [docs/evaluation.md](docs/evaluation.md).
+
+## 5. Train the final model
+
+```sh
+jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=-1 MODELO_v3.ipynb
+```
+
+The notebook does the following, see [docs/model.md](docs/model.md):
+
+1. Compares the model variants on the validation block.
+2. Scores five weekly rolling-origin folds.
+3. Fits the shared shocks that calibrate the intervals.
+4. Fits the final model on all days before Sep 17 (`refit`) and scores it on the test block, Sep 17 to 30.
+5. Exports `notebooks/modelos/demanda_net_v3.onnx`, `demanda_net_v3.pt`, `estaciones_onnx_v3.json` and `station_ids_v3.json`.
+
+Fitted models and predictions are cached in `tmp/v3/`, so a rerun takes about 2 minutes.
+Delete that folder to retrain everything, which takes about 90 minutes on 8 CPU cores.
+Training uses fixed seeds, but small differences in the last digits can appear between machines and library versions.
+
+## 6. Check the results
+
+The final model (`v3, refit`) on the test block must be close to this table (mean of total departures and total arrivals):
+
+| model | deviance_15min | mae_15min | wape_hour | wape_day |
+| --- | --- | --- | --- | --- |
+| v3, refit (ships) | 0.7910 | 0.5060 | 0.4678 | 0.2086 |
+| v2 network (previous version) | 0.8302 | 0.5163 | 0.4974 | 0.2555 |
+| Baseline to beat | 0.9111 | 0.5658 | 0.5674 | 0.3339 |
+
+The notebooks write the full tables to `data/results/`, for example `point_metrics_v3.csv`, `v3_test_summary.csv` and `intervals_v3_test.csv`.
+The files committed there are the ones the submitted results come from, so a diff shows any change.
+
+## 7. Serve the model in the dashboard
+
+```sh
+cp notebooks/modelos/demanda_net_v3.onnx ui/models/
+cp notebooks/modelos/estaciones_onnx_v3.json ui/models/
+cd ui
+yarn install
+yarn check:reference
+yarn dev
+```
+
+`yarn check:reference` runs the TypeScript port of the model code against `data/results/ui_reference_v3.json`, which `notebooks/ui_reference.py` computes in Python.
+Open http://localhost:3000.
+The `ui/models/` folder in the repository already has the JSON files, and `demanda_net_v3.onnx` is gitignored there.
+
+## Optional: rebuild the map data
+
+The dashboard map data in `ui/src/data/` is committed.
+To rebuild it from the raw trips (standard library only):
+
+```sh
+python3 scripts/extract_stations.py
+mkdir -p tmp
+curl -sL "https://data.cityofnewyork.us/resource/9nt8-h7nd.geojson?\$limit=1000" -o tmp/nta.geojson
+python3 scripts/assign_regions.py
+```
+
+See [docs/stations.md](docs/stations.md) and [docs/regions.md](docs/regions.md).
+This does not affect the model.
 
 ## Repository layout
 
 | Path | Purpose |
 | --- | --- |
-| `ui/` | Next.js dashboard and mock API |
-| `slides/` | Slidev pitch deck, in Spanish |
-| `scripts/` | Data preparation scripts |
-| `notebooks/` | Data cleaning, model evaluation and training notebooks, see [docs/ml-data.md](docs/ml-data.md) |
-| `data/results/` | Evaluation tables (CSV), see [docs/evaluation.md](docs/evaluation.md) |
+| `notebooks/` | Cleaning, evaluation, training and findings notebooks, with their Python modules |
+| `notebooks/modelos/` | Trained models and their station files |
 | `data/raw/` | Raw Citi Bike trip files (gitignored) |
-| `docs/` | Notes on each data process, see [docs/README.md](docs/README.md) |
+| `data/results/` | Evaluation tables, see [docs/evaluation.md](docs/evaluation.md) |
+| `scripts/` | Station and region preparation for the map |
+| `ui/` | Next.js dashboard and API, see [docs/api.md](docs/api.md) |
+| `slides/` | Slidev pitch deck, in Spanish |
+| `docs/` | Notes on each process, see [docs/README.md](docs/README.md) |
 
-## Data sources
+## More
 
-- [Citi Bike](https://citibikenyc.com)
-- [System data](https://citibikenyc.com/system-data)
-- [Trip data archive](https://s3.amazonaws.com/tripdata/index.html)
-
-Download the trip files into `data/raw/`.
-
-### NYC regions
-
-- [2020 Neighborhood Tabulation Areas (NTAs)](https://data.cityofnewyork.us/d/9nt8-h7nd), NYC Open Data id `9nt8-h7nd`
-- 262 neighborhood polygons, used to divide the city into regions and group stations by the polygon that contains them.
-
-See [docs/nta-dataset.md](docs/nta-dataset.md) for the download command and fields.
-
-## Quick start
-
-1. Download trip data into `data/raw/`.
-2. Run `python3 scripts/extract_stations.py`.
-   It reads every zip in `data/raw/`, so with the 12 months used by the model it rebuilds `stations.json` from all of them, see [docs/ml-data.md](docs/ml-data.md).
-3. Run `cd ui && yarn install && yarn dev`.
-4. Open http://localhost:3000.
-
-## Dashboard
-
-### Stations
-Run `python3 scripts/extract_stations.py` to derive all start stations from `data/raw/*.csv` (or `*.zip`).
-Pass `--top N` to keep only the N busiest.
-It writes `ui/src/data/stations.json`.
-
-### Regions
-Run `python3 scripts/assign_regions.py` to assign each station to its NTA polygon (standard library only).
-It reads `stations.json` and `tmp/nta.geojson`, and writes `ui/src/data/regions.json` with a station-to-region map and the simplified polygons.
-Every NTA is kept, including the ones with no stations.
-The dashboard always shows regions, colored by predicted bikes per station, and adds small bike-icon station markers from zoom 16.
-See [docs/regions.md](docs/regions.md).
-
-### Run the UI
-```sh
-cd ui
-yarn install
-yarn dev
-```
-
-### API
-`GET /api/predictions?date=YYYY-MM-DD&slot=0-95` returns the forecast for one 15-minute slot (`slot` 0 is 00:00, 95 is 23:45):
-```json
-{
-  "date": "2026-10-09",
-  "slot": 32,
-  "weather": "open-meteo",
-  "stations": [{
-    "id": "...", "name": "...", "lat": 40.7, "lon": -73.9,
-    "classic": 12, "classicLow": 9, "classicHigh": 15,
-    "electric": 5, "electricLow": 4, "electricHigh": 6,
-    "departures": { "classic": 1.7, "classicLow": 0, "classicHigh": 3.3, "electric": 4, "electricLow": 1.5, "electricHigh": 6.6 },
-    "arrivals": { "classic": 1.2, "classicLow": 0, "classicHigh": 2.6, "electric": 3.5, "electricLow": 1.1, "electricHigh": 5.9 }
-  }]
-}
-```
-The top-level counts are bikes available (stock).
-`departures` is the expected number of bikes taken in that 15-minute slot.
-`arrivals` has the same shape and is the expected number of bikes returned.
-`weather` is `default` when Open-Meteo could not be reached.
-`GET /api/predictions/day?date=YYYY-MM-DD&station=ID` returns `{ date, weather, station, slots: [{ slot, ...counts, departures, arrivals }] }` with 96 entries, used by the station chart.
-`GET /api/weather?date=YYYY-MM-DD` returns `{ date, weather, hours }` with 24 `{ hour, temperature, humidity, wind, precipitation, code }` entries (°C, %, km/h, mm in the hour, WMO weather code).
-It reads the same Open-Meteo values the model uses, and `weather` is `default` when they are unavailable.
-`GET /api/insights?date=YYYY-MM-DD&slot=0-95` returns `{ date, slot, week, netFlow }`.
-`week` has the Monday to Sunday days around `date`, each with 96 citywide `{ classic, electric, depClassic, depElectric }` slots.
-`netFlow` has one `{ id, classic, electric }` per neighborhood: arrivals minus departures during `slot`.
-Requests return 503 if the model files in `ui/models/` are missing.
-
-## Model
-
-The demand model and its evaluation live in `notebooks/`.
-See [docs/ml-data.md](docs/ml-data.md) for the training tables, [docs/evaluation.md](docs/evaluation.md) for the evaluation protocol and [docs/model.md](docs/model.md) for the v3 model.
-`notebooks/ui_reference.py` writes the numbers that the dashboard code has to reproduce, see [docs/model.md](docs/model.md).
-
-1. Put the monthly Citi Bike zips in `data/raw/`.
-   The model uses 12 consecutive months, Oct 2025 to Sep 2026.
-2. Install `notebooks/requirements.txt` in a virtual environment.
-3. Run `notebooks/LIMPIEZA_citibike.ipynb` to build `notebooks/data_procesada/`.
-   It needs about 6 GB of memory.
-4. Run `notebooks/EVALUACION_protocolo.ipynb` to score the baselines and the shipped network.
-   It writes the tables in `data/results/`.
-5. Run `notebooks/MODELO_v3.ipynb` to train, score and export the v3 model, see [docs/model.md](docs/model.md).
-   It writes `notebooks/modelos/demanda_net_v3.onnx` and more tables in `data/results/`.
-6. Run `notebooks/HALLAZGOS_demanda.ipynb` to compute the demand findings and their figures, see [docs/findings.md](docs/findings.md).
-   It needs the extracted trip folders next to the notebooks and the fit of step 5.
+- [docs/findings.md](docs/findings.md): five findings on what drives demand, from `notebooks/HALLAZGOS_demanda.ipynb`.
+- [docs/inference.md](docs/inference.md): how the API runs the ONNX model.
+- [docs/dashboard.md](docs/dashboard.md): the dashboard features.
