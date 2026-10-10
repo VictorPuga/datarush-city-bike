@@ -29,6 +29,13 @@ Theme and colors are in `lib/nivoTheme.ts`.
 - `StationChart` is the per-station forecast, a Nivo line chart with the 80% range drawn as a custom layer. Click to set the time.
 - Ranking and Net flow follow the bike type toggle.
 
+## Weather
+
+The `Weather` card in the sidebar shows the conditions of the selected hour: icon, temperature, label, wind, humidity and rain, plus the day's temperature range and total rain.
+It reads `/api/weather`, which returns the hourly Open-Meteo values that feed the model, so the card shows what the forecast assumed.
+The card is hidden when the weather is `default`, and the notice about typical conditions stays.
+`lib/weatherCodes.ts` maps WMO weather codes to a label and an emoji.
+
 ## Time and metric
 
 - The time slider moves in 15-minute slots (0 to 95). `lib/time.ts` formats them.

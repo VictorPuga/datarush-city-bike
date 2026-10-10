@@ -18,6 +18,22 @@ export type BikeCounts = {
 
 export type WeatherSource = 'open-meteo' | 'default';
 
+/** Conditions at the start of an hour: °C, %, km/h, mm in that hour and a WMO weather code. */
+export type HourWeather = {
+  hour: number;
+  temperature: number;
+  humidity: number;
+  wind: number;
+  precipitation: number;
+  code: number;
+};
+
+export type WeatherResponse = {
+  date: string;
+  weather: WeatherSource;
+  hours: HourWeather[];
+};
+
 export type Metric = 'stock' | 'departures' | 'arrivals';
 
 export type StationPrediction = BikeCounts & {

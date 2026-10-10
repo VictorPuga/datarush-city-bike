@@ -1,0 +1,35 @@
+.weather {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--solid-surface);
+  border-radius: 12px;
+}
+
+.icon {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.temperature {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.label,
+.details {
+  font-size: 13px;
+  color: var(--secondary);
+}
+
+.details {
+  margin-left: auto;
+  text-align: right;
+}

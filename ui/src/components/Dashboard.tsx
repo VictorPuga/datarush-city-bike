@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react';
 import { maxFor, viewMetric } from '@/lib/density';
 import { regionIdOf } from '@/lib/regions';
 import { useJson } from '@/lib/useJson';
-import type { Layer, Metric, PredictionsResponse, StationDayResponse } from '@/lib/types';
+import type { Layer, Metric, PredictionsResponse, StationDayResponse, WeatherResponse } from '@/lib/types';
 import type { FlyTarget } from './Map';
 import Controls from './Controls';
 import Insights from './Insights';
@@ -19,6 +19,7 @@ import StationPanel from './StationPanel';
 import StationSearch from './StationSearch';
 import Summary from './Summary';
 import ThemeToggle from './ThemeToggle';
+import Weather from './Weather';
 
 const BikeMap = dynamic(() => import('./Map'), { ssr: false });
 
@@ -41,6 +42,7 @@ export default function Dashboard() {
   const [dragHeight, setDragHeight] = useState<number | null>(null);
 
   const predictions = useJson<PredictionsResponse>(`/api/predictions?date=${date}&slot=${slot}`);
+  const weather = useJson<WeatherResponse>(`/api/weather?date=${date}`);
   const day = useJson<StationDayResponse>(
     selectedId ? `/api/predictions/day?date=${date}&station=${encodeURIComponent(selectedId)}` : null,
   );
@@ -104,6 +106,7 @@ export default function Dashboard() {
               if (station) flyTo(station.lat, station.lon, 16);
             }}
           />
+          <Weather data={weather.data} slot={slot} />
           <Summary stations={stations} />
           <Legend metric={metric} />
           <Insights

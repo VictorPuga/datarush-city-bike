@@ -86,6 +86,8 @@ The top-level counts are bikes available (stock).
 `arrivals` has the same shape and is the expected number of bikes returned.
 `weather` is `default` when Open-Meteo could not be reached.
 `GET /api/predictions/day?date=YYYY-MM-DD&station=ID` returns `{ date, weather, station, slots: [{ slot, ...counts, departures, arrivals }] }` with 96 entries, used by the station chart.
+`GET /api/weather?date=YYYY-MM-DD` returns `{ date, weather, hours }` with 24 `{ hour, temperature, humidity, wind, precipitation, code }` entries (°C, %, km/h, mm in the hour, WMO weather code).
+It reads the same Open-Meteo values the model uses, and `weather` is `default` when they are unavailable.
 `GET /api/insights?date=YYYY-MM-DD&slot=0-95` returns `{ date, slot, week, netFlow }`.
 `week` has the Monday to Sunday days around `date`, each with 96 citywide `{ classic, electric, depClassic, depElectric }` slots.
 `netFlow` has one `{ id, classic, electric }` per neighborhood: arrivals minus departures during `slot`.

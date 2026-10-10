@@ -1,4 +1,4 @@
-import type { WeatherSource } from './types';
+import type { HourWeather, WeatherSource } from './types';
 
 const LATITUDE = 40.73;
 const LONGITUDE = -73.99;
@@ -71,6 +71,21 @@ export function climaFromHourly(hourly: HourlyWeather): Float32Array {
     clima.set([smooth(temperature), smooth(humidity), smooth(wind), rainRate(j), previous / 4, code[hour]], slot * 6);
   }
   return clima;
+}
+
+/** The conditions of each hour of the day, read from the `clima` slots at the start of the hour. */
+export function hoursFromClima(clima: Float32Array): HourWeather[] {
+  return Array.from({ length: 24 }, (_, hour) => {
+    const [temperature, humidity, wind, precipitation, , code] = clima.subarray(hour * 4 * 6, hour * 4 * 6 + 6);
+    return {
+      hour,
+      temperature: Math.round(temperature * 10) / 10,
+      humidity: Math.round(humidity),
+      wind: Math.round(wind * 10) / 10,
+      precipitation: Math.round(precipitation * 10) / 10,
+      code: Math.round(code),
+    };
+  });
 }
 
 /** One retry after a failed request or a 429 or 5xx, since a whole week of days is requested at once. */

@@ -58,6 +58,9 @@ Fallbacks:
   If it fails again, or the date is more than 15 days ahead, the default weather is used for all slots, the API returns `weather: "default"` and the dashboard says so.
   The failure is cached for 5 minutes and logged as a warning on the server.
 
+`hoursFromClima` reads the `clima` slots at the start of each hour to give the 24 hourly values of `/api/weather`.
+The endpoint shares the per-date weather cache with the forecast.
+
 ## Holidays
 
 `calendar.ts` flags the US federal holidays and their observed weekdays.
