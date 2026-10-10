@@ -11,7 +11,7 @@ import styles from './Map.module.css';
 
 const NYC_CENTER: [number, number] = [40.7306, -73.9866];
 const INITIAL_ZOOM = 13;
-const STATION_MIN_ZOOM = 15;
+const STATION_MIN_ZOOM = 16;
 const STATION_MARKER_RADIUS = 6;
 
 export type FlyTarget = { lat: number; lon: number; zoom: number; request: number };
@@ -82,6 +82,7 @@ export default function BikeMap({
   onSelectRegion,
 }: MapProps) {
   const [zoom, setZoom] = useState(INITIAL_ZOOM);
+  const showStations = zoom >= STATION_MIN_ZOOM;
   const regionById = new Map(regions.map((region) => [region.id, region]));
 
   return (
@@ -97,6 +98,7 @@ export default function BikeMap({
         if (!region) return null;
         const occupied = region.stations > 0;
         const isSelected = shape.id === selectedRegionId;
+        const fillOpacity = showStations ? 0 : occupied ? 0.55 : 0.12;
         return (
           <Polygon
             key={`region-${shape.id}`}
@@ -105,7 +107,7 @@ export default function BikeMap({
               color: isSelected ? '#111' : '#555',
               weight: isSelected ? 3 : 1,
               fillColor: occupied ? colorFor(layerValue(region, layer) / region.stations) : '#9ca3af',
-              fillOpacity: occupied ? 0.55 : 0.12,
+              fillOpacity,
             }}
             eventHandlers={{ click: () => onSelectRegion(shape.id) }}
           >
@@ -113,7 +115,7 @@ export default function BikeMap({
           </Polygon>
         );
       })}
-      {zoom >= STATION_MIN_ZOOM &&
+      {showStations &&
         stations.map((station) => (
           <CircleMarker
             key={`station-${station.id}`}

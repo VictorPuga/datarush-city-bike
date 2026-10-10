@@ -84,7 +84,7 @@ export default function Dashboard() {
             onSelect={(id) => {
               setSelectedId(id);
               const station = stations.find((item) => item.id === id);
-              if (station) flyTo(station.lat, station.lon, 15);
+              if (station) flyTo(station.lat, station.lon, 16);
             }}
           />
           <Summary stations={stations} />

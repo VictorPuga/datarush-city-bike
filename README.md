@@ -49,7 +49,7 @@ It writes `ui/src/data/stations.json`.
 Run `python3 scripts/assign_regions.py` to assign each station to its NTA polygon (standard library only).
 It reads `stations.json` and `tmp/nta.geojson`, and writes `ui/src/data/regions.json` with a station-to-region map and the simplified polygons.
 Every NTA is kept, including the ones with no stations.
-The dashboard always shows regions, colored by predicted bikes per station, and adds small station markers from zoom 15.
+The dashboard always shows regions, colored by predicted bikes per station, and adds small station markers from zoom 16.
 See [docs/regions.md](docs/regions.md).
 
 ### Run the UI
